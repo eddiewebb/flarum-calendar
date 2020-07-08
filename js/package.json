@@ -6,6 +6,7 @@
     "@fullcalendar/core": "^5.1.0",
     "@fullcalendar/daygrid": "^5.1.0",
     "css-loader": "^3.6.0",
+    "flarum": "^1.0.2",
     "flarum-webpack-config": "^0.1.0-beta.10",
     "style-loader": "^1.2.1",
     "webpack": "^4.26.0",

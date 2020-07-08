@@ -17,14 +17,17 @@ use Webbinaro\AdvCalendar\Api\Controllers as ControllersAlias;
 return [
     (new Extend\Frontend('forum'))
         ->js(__DIR__.'/js/dist/forum.js')
-        ->css(__DIR__.'/resources/less/forum.less'),
+        ->css(__DIR__.'/resources/less/forum.less')
+        ->route('/events', 'advevents'),
     (new Extend\Frontend('admin'))
         ->js(__DIR__.'/js/dist/admin.js')
         ->css(__DIR__.'/resources/less/admin.less'),
+    //API Routes
     (new Extend\Routes('api'))
     	->get('/events','events.index', ControllersAlias\EventsListController::class)
     	->get('/events/{id}','events.show', ControllersAlias\EventsShowController::class)
     	->post('/events','events.create', ControllersAlias\EventsCreateController::class),
+
 ];
 
 

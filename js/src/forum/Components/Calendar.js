@@ -10,19 +10,22 @@ import LinkButton from 'flarum/components/LinkButton';
 import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 
+
 export default class CalendarComponent extends Page {
     init() {
         super.init();
-        document.addEventListener('DOMContentLoaded', function() {
-          var calendarEl = document.getElementById('calendar');
 
-          var calendar = new Calendar(calendarEl, {
+        // THIS NEEDS TO EXPORTED to frontend
+        document.addEventListener('DOMContentLoaded', function() {
+          const calendarEl = document.getElementById('calendar');
+
+          const calendar = new Calendar(calendarEl, {
             plugins: [ dayGridPlugin ]
           });
 
           calendar.render();
         });
-	}
+	  }
 
     onunload() {
     }
@@ -43,7 +46,7 @@ export default class CalendarComponent extends Page {
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
         );
     }
 
@@ -66,7 +69,7 @@ export default class CalendarComponent extends Page {
         );
 
         return items;
-    }  
+    }
 
     /**
      * Build an item list for the navigation in the sidebar of the index page. By
@@ -79,8 +82,8 @@ export default class CalendarComponent extends Page {
 
         items.add('fof-user-directory',
             LinkButton.component({
-                href: app.route('advcalendar'),
-                children: app.translator.trans('fof-user-directory.forum.page.nav'),
+                href: app.route('advevents'),
+                children: "View a new events",
                 icon: 'far fa-address-book'
             }),
             85
@@ -102,3 +105,5 @@ export default class CalendarComponent extends Page {
     config(isInitialized, context) {
     }
 }
+
+

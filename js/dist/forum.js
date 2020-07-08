@@ -12503,7 +12503,8 @@ var CalendarComponent = /*#__PURE__*/function (_Page) {
   var _proto = CalendarComponent.prototype;
 
   _proto.init = function init() {
-    _Page.prototype.init.call(this);
+    _Page.prototype.init.call(this); // THIS NEEDS TO EXPORTED to frontend
+
 
     document.addEventListener('DOMContentLoaded', function () {
       var calendarEl = document.getElementById('calendar');
@@ -12562,8 +12563,8 @@ var CalendarComponent = /*#__PURE__*/function (_Page) {
   _proto.navItems = function navItems() {
     var items = flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_7___default.a.prototype.navItems();
     items.add('fof-user-directory', flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_9___default.a.component({
-      href: flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.route('advcalendar'),
-      children: flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.translator.trans('fof-user-directory.forum.page.nav'),
+      href: flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.route('advevents'),
+      children: "View a new events",
       icon: 'far fa-address-book'
     }), 85);
     return items;
@@ -12600,15 +12601,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _flarum_core_forum__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @flarum/core/forum */ "@flarum/core/forum");
 /* harmony import */ var _flarum_core_forum__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_flarum_core_forum__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Components_Calendar_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Components/Calendar.js */ "./src/forum/Components/Calendar.js");
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
+/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_components_HeaderPrimary__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/components/HeaderPrimary */ "flarum/components/HeaderPrimary");
+/* harmony import */ var flarum_components_HeaderPrimary__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_components_HeaderPrimary__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/components/IndexPage */ "flarum/components/IndexPage");
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/components/LinkButton */ "flarum/components/LinkButton");
+/* harmony import */ var flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_5__);
 
 
-app.initializers.add('webbinaro/adv-extras', function () {
-  app.routes.advcalendar = {
-    path: '/users',
+
+
+
+
+app.initializers.add('webbinaro/flarum-calendar', function () {
+  app.routes.advevents = {
+    path: '/events',
     component: m(_Components_Calendar_js__WEBPACK_IMPORTED_MODULE_1__["default"], null)
   };
-  console.log('[webbinaro/adv-extras] Hello, admin!');
-});
+  console.log('[webbinaro/flarum-calendar] Hello, forum user!'); //add google to header
+
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_2__["extend"])(flarum_components_HeaderPrimary__WEBPACK_IMPORTED_MODULE_3___default.a.prototype, 'items', function (items) {
+    items.add('google', m("a", {
+      href: "https://google.com"
+    }, "Google"));
+  }); //add events to side nav
+
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_2__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_4___default.a.prototype, 'navItems', function (items) {
+    items.add('events', flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_5___default.a.component({
+      icon: 'fas fa-th-list',
+      children: 'Event Calendar',
+      href: app.route('advevents')
+    }), -9.5);
+    return items;
+  });
+}); //end initalizer
 
 /***/ }),
 
@@ -12642,6 +12670,17 @@ module.exports = flarum.core.compat['Component'];
 /***/ (function(module, exports) {
 
 module.exports = flarum.core.compat['app'];
+
+/***/ }),
+
+/***/ "flarum/components/HeaderPrimary":
+/*!*****************************************************************!*\
+  !*** external "flarum.core.compat['components/HeaderPrimary']" ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/HeaderPrimary'];
 
 /***/ }),
 
