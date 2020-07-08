@@ -11,11 +11,11 @@ use Webbinaro\AdvCalendar\Event;
 class EventsShowController extends AbstractShowController
 {
     public $serializer = EventSerializer::class;
-
+    public $include = ['user'];
     protected function data(Request $request, Document $document)
     {
         $id = array_get($request->getQueryParams(), 'id');
-
+        //$relations = $this->extractInclude($request);
         return Event::findOrFail($id);
     }
 }

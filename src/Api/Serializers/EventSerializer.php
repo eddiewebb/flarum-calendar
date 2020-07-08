@@ -2,6 +2,7 @@
 namespace Webbinaro\AdvCalendar\Api\Serializers;
 
 use Flarum\Api\Serializer\AbstractSerializer;
+use Flarum\Api\Serializer\UserSerializer;
 use Webbinaro\AdvCalendar\Event;
 
 class EventSerializer extends AbstractSerializer
@@ -30,6 +31,10 @@ class EventSerializer extends AbstractSerializer
             'createdAt'   => $this->formatDate($event->created_at),
             'updatedAt'   => $this->formatDate($event->updated_at),
         ];
+    }
+
+    protected function user($event){
+        return $this->hasOne($event, UserSerializer::class);
     }
 
 }
