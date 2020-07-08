@@ -2,27 +2,33 @@
 namespace Webbinaro\AdvCalendar\Api\Serializers;
 
 use Flarum\Api\Serializer\AbstractSerializer;
-use Flarum\Api\Serializer\UserSerializer;
+use Webbinaro\AdvCalendar\Event;
 
-class DiscussionSerializer extends AbstractSerializer
+class EventSerializer extends AbstractSerializer
 {
+
+    /**
+     * @var string
+     */
     protected $type = 'events';
 
-    protected function getDefaultAttributes($poll)
+    /**
+     * Get the default set of serialized attributes for a model.
+     *
+     * @param Event $event
+     *
+     * @return array
+     */
+    protected function getDefaultAttributes($event)
     {
         return [
-            'name'    => $poll->name,
-            'description'    => $poll->description,
-            'hasEnded'    => $poll->hasEnded(),
-            'endDate'     => $this->formatDate($poll->event_end),
-            'createdAt'   => $this->formatDate($poll->created_at),
-            'updatedAt'   => $this->formatDate($poll->updated_at),
+            'name'    => $event->name,
+            'description'    => $event->description,
+            'hasEnded'    => $event->hasEnded(),
+            'endDate'     => $this->formatDate($event->event_end),
+            'createdAt'   => $this->formatDate($event->created_at),
+            'updatedAt'   => $this->formatDate($event->updated_at),
         ];
     }
 
-
-    protected function user($event)
-    {
-        return $this->hasOne($event, UserSerializer::class);
-    }
 }

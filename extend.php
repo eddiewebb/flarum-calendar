@@ -12,7 +12,7 @@
 namespace Webbinaro\AdvCalendar;
 
 use Flarum\Extend;
-use Webbinaro\AdvCalendar\Api\Controllers;
+use Webbinaro\AdvCalendar\Api\Controllers as ControllersAlias;
 
 return [
     (new Extend\Frontend('forum'))
@@ -22,9 +22,9 @@ return [
         ->js(__DIR__.'/js/dist/admin.js')
         ->css(__DIR__.'/resources/less/admin.less'),
     (new Extend\Routes('api'))
-    	->get('/events','events.index', Controllers\EventsListController::class)
-    	->get('/events/{id}','events.show', Controllers\EventsShowController::class)
-    	->post('/events','events.create', Controllers\EventsCreateController::class),
+    	->get('/events','events.index', ControllersAlias\EventsListController::class)
+    	->get('/events/{id}','events.show', ControllersAlias\EventsShowController::class)
+    	->post('/events','events.create', ControllersAlias\EventsCreateController::class),
 ];
 
 

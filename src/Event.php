@@ -9,12 +9,10 @@ use Flarum\User\User;
 /**
  * @property int $id
  * @property string $question
- * @property bool $public_poll
- * @property Discussion $discussion
- * @property USer $user
- * @property int $discussion_id
+ * @property User $user
  * @property int $user_id
  * @property \Carbon\Carbon $end_date
+ * @property \Carbon\Carbon $start_date
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
  */
@@ -43,15 +41,15 @@ class Event extends AbstractModel
      */
     public static function build($name, $description, $actorId, $startDate,$endDate)
     {
-        $poll = new static();
+        $event = new static();
 
-        $poll->name = $name;
-        $poll->description = $description;
-        $poll->user_id = $actorId;
-        $poll->event_start = $startDate;
-        $poll->event_end = $endDate;
+        $event->name = $name;
+        $event->description = $description;
+        $event->user_id = $actorId;
+        $event->event_start = $startDate;
+        $event->event_end = $endDate;
 
-        return $poll;
+        return $event;
     }
 
     /**
@@ -59,7 +57,7 @@ class Event extends AbstractModel
      */
     public function hasEnded()
     {
-        return $this->end_date !== null && $this->end_date->isPast();
+        return $this->event_end !== null && $this->event_end->isPast();
     }
 
     /**
