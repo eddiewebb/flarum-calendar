@@ -9,11 +9,15 @@ Collaborators welcome!
 
 In Progress
 - [x] Data model and DB migrations
-- [ ] API to CRUD events
+- [x] API to CR ~~UD~~ events
+- [ ] API to update/delete events 
+- [ ] Hosts and Attendees (currently just actor)
   
 Up Next / Need Help
-- [ ] New UI route to CRUD event 
-- [ ] JS Frontend (I was exploring ["fullcalendar"](https://fullcalendar.io/) as a nice looking option) 
+- [x] New UI route to calendar
+- [x] JS Frontend (I was exploring ["fullcalendar"](https://fullcalendar.io/) as a nice looking option) 
+- [ ] Events details modal or page
+- [ ] Events create modal or page
 
 Decisions
 - [ ] Relationships 
