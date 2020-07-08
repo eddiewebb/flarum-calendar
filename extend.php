@@ -9,10 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Webbinaro\AdvExtras;
+namespace Webbinaro\AdvCalendar;
 
 use Flarum\Extend;
-use Webbinaro\AdvExtras\CalendarController;
+use Webbinaro\AdvCalendar\Api\Controllers;
 
 return [
     (new Extend\Frontend('forum'))
@@ -21,8 +21,10 @@ return [
     (new Extend\Frontend('admin'))
         ->js(__DIR__.'/js/dist/admin.js')
         ->css(__DIR__.'/resources/less/admin.less'),
-    (new Extend\Frontend('forum'))
-        ->route('/users', 'webbinaro.adv-extras')
+    (new Extend\Routes('api'))
+    	->get('/events','events.index', Controllers\EventsListController::class)
+    	->get('/events/{id}','events.show', Controllers\EventsShowController::class)
+    	->post('/events','events.create', Controllers\EventsCreateController::class),
 ];
 
 

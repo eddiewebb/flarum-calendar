@@ -10,8 +10,7 @@ return [
 		    $table->integer('user_id')->unsigned();
 		    $table->string('name');
 		    $table->longText('description');
-		    $table->dateTime('created_at');
-		    $table->dateTime('modified_at');
+            $table->timestamps();
 		    $table->dateTime('event_start');
 		    $table->dateTime('event_end');
 
