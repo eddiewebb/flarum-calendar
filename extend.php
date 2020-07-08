@@ -9,7 +9,10 @@
  * file that was distributed with this source code.
  */
 
+namespace Webbinaro\AdvExtras;
+
 use Flarum\Extend;
+use Webbinaro\AdvExtras\CalendarController;
 
 return [
     (new Extend\Frontend('forum'))
@@ -18,5 +21,8 @@ return [
     (new Extend\Frontend('admin'))
         ->js(__DIR__.'/js/dist/admin.js')
         ->css(__DIR__.'/resources/less/admin.less'),
-    
+    (new Extend\Frontend('forum'))
+        ->route('/users', 'webbinaro.adv-extras')
 ];
+
+

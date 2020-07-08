@@ -1,8 +1,10 @@
 {
-  "name": "webbinaro/adv-extras",
-  "description": "adds adv extras like route sharing",
+  "name": "webbinaro/flarum-calendar",
+  "description": "Adds events with owner and attendees",
   "keywords": [
-    "flarum"
+    "flarum",
+    "calendar",
+    "events"
   ],
   "type": "flarum-extension",
   "license": "MIT",
@@ -18,12 +20,12 @@
   ],
   "autoload": {
     "psr-4": {
-      "Webbinaro\\AdvExtras\\": "src/"
+      "Webbinaro\\AdvCalendar\\": "src/"
     }
   },
   "extra": {
     "flarum-extension": {
-      "title": "ADV Extras",
+      "title": "ADV Calendar",
       "icon": {
         "name": "",
         "backgroundColor": "",
