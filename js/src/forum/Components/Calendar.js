@@ -82,14 +82,14 @@ export default class CalendarComponent extends Page {
     navItems() {
         const items = IndexPage.prototype.navItems();
 
-        items.add('fof-user-directory',
+       /* items.add('fof-user-directory',
             LinkButton.component({
                 href: app.route('advevents'),
                 children: "View a new events",
                 icon: 'far fa-address-book'
             }),
             85
-        );
+        );*/
 
         return items;
     }
