@@ -107,26 +107,53 @@ export default class CalendarComponent extends Page {
     config(isInitialized, context) {
 
         const calendarEl = document.getElementById('calendar');
+        let userRecords;
+
         const calendar = new Calendar(calendarEl,{
           headerToolbar: { center: 'dayGridMonth,listYear' }, // buttons for switching between views
           initialView: 'dayGridMonth',
           plugins: [ dayGridPlugin, interactionPlugin, listPlugin ],
-          events:[
+          eventClick: function(info) {
+            alert(
+              'Event: ' + info.event.title + '\n' +
+              'User: ' + info.event.extendedProps.user_display + '\n'
 
-            {
-              title: 'Meeting',
-              start: '2020-07-12T14:30:00',
-              extendedProps: {
-                status: 'done'
-              }
+
+            );
+
+            // change the border color just for fun
+            info.el.style.borderColor = 'red';
+          },
+          events: {
+            "url": "/api/events",
+            "success": function (content, xhr) {
+              userRecords = content.included;
+              return content.data;
             },
-            {
-              title: 'Birthday Party',
-              start: '2020-08-13T07:00:00',
-              backgroundColor: 'green',
-              borderColor: 'green'
+          },
+          eventDataTransform: function(eventData){
+            function userLookup(userId) {
+              for (const userKey in userRecords) {
+                if( userRecords[userKey].id === userId){
+                  return userRecords[userKey];
+                }
+              }
             }
-          ]
+
+            const associatedUser = userLookup(eventData.relationships.user.data.id);
+            return {
+              "id":eventData.attributes.id,
+              "title":eventData.attributes.name,
+              "end":eventData.attributes.event_end,
+              "start":eventData.attributes.event_start,
+              "extendedProps":{
+                "description": eventData.attributes.description,
+                "user_id" : eventData.relationships.user.data.id,
+                "user_url": "/u/" + associatedUser.attributes.name,
+                "user_display": associatedUser.attributes.displayName,
+              },
+            };
+          }
         });
         calendar.render();
         calendar.on('dateClick', function(info) {

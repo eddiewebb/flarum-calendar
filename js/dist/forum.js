@@ -15659,6 +15659,7 @@ var CalendarComponent = /*#__PURE__*/function (_Page) {
 
   _proto.config = function config(isInitialized, context) {
     var calendarEl = document.getElementById('calendar');
+    var userRecords;
     var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_10__["Calendar"](calendarEl, {
       headerToolbar: {
         center: 'dayGridMonth,listYear'
@@ -15666,18 +15667,41 @@ var CalendarComponent = /*#__PURE__*/function (_Page) {
       // buttons for switching between views
       initialView: 'dayGridMonth',
       plugins: [_fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_11__["default"], _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_12__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_13__["default"]],
-      events: [{
-        title: 'Meeting',
-        start: '2020-07-12T14:30:00',
-        extendedProps: {
-          status: 'done'
+      eventClick: function eventClick(info) {
+        alert('Event: ' + info.event.title + '\n' + 'User: ' + info.event.extendedProps.user_display + '\n'); // change the border color just for fun
+
+        info.el.style.borderColor = 'red';
+      },
+      events: {
+        "url": "/api/events",
+        "success": function success(content, xhr) {
+          userRecords = content.included;
+          return content.data;
         }
-      }, {
-        title: 'Birthday Party',
-        start: '2020-08-13T07:00:00',
-        backgroundColor: 'green',
-        borderColor: 'green'
-      }]
+      },
+      eventDataTransform: function eventDataTransform(eventData) {
+        function userLookup(userId) {
+          for (var userKey in userRecords) {
+            if (userRecords[userKey].id === userId) {
+              return userRecords[userKey];
+            }
+          }
+        }
+
+        var associatedUser = userLookup(eventData.relationships.user.data.id);
+        return {
+          "id": eventData.attributes.id,
+          "title": eventData.attributes.name,
+          "end": eventData.attributes.event_end,
+          "start": eventData.attributes.event_start,
+          "extendedProps": {
+            "description": eventData.attributes.description,
+            "user_id": eventData.relationships.user.data.id,
+            "user_url": "/u/" + associatedUser.attributes.name,
+            "user_display": associatedUser.attributes.displayName
+          }
+        };
+      }
     });
     calendar.render();
     calendar.on('dateClick', function (info) {
