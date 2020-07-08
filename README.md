@@ -2,7 +2,8 @@
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg) [![Latest Stable Version](https://img.shields.io/packagist/v/webbinaro/adv-extras.svg)](https://packagist.org/packages/webbinaro/adv-extras)
 
-A [Flarum](http://flarum.org) extension. adds adv extras like route sharing
+A [Flarum](http://flarum.org) extension. 
+Adds Events Calendars to share and plan community activities, webinars, etc.
 
 ** Work In Progress **
 Collaborators welcome!
