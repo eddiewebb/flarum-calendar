@@ -5,6 +5,8 @@
   "dependencies": {
     "@fullcalendar/core": "^5.1.0",
     "@fullcalendar/daygrid": "^5.1.0",
+    "@fullcalendar/interaction": "^5.1.0",
+    "@fullcalendar/list": "^5.1.0",
     "css-loader": "^3.6.0",
     "flarum": "^1.0.2",
     "flarum-webpack-config": "^0.1.0-beta.10",

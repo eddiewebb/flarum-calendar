@@ -9,6 +9,8 @@ import SelectDropdown from 'flarum/components/SelectDropdown';
 import LinkButton from 'flarum/components/LinkButton';
 import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import listPlugin from '@fullcalendar/list';
 
 
 export default class CalendarComponent extends Page {
@@ -105,9 +107,31 @@ export default class CalendarComponent extends Page {
     config(isInitialized, context) {
 
         const calendarEl = document.getElementById('calendar');
-        const calendar = new Calendar(calendarEl,{plugins: [ dayGridPlugin ]});
-        calendar.render();
+        const calendar = new Calendar(calendarEl,{
+          headerToolbar: { center: 'dayGridMonth,listYear' }, // buttons for switching between views
+          initialView: 'dayGridMonth',
+          plugins: [ dayGridPlugin, interactionPlugin, listPlugin ],
+          events:[
 
+            {
+              title: 'Meeting',
+              start: '2020-07-12T14:30:00',
+              extendedProps: {
+                status: 'done'
+              }
+            },
+            {
+              title: 'Birthday Party',
+              start: '2020-08-13T07:00:00',
+              backgroundColor: 'green',
+              borderColor: 'green'
+            }
+          ]
+        });
+        calendar.render();
+        calendar.on('dateClick', function(info) {
+          console.log('clicked on ' + info.dateStr);
+        });
     }
 }
 
