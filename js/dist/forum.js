@@ -12505,14 +12505,15 @@ var CalendarComponent = /*#__PURE__*/function (_Page) {
   _proto.init = function init() {
     _Page.prototype.init.call(this); // THIS NEEDS TO EXPORTED to frontend
 
-
-    document.addEventListener('DOMContentLoaded', function () {
-      var calendarEl = document.getElementById('calendar');
-      var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_10__["Calendar"](calendarEl, {
-        plugins: [_fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_11__["default"]]
+    /*document.addEventListener('DOMContentLoaded', function() {
+      const calendarEl = document.getElementById('calendar');
+      console.log({"message":"Calendar div found","object":calendarEl});
+      const calendar = new Calendar(calendarEl, {
+        plugins: [ dayGridPlugin ]
       });
-      calendar.render();
-    });
+       calendar.render();
+    });*/
+
   };
 
   _proto.onunload = function onunload() {};
@@ -12580,7 +12581,13 @@ var CalendarComponent = /*#__PURE__*/function (_Page) {
 
   _proto.viewItems = function viewItems() {};
 
-  _proto.config = function config(isInitialized, context) {};
+  _proto.config = function config(isInitialized, context) {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_10__["Calendar"](calendarEl, {
+      plugins: [_fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_11__["default"]]
+    });
+    calendar.render();
+  };
 
   return CalendarComponent;
 }(flarum_components_Page__WEBPACK_IMPORTED_MODULE_4___default.a);

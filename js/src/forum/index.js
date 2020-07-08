@@ -34,6 +34,7 @@ app.initializers.add('webbinaro/flarum-calendar', () => {
   });
 
 
+
 }); //end initalizer
 
 

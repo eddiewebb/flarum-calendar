@@ -16,15 +16,15 @@ export default class CalendarComponent extends Page {
         super.init();
 
         // THIS NEEDS TO EXPORTED to frontend
-        document.addEventListener('DOMContentLoaded', function() {
+        /*document.addEventListener('DOMContentLoaded', function() {
           const calendarEl = document.getElementById('calendar');
-
+          console.log({"message":"Calendar div found","object":calendarEl});
           const calendar = new Calendar(calendarEl, {
             plugins: [ dayGridPlugin ]
           });
 
           calendar.render();
-        });
+        });*/
 	  }
 
     onunload() {
@@ -103,6 +103,11 @@ export default class CalendarComponent extends Page {
     }
 
     config(isInitialized, context) {
+
+        const calendarEl = document.getElementById('calendar');
+        const calendar = new Calendar(calendarEl,{plugins: [ dayGridPlugin ]});
+        calendar.render();
+
     }
 }
 
