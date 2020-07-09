@@ -15839,10 +15839,17 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
     console.log(user);
     return [m("div", {
       className: "Modal-body"
-    }, m("p", null, this.props.event.extendedProps.description), m("p", null, "Hosted by: ", m("a", {
+    }, m("p", {
+      id: "eventdescription"
+    }), m("p", null, "Hosted by: ", m("a", {
       href: app.route.user(user),
       config: m.route
     }, flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_5___default()(user), flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_4___default()(user), flarum_helpers_username__WEBPACK_IMPORTED_MODULE_2___default()(user))))];
+  };
+
+  _proto.config = function config() {
+    var descElement = document.getElementById("eventdescription");
+    s9e.TextFormatter.preview(this.props.event.extendedProps.description, descElement);
   };
 
   return EventDetailsModal;
