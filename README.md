@@ -17,7 +17,7 @@ In Progress
 Up Next / Need Help
 - [x] New UI route to calendar
 - [x] JS Frontend (I was exploring ["fullcalendar"](https://fullcalendar.io/) as a nice looking option) 
-- [ ] Events details modal or page
+- [x] Events details modal or page (exists, can be prettier)
 - [ ] Events create modal or page
 
 Decisions
