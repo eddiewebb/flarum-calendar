@@ -45,7 +45,7 @@ export default class CalendarComponent extends Page {
                         <div className="IndexPage-results sideNavOffset">
                             <div className="IndexPage-toolbar">
                             </div>
-                            <div id="calendar">here</div>
+                            <div id="calendar" />
                         </div>
                     </div>
                 </div>

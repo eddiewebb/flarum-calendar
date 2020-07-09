@@ -1,9 +1,9 @@
 POST localhost:8080/api/events
 Content-Type: application/json
 Cookie: Idea-5081e67c=1baef0d0-e15d-498d-bebc-cc9aada4b0c9; flarum_session=NcBTSx1eVETtquD9UKZQlMMyz85wkypQw3kkSVDp
-X-CSRF-Token: CQWB76F9VClXYPrutg30K8xm5tv1WDQB0SvZcL0H
+X-CSRF-Token: tlL8WCe6i6CPFT4KVYikQCVdChjK97mN3Vr3e4my
 
-{"data":{"type":"events","attributes":{"name": "New Event","description": "Test","event_start": "2020-07-10 10:00:00","event_end": "2020-07-10 17:00:00"}}}
+{"data":{"type":"events","attributes":{"name": "Northern Lakes Ride","description": "We'll plan our route to hit Loon Lake, Lake Placid, Saranac Lake and a few smaller ones in between.  Checkout out [Northern Lakes Group Run](https://adkadv.com/d/12-northern-lakes-group-ride) for details and to sign-up to join us.","event_start": "2020-08-01 9:00:00","event_end": "2020-08-01 17:00:00"}}}
 
 
 

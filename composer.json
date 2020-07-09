@@ -1,6 +1,6 @@
 {
   "name": "webbinaro/flarum-calendar",
-  "description": "Adds events with owner and attendees",
+  "description": "Adds calendar events with hosts and attendees",
   "keywords": [
     "flarum",
     "calendar",
@@ -27,13 +27,13 @@
     "flarum-extension": {
       "title": "ADV Calendar",
       "icon": {
-        "name": "",
+        "name": "calendar-alt",
         "backgroundColor": "",
         "color": ""
       }
     },
     "flagrow": {
-      "discuss": ""
+      "discuss": "https://discuss.flarum.org/d/24429-events-calendar-wip-help-wanted"
     }
   }
 }

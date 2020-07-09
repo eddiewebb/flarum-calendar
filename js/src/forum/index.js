@@ -14,7 +14,7 @@ app.initializers.add('webbinaro/flarum-calendar', () => {
     items.add(
       'events',
       LinkButton.component({
-        icon: 'fas fa-th-list',
+        icon: 'fas fa-calendar-alt',
         children: 'Event Calendar',
         href: app.route('advevents'),
       }),

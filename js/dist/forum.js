@@ -15661,7 +15661,7 @@ var CalendarComponent = /*#__PURE__*/function (_Page) {
       className: "IndexPage-toolbar"
     }), m("div", {
       id: "calendar"
-    }, "here")))));
+    })))));
   }
   /**
   * Build an item list for the sidebar of the index page. By default this is a
@@ -15936,7 +15936,7 @@ app.initializers.add('webbinaro/flarum-calendar', function () {
 
   Object(flarum_extend__WEBPACK_IMPORTED_MODULE_1__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype, 'navItems', function (items) {
     items.add('events', flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3___default.a.component({
-      icon: 'fas fa-th-list',
+      icon: 'fas fa-calendar-alt',
       children: 'Event Calendar',
       href: app.route('advevents')
     }), -9.5);
