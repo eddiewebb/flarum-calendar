@@ -11,6 +11,7 @@ import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
+import EventDetailsModal from "./EventDetailsModal";
 
 
 export default class CalendarComponent extends Page {
@@ -114,11 +115,13 @@ export default class CalendarComponent extends Page {
           initialView: 'dayGridMonth',
           plugins: [ dayGridPlugin, interactionPlugin, listPlugin ],
           eventClick: function(info) {
-            alert(
-              'Event: ' + info.event.title + '\n' +
-              'User: ' + info.event.extendedProps.user_display + '\n'
+            // alert(
+            //   'Event: ' + info.event.title + '\n' +
+            //   'User: ' + info.event.extendedProps.user_display + '\n'
+            // );
 
-
+            app.modal.show(
+              new EventDetailsModal({"event":info.event})
             );
 
             // change the border color just for fun
@@ -148,9 +151,7 @@ export default class CalendarComponent extends Page {
               "start":eventData.attributes.event_start,
               "extendedProps":{
                 "description": eventData.attributes.description,
-                "user_id" : eventData.relationships.user.data.id,
-                "user_url": "/u/" + associatedUser.attributes.name,
-                "user_display": associatedUser.attributes.displayName,
+                "user" : associatedUser,
               },
             };
           }

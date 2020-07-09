@@ -15554,6 +15554,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/main.js");
 /* harmony import */ var _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @fullcalendar/interaction */ "./node_modules/@fullcalendar/interaction/main.js");
 /* harmony import */ var _fullcalendar_list__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @fullcalendar/list */ "./node_modules/@fullcalendar/list/main.js");
+/* harmony import */ var _EventDetailsModal__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./EventDetailsModal */ "./src/forum/Components/EventDetailsModal.js");
+
 
 
 
@@ -15672,7 +15674,13 @@ var CalendarComponent = /*#__PURE__*/function (_Page) {
       initialView: 'dayGridMonth',
       plugins: [_fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_11__["default"], _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_12__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_13__["default"]],
       eventClick: function eventClick(info) {
-        alert('Event: ' + info.event.title + '\n' + 'User: ' + info.event.extendedProps.user_display + '\n'); // change the border color just for fun
+        // alert(
+        //   'Event: ' + info.event.title + '\n' +
+        //   'User: ' + info.event.extendedProps.user_display + '\n'
+        // );
+        flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.modal.show(new _EventDetailsModal__WEBPACK_IMPORTED_MODULE_14__["default"]({
+          "event": info.event
+        })); // change the border color just for fun
 
         info.el.style.borderColor = 'red';
       },
@@ -15700,9 +15708,7 @@ var CalendarComponent = /*#__PURE__*/function (_Page) {
           "start": eventData.attributes.event_start,
           "extendedProps": {
             "description": eventData.attributes.description,
-            "user_id": eventData.relationships.user.data.id,
-            "user_url": "/u/" + associatedUser.attributes.name,
-            "user_display": associatedUser.attributes.displayName
+            "user": associatedUser
           }
         };
       }
@@ -15715,6 +15721,85 @@ var CalendarComponent = /*#__PURE__*/function (_Page) {
 
   return CalendarComponent;
 }(flarum_components_Page__WEBPACK_IMPORTED_MODULE_4___default.a);
+
+
+
+/***/ }),
+
+/***/ "./src/forum/Components/EventDetailsModal.js":
+/*!***************************************************!*\
+  !*** ./src/forum/Components/EventDetailsModal.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return EventDetailsModal; });
+/* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
+/* harmony import */ var flarum_components_Modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/components/Modal */ "flarum/components/Modal");
+/* harmony import */ var flarum_components_Modal__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Modal__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_helpers_username__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/helpers/username */ "flarum/helpers/username");
+/* harmony import */ var flarum_helpers_username__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_username__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_models_User__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/models/User */ "flarum/models/User");
+/* harmony import */ var flarum_models_User__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_models_User__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/helpers/userOnline */ "flarum/helpers/userOnline");
+/* harmony import */ var flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_4__);
+
+
+
+
+
+
+var EventDetailsModal = /*#__PURE__*/function (_Modal) {
+  Object(_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(EventDetailsModal, _Modal);
+
+  function EventDetailsModal() {
+    return _Modal.apply(this, arguments) || this;
+  }
+
+  var _proto = EventDetailsModal.prototype;
+
+  _proto.init = function init() {
+    _Modal.prototype.init.call(this);
+
+    this.title = m.prop('');
+    this.description = m.prop('');
+    this.user = m.prop('');
+    this.event_start = m.prop();
+    this.event_end = m.prop();
+
+    if (this.props.event) {
+      var event = this.props.event;
+      this.title(event.title);
+      this.description(event.extendedProps.description);
+      this.user(event.extendedProps.user);
+      this.event_start(event.event_start);
+      this.event_end(!event.event_end || isNaN(event.event_end.getTime()) ? null : event.event_end);
+    }
+  };
+
+  _proto.title = function title() {
+    return this.title;
+  };
+
+  _proto.className = function className() {
+    return 'EventDetailsModal Modal--small';
+  };
+
+  _proto.content = function content() {
+    var user = new flarum_models_User__WEBPACK_IMPORTED_MODULE_3___default.a(this.props.event.extendedProps.user.attributes);
+    console.log(user);
+    return [m("div", {
+      className: "Modal-body"
+    }, m("p", null, this.props.event.extendedProps.description), m("p", null, "Hosted by: ", m("a", {
+      href: app.route.user(user),
+      config: m.route
+    }, flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_4___default()(user), flarum_helpers_username__WEBPACK_IMPORTED_MODULE_2___default()(user))))];
+  };
+
+  return EventDetailsModal;
+}(flarum_components_Modal__WEBPACK_IMPORTED_MODULE_1___default.a);
 
 
 
@@ -15802,6 +15887,17 @@ module.exports = flarum.core.compat['components/LinkButton'];
 
 /***/ }),
 
+/***/ "flarum/components/Modal":
+/*!*********************************************************!*\
+  !*** external "flarum.core.compat['components/Modal']" ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/Modal'];
+
+/***/ }),
+
 /***/ "flarum/components/Page":
 /*!********************************************************!*\
   !*** external "flarum.core.compat['components/Page']" ***!
@@ -15843,6 +15939,39 @@ module.exports = flarum.core.compat['extend'];
 /***/ (function(module, exports) {
 
 module.exports = flarum.core.compat['helpers/listItems'];
+
+/***/ }),
+
+/***/ "flarum/helpers/userOnline":
+/*!***********************************************************!*\
+  !*** external "flarum.core.compat['helpers/userOnline']" ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['helpers/userOnline'];
+
+/***/ }),
+
+/***/ "flarum/helpers/username":
+/*!*********************************************************!*\
+  !*** external "flarum.core.compat['helpers/username']" ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['helpers/username'];
+
+/***/ }),
+
+/***/ "flarum/models/User":
+/*!****************************************************!*\
+  !*** external "flarum.core.compat['models/User']" ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['models/User'];
 
 /***/ }),
 
