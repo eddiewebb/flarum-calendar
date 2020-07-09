@@ -12,7 +12,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import EventDetailsModal from "./EventDetailsModal";
-
+import User from 'flarum/User';
 
 export default class CalendarComponent extends Page {
     init() {
@@ -107,59 +107,52 @@ export default class CalendarComponent extends Page {
 
     config(isInitialized, context) {
 
-        const calendarEl = document.getElementById('calendar');
-        let userRecords;
+        console.log("loaidng events..");
+        app.store.find('events', {sort: 'createdAt'}).then(
+          this.renderCalendarEvents
+         );
+    }
 
-        const calendar = new Calendar(calendarEl,{
-          headerToolbar: { center: 'dayGridMonth,listYear' }, // buttons for switching between views
-          initialView: 'dayGridMonth',
-          plugins: [ dayGridPlugin, interactionPlugin, listPlugin ],
-          eventClick: function(info) {
-            // alert(
-            //   'Event: ' + info.event.title + '\n' +
-            //   'User: ' + info.event.extendedProps.user_display + '\n'
-            // );
 
-            app.modal.show(
-              new EventDetailsModal({"event":info.event})
-            );
+  renderCalendarEvents(data){
+      console.log(data);
+      let cleanedEvents = [];
+      for (const eventKey in data) {
+        if(data[eventKey].hasOwnProperty('createdAt')){
+          cleanedEvents.push(data[eventKey]);
 
-            // change the border color just for fun
-            info.el.style.borderColor = 'red';
-          },
-          events: {
-            "url": "/api/events",
-            "success": function (content, xhr) {
-              userRecords = content.included;
-              return content.data;
+        }
+      }
+      const calendarEl = document.getElementById('calendar');
+      const calendar = new Calendar(calendarEl, {
+        headerToolbar: {center: 'dayGridMonth,listYear'}, // buttons for switching between views
+        initialView: 'dayGridMonth',
+        plugins: [dayGridPlugin, interactionPlugin, listPlugin],
+        eventClick: function (info) {
+          app.modal.show(
+            new EventDetailsModal({"event": info.event})
+          );
+
+          // change the border color just for fun
+          info.el.style.borderColor = 'red';
+        },
+        events: cleanedEvents,
+        eventDataTransform: function (eventData) {
+          console.log(eventData);
+          return {
+            "id": eventData.id,
+            "title": eventData.name(),
+            "end": eventData.event_end(),
+            "start": eventData.event_start(),
+            "extendedProps": {
+              "description": eventData.description(),
+              "user":eventData.user() ,
             },
-          },
-          eventDataTransform: function(eventData){
-            function userLookup(userId) {
-              for (const userKey in userRecords) {
-                if( userRecords[userKey].id === userId){
-                  return userRecords[userKey];
-                }
-              }
-            }
+          };
+        }
+      });
+      calendar.render();
 
-            const associatedUser = userLookup(eventData.relationships.user.data.id);
-            return {
-              "id":eventData.attributes.id,
-              "title":eventData.attributes.name,
-              "end":eventData.attributes.event_end,
-              "start":eventData.attributes.event_start,
-              "extendedProps":{
-                "description": eventData.attributes.description,
-                "user" : associatedUser,
-              },
-            };
-          }
-        });
-        calendar.render();
-        calendar.on('dateClick', function(info) {
-          console.log('clicked on ' + info.dateStr);
-        });
     }
 }
 

@@ -4,6 +4,7 @@ import CalendarComponent  from './Components/Calendar.js';
 import { extend } from 'flarum/extend';
 import IndexPage from 'flarum/components/IndexPage';
 import LinkButton from 'flarum/components/LinkButton';
+import Event from "./Models/Event";
 
 
 app.initializers.add('webbinaro/flarum-calendar', () => {
@@ -22,7 +23,7 @@ app.initializers.add('webbinaro/flarum-calendar', () => {
     return items;
   });
 
-
+  app.store.models.events = Event;
 
 }); //end initalizer
 
