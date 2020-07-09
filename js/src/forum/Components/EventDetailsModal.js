@@ -3,8 +3,10 @@ import username from 'flarum/helpers/username';
 import User from 'flarum/models/User'
 import userOnline from 'flarum/helpers/userOnline';
 import avatar from 'flarum/helpers/avatar';
-export default class EventDetailsModal extends Modal {
 
+
+
+export default class EventDetailsModal extends Modal {
 
   init() {
     super.init();
@@ -38,9 +40,7 @@ export default class EventDetailsModal extends Modal {
     console.log(user);
     return [
       <div className="Modal-body">
-        <p>{this.props.event.extendedProps.description}</p>
-
-
+        <p id="eventdescription"/>
         <p>Hosted by: <a href={app.route.user(user)} config={m.route}>
           {avatar(user)}
           {userOnline(user)}
@@ -48,6 +48,11 @@ export default class EventDetailsModal extends Modal {
         </a></p>
       </div>,
     ];
+  }
+
+  config(){
+    const descElement = document.getElementById("eventdescription");
+    s9e.TextFormatter.preview(this.props.event.extendedProps.description,descElement);
   }
 
 }
