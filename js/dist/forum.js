@@ -15577,7 +15577,7 @@ module.exports = function (list, options) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CalendarComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CalendarPage; });
 /* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
 /* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
 /* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_1__);
@@ -15624,14 +15624,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var CalendarComponent = /*#__PURE__*/function (_Page) {
-  Object(_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(CalendarComponent, _Page);
+var CalendarPage = /*#__PURE__*/function (_Page) {
+  Object(_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(CalendarPage, _Page);
 
-  function CalendarComponent() {
+  function CalendarPage() {
     return _Page.apply(this, arguments) || this;
   }
 
-  var _proto = CalendarComponent.prototype;
+  var _proto = CalendarPage.prototype;
 
   _proto.init = function init() {
     _Page.prototype.init.call(this); // THIS NEEDS TO EXPORTED to frontend
@@ -15771,7 +15771,7 @@ var CalendarComponent = /*#__PURE__*/function (_Page) {
     calendar.render();
   };
 
-  return CalendarComponent;
+  return CalendarPage;
 }(flarum_components_Page__WEBPACK_IMPORTED_MODULE_4___default.a);
 
 
@@ -15884,12 +15884,12 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
       onsubmit: this.onsubmit.bind(this)
     }, m("div", {
       className: "Modal-header"
-    }, m("div", {
-      className: "fa-pull-left ButtonLabel",
+    }, m("div", null, m("h3", {
+      className: "fa-pull-left App-titleControl App-titleControl--text",
       style: "margin-right:1em"
-    }, flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_5___default()(user)), m("div", null, m("h3", {
-      className: "fa-pull-left App-titleControl App-titleControl--text"
     }, this.title())), m("div", {
+      className: "fa-pull-right"
+    }, flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_5___default()(user)), m("div", {
       style: "clear:both"
     })), this.alertAttrs ? m("div", {
       className: "Modal-alert"
@@ -15980,6 +15980,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 app.initializers.add('webbinaro/flarum-calendar', function () {
+  // serve up our main page when they load our route
   app.routes.advevents = {
     path: '/events',
     component: m(_Components_Calendar_js__WEBPACK_IMPORTED_MODULE_0__["default"], null)

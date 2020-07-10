@@ -81,12 +81,11 @@ export default class EventDetailsModal extends Modal {
 
           <form onsubmit={this.onsubmit.bind(this)}>
             <div className="Modal-header">
-
-                <div className="fa-pull-left ButtonLabel" style="margin-right:1em">{avatar(user)}</div>
                 <div>
-                  <h3 className="fa-pull-left App-titleControl App-titleControl--text">{this.title()}</h3>
+                  <h3 className="fa-pull-left App-titleControl App-titleControl--text" style="margin-right:1em">{this.title()}</h3>
                 </div>
-              <div style="clear:both">
+                <div className="fa-pull-right" >{avatar(user)}</div>
+                <div style="clear:both">
               </div>
             </div>
 

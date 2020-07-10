@@ -1,5 +1,5 @@
 
-import CalendarComponent  from './Components/Calendar.js';
+import CalendarPage  from './Components/Calendar.js';
 
 import { extend } from 'flarum/extend';
 import IndexPage from 'flarum/components/IndexPage';
@@ -8,8 +8,11 @@ import Event from "./Models/Event";
 
 
 app.initializers.add('webbinaro/flarum-calendar', () => {
-	app.routes.advevents = {path: '/events', component: <CalendarComponent />};
-  //add events to side nav
+	// serve up our main page when they load our route
+  app.routes.advevents = {path: '/events', component: <CalendarPage />};
+
+
+	//add events to side nav
   extend(IndexPage.prototype, 'navItems', function (items) {
     items.add(
       'events',

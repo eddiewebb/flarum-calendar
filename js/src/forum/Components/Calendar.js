@@ -15,7 +15,7 @@ import EventDetailsModal from "./EventDetailsModal";
 import User from 'flarum/User';
 import Button from 'flarum/components/Button'
 
-export default class CalendarComponent extends Page {
+export default class CalendarPage extends Page {
     init() {
         super.init();
 
