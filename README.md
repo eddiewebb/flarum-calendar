@@ -1,6 +1,7 @@
 # ADV Events (Calendar)
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg) [![Latest Stable Version](https://img.shields.io/packagist/v/webbinaro/adv-extras.svg)](https://packagist.org/packages/webbinaro/adv-extras)
+![License](https://img.shields.io/badge/license-MIT-blue.svg) 
+[![Latest Stable Version](https://img.shields.io/packagist/v/webbinaro/flarum-calendar.svg)](https://packagist.org/packages/webbinaro/flarum-calendar)
 
 A [Flarum](http://flarum.org) extension. 
 Adds Events Calendars to share and plan community activities, webinars, etc.
