@@ -13,6 +13,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import EventDetailsModal from "./EventDetailsModal";
 import User from 'flarum/User';
+import Button from 'flarum/components/Button'
 
 export default class CalendarComponent extends Page {
     init() {
@@ -44,6 +45,7 @@ export default class CalendarComponent extends Page {
                         </nav>
                         <div className="IndexPage-results sideNavOffset">
                             <div className="IndexPage-toolbar">
+
                             </div>
                             <div id="calendar" />
                         </div>
@@ -62,6 +64,17 @@ export default class CalendarComponent extends Page {
      */
     sidebarItems() {
         const items = IndexPage.prototype.sidebarItems();
+        console.log(items);
+
+        //new evemt
+          items.replace('newDiscussion',
+            Button.component({
+              children: "Add New Event",
+              buttonClassName: 'Button',
+              className: 'App-titleControl'
+            })
+          );
+
 
         items.replace('nav',
             SelectDropdown.component({
@@ -102,12 +115,11 @@ export default class CalendarComponent extends Page {
      * @return {ItemList}
      */
     viewItems() {
-
     }
 
     config(isInitialized, context) {
 
-        console.log("loaidng events..");
+        console.log("[webbinaro/flarum-calendar] loading events..");
         app.store.find('events', {sort: 'createdAt'}).then(
           this.renderCalendarEvents
          );
@@ -115,7 +127,6 @@ export default class CalendarComponent extends Page {
 
 
   renderCalendarEvents(data){
-      console.log(data);
       let cleanedEvents = [];
       for (const eventKey in data) {
         if(data[eventKey].hasOwnProperty('createdAt')){
@@ -138,7 +149,6 @@ export default class CalendarComponent extends Page {
         },
         events: cleanedEvents,
         eventDataTransform: function (eventData) {
-          console.log(eventData);
           return {
             "id": eventData.id,
             "title": eventData.name(),

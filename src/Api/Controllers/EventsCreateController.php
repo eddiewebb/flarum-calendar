@@ -16,9 +16,7 @@ class EventsCreateController extends AbstractCreateController
     {
         $actor = $request->getAttribute('actor');
         $requestData = array_get($request->getParsedBody(), 'data.attributes');
-
-            $event = Event::build( $requestData['name'], $requestData['description'], $actor->id, $requestData['event_start'], $requestData['event_end'] );
-            $event->saveOrFail();
-
+        $event = Event::build( $requestData['name'], $requestData['description'], $actor->id, $requestData['event_start'], $requestData['event_end'] );
+        $event->saveOrFail();
     }
 }

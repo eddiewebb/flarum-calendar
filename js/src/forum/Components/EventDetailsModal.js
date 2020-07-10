@@ -27,7 +27,7 @@ export default class EventDetailsModal extends Modal {
   }
 
   title() {
-    return this.title;
+   return  this.title;
   }
 
   className() {
@@ -37,12 +37,10 @@ export default class EventDetailsModal extends Modal {
 
   content() {
     const user =  this.props.event.extendedProps.user;
-    console.log(user);
     return [
       <div className="Modal-body">
         <p id="eventdescription"/>
         <p>Hosted by: <a href={app.route.user(user)} config={m.route}>
-          {avatar(user)}
           {userOnline(user)}
           {username(user)}
         </a></p>
@@ -54,5 +52,55 @@ export default class EventDetailsModal extends Modal {
     const descElement = document.getElementById("eventdescription");
     s9e.TextFormatter.preview(this.props.event.extendedProps.description,descElement);
   }
+
+  /*
+  * Override parent modal so we can have avatar in title bar
+   */
+
+  view() {
+
+    const user =  this.props.event.extendedProps.user;
+    if (this.alertAttrs) {
+      this.alertAttrs.dismissible = false;
+    }
+
+    return (
+      <div className={'Modal modal-dialog ' + this.className()}>
+        <div className="Modal-content">
+          {this.constructor.isDismissible ? (
+            <div className="Modal-close App-backControl">
+              {Button.component({
+                icon: 'fas fa-times',
+                onclick: this.hide.bind(this),
+                className: 'Button Button--icon Button--link',
+              })}
+            </div>
+          ) : (
+            ''
+          )}
+
+          <form onsubmit={this.onsubmit.bind(this)}>
+            <div className="Modal-header">
+
+                <div className="fa-pull-left ButtonLabel" style="margin-right:1em">{avatar(user)}</div>
+                <div>
+                  <h3 className="fa-pull-left App-titleControl App-titleControl--text">{this.title()}</h3>
+                </div>
+              <div style="clear:both">
+              </div>
+            </div>
+
+            {this.alertAttrs ? <div className="Modal-alert">{Alert.component(this.alertAttrs)}</div> : ''}
+
+            {this.content()}
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+
+
+
 
 }

@@ -15604,6 +15604,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _EventDetailsModal__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./EventDetailsModal */ "./src/forum/Components/EventDetailsModal.js");
 /* harmony import */ var flarum_User__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! flarum/User */ "flarum/User");
 /* harmony import */ var flarum_User__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(flarum_User__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! flarum/components/Button */ "flarum/components/Button");
+/* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Button__WEBPACK_IMPORTED_MODULE_16__);
+
 
 
 
@@ -15674,6 +15677,13 @@ var CalendarComponent = /*#__PURE__*/function (_Page) {
 
   _proto.sidebarItems = function sidebarItems() {
     var items = flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_7___default.a.prototype.sidebarItems();
+    console.log(items); //new evemt
+
+    items.replace('newDiscussion', flarum_components_Button__WEBPACK_IMPORTED_MODULE_16___default.a.component({
+      children: "Add New Event",
+      buttonClassName: 'Button',
+      className: 'App-titleControl'
+    }));
     items.replace('nav', flarum_components_SelectDropdown__WEBPACK_IMPORTED_MODULE_8___default.a.component({
       children: this.navItems(this).toArray(),
       buttonClassName: 'Button',
@@ -15714,14 +15724,13 @@ var CalendarComponent = /*#__PURE__*/function (_Page) {
   _proto.viewItems = function viewItems() {};
 
   _proto.config = function config(isInitialized, context) {
-    console.log("loaidng events..");
+    console.log("[webbinaro/flarum-calendar] loading events..");
     flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.store.find('events', {
       sort: 'createdAt'
     }).then(this.renderCalendarEvents);
   };
 
   _proto.renderCalendarEvents = function renderCalendarEvents(data) {
-    console.log(data);
     var cleanedEvents = [];
 
     for (var eventKey in data) {
@@ -15747,7 +15756,6 @@ var CalendarComponent = /*#__PURE__*/function (_Page) {
       },
       events: cleanedEvents,
       eventDataTransform: function eventDataTransform(eventData) {
-        console.log(eventData);
         return {
           "id": eventData.id,
           "title": eventData.name(),
@@ -15836,7 +15844,6 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
 
   _proto.content = function content() {
     var user = this.props.event.extendedProps.user;
-    console.log(user);
     return [m("div", {
       className: "Modal-body"
     }, m("p", {
@@ -15844,12 +15851,49 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
     }), m("p", null, "Hosted by: ", m("a", {
       href: app.route.user(user),
       config: m.route
-    }, flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_5___default()(user), flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_4___default()(user), flarum_helpers_username__WEBPACK_IMPORTED_MODULE_2___default()(user))))];
+    }, flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_4___default()(user), flarum_helpers_username__WEBPACK_IMPORTED_MODULE_2___default()(user))))];
   };
 
   _proto.config = function config() {
     var descElement = document.getElementById("eventdescription");
     s9e.TextFormatter.preview(this.props.event.extendedProps.description, descElement);
+  }
+  /*
+  * Override parent modal so we can have avatar in title bar
+   */
+  ;
+
+  _proto.view = function view() {
+    var user = this.props.event.extendedProps.user;
+
+    if (this.alertAttrs) {
+      this.alertAttrs.dismissible = false;
+    }
+
+    return m("div", {
+      className: 'Modal modal-dialog ' + this.className()
+    }, m("div", {
+      className: "Modal-content"
+    }, this.constructor.isDismissible ? m("div", {
+      className: "Modal-close App-backControl"
+    }, Button.component({
+      icon: 'fas fa-times',
+      onclick: this.hide.bind(this),
+      className: 'Button Button--icon Button--link'
+    })) : '', m("form", {
+      onsubmit: this.onsubmit.bind(this)
+    }, m("div", {
+      className: "Modal-header"
+    }, m("div", {
+      className: "fa-pull-left ButtonLabel",
+      style: "margin-right:1em"
+    }, flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_5___default()(user)), m("div", null, m("h3", {
+      className: "fa-pull-left App-titleControl App-titleControl--text"
+    }, this.title())), m("div", {
+      style: "clear:both"
+    })), this.alertAttrs ? m("div", {
+      className: "Modal-alert"
+    }, Alert.component(this.alertAttrs)) : '', this.content())));
   };
 
   return EventDetailsModal;
@@ -15995,6 +16039,17 @@ module.exports = flarum.core.compat['User'];
 /***/ (function(module, exports) {
 
 module.exports = flarum.core.compat['app'];
+
+/***/ }),
+
+/***/ "flarum/components/Button":
+/*!**********************************************************!*\
+  !*** external "flarum.core.compat['components/Button']" ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/Button'];
 
 /***/ }),
 
