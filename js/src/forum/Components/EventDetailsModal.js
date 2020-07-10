@@ -21,8 +21,8 @@ export default class EventDetailsModal extends Modal {
       this.name(event.title);
       this.description(event.extendedProps.description);
       this.user(event.extendedProps.user)
-      this.event_start(event.event_start );
-      this.event_end(!event.event_end || isNaN(event.event_end.getTime()) ? null : event.event_end);
+      this.event_start(event.start);
+      this.event_end(event.end);
     }
   }
 
@@ -43,6 +43,7 @@ export default class EventDetailsModal extends Modal {
           {userOnline(this.user())}
           {username(this.user())}
         </a></p>
+        <p>{this.event_start().toLocaleDateString() + ", " + this.event_start().toLocaleTimeString()} - {this.event_end().toLocaleDateString() + ", " + this.event_end().toLocaleTimeString()}</p>
       </div>,
     ];
   }

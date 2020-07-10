@@ -92,7 +92,6 @@ export default class EditEventModal extends Modal {
     }
     console.log("submitting new event")
     const eventRecord = app.store.createRecord('events');
-
     eventRecord.save({
       name: this.name(),
       description: this.description(),

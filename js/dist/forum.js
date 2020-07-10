@@ -18639,8 +18639,8 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
       this.name(event.title);
       this.description(event.extendedProps.description);
       this.user(event.extendedProps.user);
-      this.event_start(event.event_start);
-      this.event_end(!event.event_end || isNaN(event.event_end.getTime()) ? null : event.event_end);
+      this.event_start(event.start);
+      this.event_end(event.end);
     }
   };
 
@@ -18660,7 +18660,7 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
     }), m("p", null, "Hosted by: ", m("a", {
       href: app.route.user(this.user()),
       config: m.route
-    }, flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_4___default()(this.user()), flarum_helpers_username__WEBPACK_IMPORTED_MODULE_2___default()(this.user()))))];
+    }, flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_4___default()(this.user()), flarum_helpers_username__WEBPACK_IMPORTED_MODULE_2___default()(this.user()))), m("p", null, this.event_start().toLocaleDateString() + ", " + this.event_start().toLocaleTimeString(), " - ", this.event_end().toLocaleDateString() + ", " + this.event_end().toLocaleTimeString()))];
   };
 
   _proto.config = function config() {
