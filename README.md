@@ -8,19 +8,22 @@ Adds Events Calendars to share and plan community activities, webinars, etc.
 ** Work In Progress **
 Collaborators welcome!
 
-In Progress
+#### Done!
 - [x] Data model and DB migrations
 - [x] API to CR ~~UD~~ events
-- [ ] API to update/delete events 
-- [ ] Hosts and Attendees (currently just actor)
-  
-Up Next / Need Help
 - [x] New UI route to calendar
 - [x] JS Frontend (I was exploring ["fullcalendar"](https://fullcalendar.io/) as a nice looking option) 
 - [x] Events details modal or page (exists, can be prettier)
-- [ ] Events create modal or page
 
-Decisions
+#### In Progress
+- [ ] Events create modal or page
+- [ ] API to update/delete events 
+  
+#### Up Next / Need Help
+- [ ] Permissions
+- [ ] Hosts and Attendees (currently just actor)
+
+#### Open Decisions
 - [ ] Relationships 
     - should they be linked to discussions like polls or free
     - roles: single owner, what about hosts, attendees, what are the cardinality
@@ -41,4 +44,4 @@ composer update webbinaro/flarum-calendar
 
 ### Links
 
-- [Packagist](https://packagist.org/packages/webbinaro/adv-extras)
+- [Packagist](https://packagist.org/packages/webbinaro/flarum-calendar)
