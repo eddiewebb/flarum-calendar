@@ -1,5 +1,5 @@
 
-import CalendarPage  from './Components/Calendar.js';
+import CalendarPage  from './Components/CalendarPage.js';
 
 import { extend } from 'flarum/extend';
 import IndexPage from 'flarum/components/IndexPage';

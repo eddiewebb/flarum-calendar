@@ -10,7 +10,7 @@ export default class EventDetailsModal extends Modal {
 
   init() {
     super.init();
-    this.title = m.prop('');
+    this.name = m.prop('');
     this.description = m.prop('');
     this.user = m.prop('');
     this.event_start = m.prop();
@@ -18,7 +18,7 @@ export default class EventDetailsModal extends Modal {
     if (this.props.event) {
       const event = this.props.event;
 
-      this.title(event.title);
+      this.name(event.title);
       this.description(event.extendedProps.description);
       this.user(event.extendedProps.user)
       this.event_start(event.event_start );
@@ -27,7 +27,7 @@ export default class EventDetailsModal extends Modal {
   }
 
   title() {
-   return  this.title;
+   return  this.name();
   }
 
   className() {
@@ -36,13 +36,12 @@ export default class EventDetailsModal extends Modal {
 
 
   content() {
-    const user =  this.props.event.extendedProps.user;
     return [
       <div className="Modal-body">
         <p id="eventdescription"/>
-        <p>Hosted by: <a href={app.route.user(user)} config={m.route}>
-          {userOnline(user)}
-          {username(user)}
+        <p>Hosted by: <a href={app.route.user(this.user())} config={m.route}>
+          {userOnline(this.user())}
+          {username(this.user())}
         </a></p>
       </div>,
     ];
@@ -50,7 +49,7 @@ export default class EventDetailsModal extends Modal {
 
   config(){
     const descElement = document.getElementById("eventdescription");
-    s9e.TextFormatter.preview(this.props.event.extendedProps.description,descElement);
+    s9e.TextFormatter.preview(this.description(),descElement);
   }
 
   /*
@@ -84,7 +83,7 @@ export default class EventDetailsModal extends Modal {
                 <div>
                   <h3 className="fa-pull-left App-titleControl App-titleControl--text" style="margin-right:1em">{this.title()}</h3>
                 </div>
-                <div className="fa-pull-right" >{avatar(user)}</div>
+                <div className="fa-pull-right" >{avatar(this.user())}</div>
                 <div style="clear:both">
               </div>
             </div>
