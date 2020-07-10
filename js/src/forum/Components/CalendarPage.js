@@ -1,20 +1,18 @@
-import {extend} from 'flarum/extend';
 import app from 'flarum/app';
-import Component  from 'flarum/Component';
 import Page from 'flarum/components/Page';
 import ItemList from 'flarum/utils/ItemList';
 import listItems from 'flarum/helpers/listItems';
 import IndexPage from 'flarum/components/IndexPage';
 import SelectDropdown from 'flarum/components/SelectDropdown';
-import LinkButton from 'flarum/components/LinkButton';
 import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import EventDetailsModal from "./EventDetailsModal";
-import User from 'flarum/User';
 import Button from 'flarum/components/Button'
 import EditEventModal from "./EditEventModal";
+import LogInModal from 'flarum/components/LogInModal'
+
 
 export default class CalendarPage extends Page {
   init() {
@@ -153,9 +151,14 @@ export default class CalendarPage extends Page {
   }
 
   openCreateModal() {
-    app.modal.show(
-      new EditEventModal()
-    );
+    console.log(app.session.user)
+    if(app.session.user != undefined) {
+      app.modal.show(
+        new EditEventModal()
+      );
+    }else{
+      app.modal.show(new LogInModal());
+    }
 
   }
 }

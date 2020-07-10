@@ -36,7 +36,7 @@ return [
     	->get('/events/{id}','events.show', ControllersAlias\EventsShowController::class)
     	->post('/events','events.create', ControllersAlias\EventsCreateController::class),
 
-
+    new Extend\Locales(__DIR__ . '/resources/locale'),
 ];
 
 

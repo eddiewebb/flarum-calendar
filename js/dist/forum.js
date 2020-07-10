@@ -18241,37 +18241,28 @@ module.exports = function (list, options) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CalendarPage; });
 /* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
-/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/extend */ "flarum/extend");
-/* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var flarum_app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/app */ "flarum/app");
-/* harmony import */ var flarum_app__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_app__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var flarum_Component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/Component */ "flarum/Component");
-/* harmony import */ var flarum_Component__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_Component__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var flarum_components_Page__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/components/Page */ "flarum/components/Page");
-/* harmony import */ var flarum_components_Page__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Page__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/utils/ItemList */ "flarum/utils/ItemList");
-/* harmony import */ var flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! flarum/helpers/listItems */ "flarum/helpers/listItems");
-/* harmony import */ var flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! flarum/components/IndexPage */ "flarum/components/IndexPage");
-/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var flarum_components_SelectDropdown__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! flarum/components/SelectDropdown */ "flarum/components/SelectDropdown");
-/* harmony import */ var flarum_components_SelectDropdown__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(flarum_components_SelectDropdown__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! flarum/components/LinkButton */ "flarum/components/LinkButton");
-/* harmony import */ var flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/main.js");
-/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/main.js");
-/* harmony import */ var _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @fullcalendar/interaction */ "./node_modules/@fullcalendar/interaction/main.js");
-/* harmony import */ var _fullcalendar_list__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @fullcalendar/list */ "./node_modules/@fullcalendar/list/main.js");
-/* harmony import */ var _EventDetailsModal__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./EventDetailsModal */ "./src/forum/Components/EventDetailsModal.js");
-/* harmony import */ var flarum_User__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! flarum/User */ "flarum/User");
-/* harmony import */ var flarum_User__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(flarum_User__WEBPACK_IMPORTED_MODULE_15__);
-/* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! flarum/components/Button */ "flarum/components/Button");
-/* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Button__WEBPACK_IMPORTED_MODULE_16__);
-/* harmony import */ var _EditEventModal__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./EditEventModal */ "./src/forum/Components/EditEventModal.js");
-
-
-
+/* harmony import */ var flarum_app__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/app */ "flarum/app");
+/* harmony import */ var flarum_app__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_app__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_components_Page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/components/Page */ "flarum/components/Page");
+/* harmony import */ var flarum_components_Page__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Page__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/utils/ItemList */ "flarum/utils/ItemList");
+/* harmony import */ var flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_utils_ItemList__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/helpers/listItems */ "flarum/helpers/listItems");
+/* harmony import */ var flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/components/IndexPage */ "flarum/components/IndexPage");
+/* harmony import */ var flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var flarum_components_SelectDropdown__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! flarum/components/SelectDropdown */ "flarum/components/SelectDropdown");
+/* harmony import */ var flarum_components_SelectDropdown__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(flarum_components_SelectDropdown__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/main.js");
+/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/main.js");
+/* harmony import */ var _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @fullcalendar/interaction */ "./node_modules/@fullcalendar/interaction/main.js");
+/* harmony import */ var _fullcalendar_list__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @fullcalendar/list */ "./node_modules/@fullcalendar/list/main.js");
+/* harmony import */ var _EventDetailsModal__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./EventDetailsModal */ "./src/forum/Components/EventDetailsModal.js");
+/* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! flarum/components/Button */ "flarum/components/Button");
+/* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Button__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var _EditEventModal__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./EditEventModal */ "./src/forum/Components/EditEventModal.js");
+/* harmony import */ var flarum_components_LogInModal__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! flarum/components/LogInModal */ "flarum/components/LogInModal");
+/* harmony import */ var flarum_components_LogInModal__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(flarum_components_LogInModal__WEBPACK_IMPORTED_MODULE_14__);
 
 
 
@@ -18306,13 +18297,13 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
   _proto.view = function view() {
     return m("div", {
       className: "IndexPage"
-    }, flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_7___default.a.prototype.hero(), m("div", {
+    }, flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_5___default.a.prototype.hero(), m("div", {
       className: "container"
     }, m("div", {
       className: "sideNavContainer"
     }, m("nav", {
       className: "IndexPage-nav sideNav"
-    }, m("ul", null, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_6___default()(this.sidebarItems().toArray()))), m("div", {
+    }, m("ul", null, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_4___default()(this.sidebarItems().toArray()))), m("div", {
       className: "IndexPage-results sideNavOffset"
     }, m("div", {
       className: "IndexPage-toolbar"
@@ -18330,15 +18321,15 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
   ;
 
   _proto.sidebarItems = function sidebarItems() {
-    var items = flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_7___default.a.prototype.sidebarItems(); //new evemt
+    var items = flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_5___default.a.prototype.sidebarItems(); //new evemt
 
-    items.replace('newDiscussion', flarum_components_Button__WEBPACK_IMPORTED_MODULE_16___default.a.component({
+    items.replace('newDiscussion', flarum_components_Button__WEBPACK_IMPORTED_MODULE_12___default.a.component({
       children: "Add New Event",
       buttonClassName: 'Button',
       className: 'App-titleControl',
       onclick: this.openCreateModal
     }));
-    items.replace('nav', flarum_components_SelectDropdown__WEBPACK_IMPORTED_MODULE_8___default.a.component({
+    items.replace('nav', flarum_components_SelectDropdown__WEBPACK_IMPORTED_MODULE_6___default.a.component({
       children: this.navItems(this).toArray(),
       buttonClassName: 'Button',
       className: 'App-titleControl'
@@ -18354,7 +18345,7 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
   ;
 
   _proto.navItems = function navItems() {
-    var items = flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_7___default.a.prototype.navItems();
+    var items = flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_5___default.a.prototype.navItems();
     /* items.add('fof-user-directory',
          LinkButton.component({
              href: app.route('advevents'),
@@ -18375,7 +18366,7 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
 
   _proto.config = function config(isInitialized, context) {
     console.log("[webbinaro/flarum-calendar] loading events..");
-    flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.store.find('events', {
+    flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.store.find('events', {
       sort: 'createdAt'
     }).then(this.renderCalendarEvents);
   };
@@ -18391,15 +18382,15 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
     }
 
     var calendarEl = document.getElementById('calendar');
-    var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_10__["Calendar"](calendarEl, {
+    var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_7__["Calendar"](calendarEl, {
       headerToolbar: {
         center: 'dayGridMonth,listYear'
       },
       // buttons for switching between views
       initialView: 'dayGridMonth',
-      plugins: [_fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_11__["default"], _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_12__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_13__["default"]],
+      plugins: [_fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_8__["default"], _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_9__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_10__["default"]],
       eventClick: function eventClick(info) {
-        flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.modal.show(new _EventDetailsModal__WEBPACK_IMPORTED_MODULE_14__["default"]({
+        flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.modal.show(new _EventDetailsModal__WEBPACK_IMPORTED_MODULE_11__["default"]({
           "event": info.event
         })); // change the border color just for fun
 
@@ -18423,11 +18414,17 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
   };
 
   _proto.openCreateModal = function openCreateModal() {
-    flarum_app__WEBPACK_IMPORTED_MODULE_2___default.a.modal.show(new _EditEventModal__WEBPACK_IMPORTED_MODULE_17__["default"]());
+    console.log(flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.session.user);
+
+    if (flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.session.user != undefined) {
+      flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.modal.show(new _EditEventModal__WEBPACK_IMPORTED_MODULE_13__["default"]());
+    } else {
+      flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.modal.show(new flarum_components_LogInModal__WEBPACK_IMPORTED_MODULE_14___default.a());
+    }
   };
 
   return CalendarPage;
-}(flarum_components_Page__WEBPACK_IMPORTED_MODULE_4___default.a);
+}(flarum_components_Page__WEBPACK_IMPORTED_MODULE_2___default.a);
 
 
 
@@ -18808,17 +18805,6 @@ app.initializers.add('webbinaro/flarum-calendar', function () {
 
 /***/ }),
 
-/***/ "flarum/Component":
-/*!**************************************************!*\
-  !*** external "flarum.core.compat['Component']" ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = flarum.core.compat['Component'];
-
-/***/ }),
-
 /***/ "flarum/Model":
 /*!**********************************************!*\
   !*** external "flarum.core.compat['Model']" ***!
@@ -18827,17 +18813,6 @@ module.exports = flarum.core.compat['Component'];
 /***/ (function(module, exports) {
 
 module.exports = flarum.core.compat['Model'];
-
-/***/ }),
-
-/***/ "flarum/User":
-/*!*********************************************!*\
-  !*** external "flarum.core.compat['User']" ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = flarum.core.compat['User'];
 
 /***/ }),
 
@@ -18882,6 +18857,17 @@ module.exports = flarum.core.compat['components/IndexPage'];
 /***/ (function(module, exports) {
 
 module.exports = flarum.core.compat['components/LinkButton'];
+
+/***/ }),
+
+/***/ "flarum/components/LogInModal":
+/*!**************************************************************!*\
+  !*** external "flarum.core.compat['components/LogInModal']" ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/LogInModal'];
 
 /***/ }),
 
