@@ -1,6 +1,6 @@
 {
   "name": "webbinaro/flarum-calendar",
-  "description": "Adds calendar events with hosts and attendees",
+  "description": "Adds a calendar of events created by users",
   "keywords": [
     "flarum",
     "calendar",
@@ -25,9 +25,9 @@
   },
   "extra": {
     "flarum-extension": {
-      "title": "ADV Calendar",
+      "title": "Calendar(Events)",
       "icon": {
-        "name": "calendar-alt",
+        "name": "fas fa-calendar-alt",
         "backgroundColor": "",
         "color": ""
       }
