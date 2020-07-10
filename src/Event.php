@@ -5,6 +5,7 @@ namespace Webbinaro\AdvCalendar;
 use Flarum\Database\AbstractModel;
 use Flarum\Discussion\Discussion;
 use Flarum\User\User;
+use Carbon\Carbon;
 
 /**
  * @property int $id
@@ -12,10 +13,10 @@ use Flarum\User\User;
  * @property string $description
  * @property User $user
  * @property int $user_id
- * @property \Carbon\Carbon $event_start
- * @property \Carbon\Carbon $event_end
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
+ * @property Carbon $event_start
+ * @property Carbon $event_end
+ * @property DateTime $created_at
+ * @property DateTime $updated_at
  */
 class Event extends AbstractModel
 {
@@ -28,15 +29,15 @@ class Event extends AbstractModel
         'created_at',
         'updated_at',
         'event_start',
-        'event_end',
+        'event_end'
     ];
 
     /**
      * @param $name
      * @param $description
      * @param $actorId
-     * @param $event_start
-     * @param $event_end
+     * @param  $event_start
+     * @param  $event_end
      *
      * @return static
      */
@@ -47,18 +48,10 @@ class Event extends AbstractModel
         $event->name = $name;
         $event->description = $description;
         $event->user_id = $actorId;
-        $event->event_start = $event_start;
-        $event->event_end = $event_end;
+        $event->event_start = new Carbon($event_start);
+        $event->event_end = new Carbon($event_end);
 
         return $event;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasEnded()
-    {
-        return $this->event_end !== null && $this->event_end->isPast();
     }
 
     /**

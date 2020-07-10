@@ -39,25 +39,26 @@ export default class EditEventModal extends Modal {
       <div className="Modal-body">
 
         <div className="Form-group">
-          <label className="label">Event Title</label>
+          <label className="label">What</label>
           <input type="text" name="title" className="FormControl" bidi={this.name} />
         </div>
         <div className="Form-group">
-          <label className="label">Begins</label>
+          <label className="label">When</label>
 
           <div className="PollModal--date" >
             <input id="startpicker" style="opacity: 1; color: inherit" className="FormControl" data-input />
           </div>
         </div>
         <div className="Form-group">
-          <label className="label">Event Description</label>
-          <input type="text" name="title" className="FormControl" bidi={this.description} />
+          <label className="label">Details</label>
+          <textarea type="text" name="title" className="FormControl" bidi={this.description} />
+          <small>You may use markdown</small>
         </div>
         <div className="Form-group">
           {Button.component({
             type: 'submit',
             className: 'Button Button--primary PollModal-SubmitButton',
-            children: app.translator.trans('fof-polls.forum.modal.submit'),
+            children: app.translator.trans('flarum-calendar.forum.modal.submit'),
             loading: this.loading,
           })}
         </div>
@@ -73,7 +74,10 @@ export default class EditEventModal extends Modal {
       dateFormat: 'Y-m-d H:i',
       mode: "range",
       //inline: true
-      onChange: dates => {this.event_start(dates[0]);this.event_end(dates[1])}
+      onChange: dates => {
+        this.event_start(dates[0]);
+        this.event_end(dates[1])
+      }
     });
   }
   config(isInitialized){
@@ -92,12 +96,15 @@ export default class EditEventModal extends Modal {
     eventRecord.save({
       name: this.name(),
       description: this.description(),
-      event_start: this.event_start().getTime(),
-      event_end: this.event_end().getTime(),
-    }).then(
+      event_start: flatpickr.parseDate(this.event_start(),"Y-m-d h:i K"),
+      event_end: flatpickr.parseDate(this.event_end(),"Y-m-d h:i K"),
+    }).then(result => {
+        console.log(result);
+        this.hide();
+      }
+    ).catch(
       console.log
     );
-
 
 
   }

@@ -25,7 +25,6 @@ class EventSerializer extends AbstractSerializer
         return [
             'name'    => $event->name,
             'description'    => $event->description,
-            'hasEnded'    => $event->hasEnded(),
             'event_start'     => $this->formatDate($event->event_start),
             'event_end'     => $this->formatDate($event->event_end),
             'createdAt'   => $this->formatDate($event->created_at),

@@ -1,0 +1,4 @@
+flarum-calendar:
+  forum:
+    modal:
+      submit: "Submit"

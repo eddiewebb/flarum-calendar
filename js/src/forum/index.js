@@ -28,6 +28,8 @@ app.initializers.add('webbinaro/flarum-calendar', () => {
 
   app.store.models.events = Event;
 
+  //alert(app.translator.trans('flarum-calendar.forum.modal.submit'));
+
 }); //end initalizer
 
 

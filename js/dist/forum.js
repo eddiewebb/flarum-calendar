@@ -18500,7 +18500,7 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
       className: "Form-group"
     }, m("label", {
       className: "label"
-    }, "Event Title"), m("input", {
+    }, "What"), m("input", {
       type: "text",
       name: "title",
       className: "FormControl",
@@ -18509,7 +18509,7 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
       className: "Form-group"
     }, m("label", {
       className: "label"
-    }, "Begins"), m("div", {
+    }, "When"), m("div", {
       className: "PollModal--date"
     }, m("input", {
       id: "startpicker",
@@ -18520,17 +18520,17 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
       className: "Form-group"
     }, m("label", {
       className: "label"
-    }, "Event Description"), m("input", {
+    }, "Details"), m("textarea", {
       type: "text",
       name: "title",
       className: "FormControl",
       bidi: this.description
-    })), m("div", {
+    }), m("small", null, "You may use markdown")), m("div", {
       className: "Form-group"
     }, flarum_components_Button__WEBPACK_IMPORTED_MODULE_2___default.a.component({
       type: 'submit',
       className: 'Button Button--primary PollModal-SubmitButton',
-      children: app.translator.trans('fof-polls.forum.modal.submit'),
+      children: app.translator.trans('flarum-calendar.forum.modal.submit'),
       loading: this.loading
     })))];
   };
@@ -18558,6 +18558,8 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
   };
 
   _proto.onsubmit = function onsubmit(e) {
+    var _this2 = this;
+
     e.preventDefault();
 
     if (this.name() === '' || this.description() === '') {
@@ -18570,9 +18572,13 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
     eventRecord.save({
       name: this.name(),
       description: this.description(),
-      event_start: this.event_start().getTime(),
-      event_end: this.event_end().getTime()
-    }).then(console.log);
+      event_start: flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.event_start(), "Y-m-d h:i K"),
+      event_end: flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.event_end(), "Y-m-d h:i K")
+    }).then(function (result) {
+      console.log(result);
+
+      _this2.hide();
+    })["catch"](console.log);
   };
 
   return EditEventModal;
@@ -18797,7 +18803,7 @@ app.initializers.add('webbinaro/flarum-calendar', function () {
     }), -9.5);
     return items;
   });
-  app.store.models.events = _Models_Event__WEBPACK_IMPORTED_MODULE_4__["default"];
+  app.store.models.events = _Models_Event__WEBPACK_IMPORTED_MODULE_4__["default"]; //alert(app.translator.trans('flarum-calendar.forum.modal.submit'));
 }); //end initalizer
 
 /***/ }),
