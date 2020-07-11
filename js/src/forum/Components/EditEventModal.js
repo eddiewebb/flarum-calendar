@@ -83,15 +83,12 @@ export default class EditEventModal extends Modal {
       }
     });
   }
+
   config(isInitialized){
-    this.configDatePicker("#startpicker",isInitialized)
+    this.configDatePicker("#startpicker",isInitialized);
   }
 
 
-  onkeydown(){
-    e.preventDefault();
-  }
-  
   onsubmit(e) {
     e.preventDefault();
     if (this.name() === '' || this.description() === '') {

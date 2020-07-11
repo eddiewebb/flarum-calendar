@@ -47,23 +47,27 @@ export default class EventDetailsModal extends Modal {
           {username(this.user())}
         </a></p>
         <p>{this.start().toLocaleDateString() + ", " + this.start().toLocaleTimeString()} - {this.end().toLocaleDateString() + ", " + this.end().toLocaleTimeString()}</p>
-        <div>
-          {Button.component({
-            icon: 'fas fa-edit',
-            onclick: this.editLaunch.bind(this),
-            className: 'Button Button--icon Button--link',
-          })}
-          {Button.component({
-            icon: 'fas fa-trash-alt',
-            onclick: this.deleteEvent.bind(this),
-            className: 'Button Button--icon Button--link',
-          })}
-        </div>
+          { (app.session.user.canModerateEvents() || this.user.id === app.session.user.id) ?
+            (<div>
+              {Button.component({
+                  icon: 'fas fa-edit',
+                  onclick: this.editLaunch.bind(this),
+                  className: 'Button Button--icon Button--link',
+                })},
+              {Button.component({
+                  icon: 'fas fa-trash-alt',
+                  onclick: this.deleteEvent.bind(this),
+                  className: 'Button Button--icon Button--link',
+                })}
+              </div>
+            ): ''
+          }
       </div>,
     ];
   }
 
   config(){
+    console.log(app.session.user.canModerateEvents());
     const descElement = document.getElementById("eventdescription");
     s9e.TextFormatter.preview(this.description(),descElement);
   }

@@ -17,10 +17,11 @@ Collaborators welcome!
 - [x] Events details modal or page (exists, can be prettier)
 - [x] Events create modal or page
 - [x] API to update/delete events 
+- [x] Permissions to add (owners can edit/delete)
+- [x] Permission to moderate (edit/delete other's events)
+- [x] mobile view is broke
 
 #### In Progress
-- [ ] mobile view is broke
-- [ ] Permissions
   
 #### Up Next 
 - [ ] Hosts and Attendees (currently just actor)

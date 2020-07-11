@@ -20,18 +20,14 @@ class EventsUpdateController extends AbstractShowController
         $id = array_get($request->getQueryParams(), 'id');
         $actor = $request->getAttribute('actor');
         $this->assertRegistered($actor);
-        $this->assertAdmin($actor);
         $requestData = array_get($request->getParsedBody(), 'data.attributes');
 
         $event = Event::findOrFail($id);
-        if( $event->user_id != $actor->id){
-            throw new PermissionDeniedException("That is not your event.");
+
+        if(! $actor->can('event.moderate') && $actor->id !== $event->user->id ) {
+            throw new PermissionDeniedException("non moderator unowned event");
         }
         $event->replace($requestData['name'],$requestData['description'],$requestData['event_start'], $requestData['event_end']);
-       /* $event->name = $requestData['name'];
-        $event->description = $requestData['description'];
-        $event->event_start = $requestData['event_start'];
-        $event->event_end = $requestData['event_end']*/;
         $event->save();
 
     }
