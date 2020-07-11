@@ -18683,6 +18683,10 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
       icon: 'fas fa-edit',
       onclick: this.editLaunch.bind(this),
       className: 'Button Button--icon Button--link'
+    }), flarum_components_Button__WEBPACK_IMPORTED_MODULE_2___default.a.component({
+      icon: 'fas fa-trash-alt',
+      onclick: this.deleteEvent.bind(this),
+      className: 'Button Button--icon Button--link'
     })))];
   };
 
@@ -18734,6 +18738,16 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
     app.modal.show(new _EditEventModal__WEBPACK_IMPORTED_MODULE_7__["default"]({
       "event": this.props.event
     }));
+  };
+
+  _proto.deleteEvent = function deleteEvent() {
+    console.log({
+      "message": "[webbinaro/flarum-calendar] delete event ",
+      "event": this.props
+    });
+    var eventRecord = app.store.getById('events', this.eventId());
+    console.log(eventRecord);
+    eventRecord["delete"]().then(this.hide());
   };
 
   return EventDetailsModal;

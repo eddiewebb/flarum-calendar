@@ -53,6 +53,11 @@ export default class EventDetailsModal extends Modal {
             onclick: this.editLaunch.bind(this),
             className: 'Button Button--icon Button--link',
           })}
+          {Button.component({
+            icon: 'fas fa-trash-alt',
+            onclick: this.deleteEvent.bind(this),
+            className: 'Button Button--icon Button--link',
+          })}
         </div>
       </div>,
     ];
@@ -111,6 +116,13 @@ export default class EventDetailsModal extends Modal {
     app.modal.show(
       new EditEventModal({"event":this.props.event})
     );
+  }
+
+  deleteEvent(){
+    console.log({"message":"[webbinaro/flarum-calendar] delete event ","event":this.props})
+    let eventRecord = app.store.getById('events',this.eventId());
+    console.log(eventRecord);
+    eventRecord.delete().then(this.hide());
   }
 
 

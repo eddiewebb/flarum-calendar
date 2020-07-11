@@ -30,7 +30,8 @@ return [
     	->get('/events','events.index', ControllersAlias\EventsListController::class)
     	->get('/events/{id}','events.show', ControllersAlias\EventsShowController::class)
     	->post('/events','events.create', ControllersAlias\EventsCreateController::class)
-        ->patch('/events/{id}','events.edit', ControllersAlias\EventsUpdateController::class),
+        ->patch('/events/{id}','events.edit', ControllersAlias\EventsUpdateController::class)
+        ->delete('/events/{id}','events.delete', ControllersAlias\EventsDeleteController::class),
 
     new Extend\Locales(__DIR__ . '/resources/locale'),
 ];
