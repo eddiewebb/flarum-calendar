@@ -3,7 +3,6 @@
 namespace Webbinaro\AdvCalendar;
 
 use Flarum\Database\AbstractModel;
-use Flarum\Discussion\Discussion;
 use Flarum\User\User;
 use Carbon\Carbon;
 
@@ -52,6 +51,24 @@ class Event extends AbstractModel
         $event->event_end = new Carbon($event_end);
 
         return $event;
+    }
+
+    /**
+     * Used by update controller to keep and conversion logic here.
+     * @param $name
+     * @param $description
+     * @param $actorId
+     * @param  $event_start
+     * @param  $event_end
+     *
+     * @return static
+     */
+    public function replace($name, $description, $event_start,$event_end)
+    {
+        $this->name = $name;
+        $this->description = $description;
+        $this->event_start = new Carbon($event_start);
+        $this->event_end = new Carbon($event_end);
     }
 
     /**
