@@ -56,10 +56,11 @@ export default class CalendarPage extends Page {
     //new evemt
     items.replace('newDiscussion',
       Button.component({
-        children: "Add New Event",
-        buttonClassName: 'Button',
+        children: app.translator.trans('flarum-calendar.forum.button.create'),
+        icon: 'fas fa-calendar-plus',
         className: 'Button Button--primary PollModal-SubmitButton',
-        onclick: this.openCreateModal
+        itemClassName: 'App-primaryControl',
+        onclick: this.openCreateModal.bind(this)
       })
     );
 

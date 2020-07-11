@@ -1,4 +1,6 @@
 flarum-calendar:
   forum:
+    button:
+      create: "New Event"
     modal:
       submit: "Submit"

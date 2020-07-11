@@ -55,7 +55,7 @@ export default class EditEventModal extends Modal {
         </div>
         <div className="Form-group">
           <label className="label">Details</label>
-          <textarea type="text" name="title" className="FormControl" bidi={this.description} />
+          <textarea type="text" name="description" className="FormControl" bidi={this.description} />
           <small>You may use markdown</small>
         </div>
         <div className="Form-group">
@@ -87,6 +87,11 @@ export default class EditEventModal extends Modal {
     this.configDatePicker("#startpicker",isInitialized)
   }
 
+
+  onkeydown(){
+    e.preventDefault();
+  }
+  
   onsubmit(e) {
     e.preventDefault();
     if (this.name() === '' || this.description() === '') {
@@ -94,7 +99,7 @@ export default class EditEventModal extends Modal {
       return;
     }
     let eventRecord = app.store.getById('events',this.eventId());
-    if (eventRecord === '' ){
+    if (!eventRecord){
       console.log("submitting new event")
       eventRecord = app.store.createRecord('events');
     }

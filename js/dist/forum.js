@@ -18324,10 +18324,11 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
     var items = flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_5___default.a.prototype.sidebarItems(); //new evemt
 
     items.replace('newDiscussion', flarum_components_Button__WEBPACK_IMPORTED_MODULE_12___default.a.component({
-      children: "Add New Event",
-      buttonClassName: 'Button',
+      children: flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.translator.trans('flarum-calendar.forum.button.create'),
+      icon: 'fas fa-calendar-plus',
       className: 'Button Button--primary PollModal-SubmitButton',
-      onclick: this.openCreateModal
+      itemClassName: 'App-primaryControl',
+      onclick: this.openCreateModal.bind(this)
     }));
     items.replace('nav', flarum_components_SelectDropdown__WEBPACK_IMPORTED_MODULE_6___default.a.component({
       children: this.navItems(this).toArray(),
@@ -18530,7 +18531,7 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
       className: "label"
     }, "Details"), m("textarea", {
       type: "text",
-      name: "title",
+      name: "description",
       className: "FormControl",
       bidi: this.description
     }), m("small", null, "You may use markdown")), m("div", {
@@ -18564,6 +18565,10 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
     this.configDatePicker("#startpicker", isInitialized);
   };
 
+  _proto.onkeydown = function onkeydown() {
+    e.preventDefault();
+  };
+
   _proto.onsubmit = function onsubmit(e) {
     var _this2 = this;
 
@@ -18576,7 +18581,7 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
 
     var eventRecord = app.store.getById('events', this.eventId());
 
-    if (eventRecord === '') {
+    if (!eventRecord) {
       console.log("submitting new event");
       eventRecord = app.store.createRecord('events');
     }
