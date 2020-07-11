@@ -18326,7 +18326,7 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
     items.replace('newDiscussion', flarum_components_Button__WEBPACK_IMPORTED_MODULE_12___default.a.component({
       children: "Add New Event",
       buttonClassName: 'Button',
-      className: 'App-titleControl',
+      className: 'Button Button--primary PollModal-SubmitButton',
       onclick: this.openCreateModal
     }));
     items.replace('nav', flarum_components_SelectDropdown__WEBPACK_IMPORTED_MODULE_6___default.a.component({
@@ -18405,7 +18405,8 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
           "start": eventData.event_start(),
           "extendedProps": {
             "description": eventData.description(),
-            "user": eventData.user()
+            "user": eventData.user(),
+            "eventId": eventData.id()
           }
         };
       }
@@ -18453,6 +18454,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 __webpack_require__(/*! flatpickr/dist/flatpickr.css */ "./node_modules/flatpickr/dist/flatpickr.css");
+/**
+ * THis builds event details based on a FullCalendar concept of object.  CalendarPage talks to api, sends us FC payload
+ */
+
 
 var EditEventModal = /*#__PURE__*/function (_Modal) {
   Object(_babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(EditEventModal, _Modal);
@@ -18469,16 +18474,18 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
     this.name = m.prop('');
     this.description = m.prop('');
     this.user = m.prop('');
-    this.event_start = m.prop();
-    this.event_end = m.prop();
+    this.start = m.prop();
+    this.end = m.prop();
+    this.eventId = m.prop();
 
     if (this.props.event) {
       var event = this.props.event;
-      this.name(event.name);
+      this.eventId(event.extendedProps.eventId);
+      this.name(event.title);
       this.description(event.extendedProps.description);
       this.user(event.extendedProps.user);
-      this.event_start(event.event_start);
-      this.event_end(!event.event_end || isNaN(event.event_end.getTime()) ? null : event.event_end);
+      this.start(event.start);
+      this.end(event.end);
     }
   };
 
@@ -18493,7 +18500,11 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
   _proto.content = function content() {
     return [m("div", {
       className: "Modal-body"
-    }, m("div", {
+    }, m("input", {
+      type: "hidden",
+      name: "id",
+      bidi: this.eventId
+    }), m("div", {
       className: "Form-group"
     }, m("label", {
       className: "label"
@@ -18535,17 +18546,16 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
   _proto.configDatePicker = function configDatePicker(el, isInitialized) {
     var _this = this;
 
-    if (isInitialized) return;
     flatpickr__WEBPACK_IMPORTED_MODULE_3___default()(el, {
       enableTime: true,
-      minDate: 'today',
       dateFormat: 'Y-m-d H:i',
       mode: "range",
+      defaultDate: [flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.start(), "Y-m-d h:i K"), flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.end(), "Y-m-d h:i K")],
       //inline: true
       onChange: function onChange(dates) {
-        _this.event_start(dates[0]);
+        _this.start(dates[0]);
 
-        _this.event_end(dates[1]);
+        _this.end(dates[1]);
       }
     });
   };
@@ -18564,13 +18574,18 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
       return;
     }
 
-    console.log("submitting new event");
-    var eventRecord = app.store.createRecord('events');
+    var eventRecord = app.store.getById('events', this.eventId());
+
+    if (eventRecord === '') {
+      console.log("submitting new event");
+      eventRecord = app.store.createRecord('events');
+    }
+
     eventRecord.save({
       name: this.name(),
       description: this.description(),
-      event_start: flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.event_start(), "Y-m-d h:i K"),
-      event_end: flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.event_end(), "Y-m-d h:i K")
+      event_start: flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.start(), "Y-m-d h:i K"),
+      event_end: flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.end(), "Y-m-d h:i K")
     }).then(function (result) {
       console.log(result);
 
@@ -18598,14 +18613,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
 /* harmony import */ var flarum_components_Modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/components/Modal */ "flarum/components/Modal");
 /* harmony import */ var flarum_components_Modal__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Modal__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var flarum_helpers_username__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/helpers/username */ "flarum/helpers/username");
-/* harmony import */ var flarum_helpers_username__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_username__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var flarum_models_User__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/models/User */ "flarum/models/User");
-/* harmony import */ var flarum_models_User__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_models_User__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/helpers/userOnline */ "flarum/helpers/userOnline");
-/* harmony import */ var flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/helpers/avatar */ "flarum/helpers/avatar");
-/* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/components/Button */ "flarum/components/Button");
+/* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Button__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var flarum_helpers_username__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/helpers/username */ "flarum/helpers/username");
+/* harmony import */ var flarum_helpers_username__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_username__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var flarum_models_User__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/models/User */ "flarum/models/User");
+/* harmony import */ var flarum_models_User__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_models_User__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/helpers/userOnline */ "flarum/helpers/userOnline");
+/* harmony import */ var flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! flarum/helpers/avatar */ "flarum/helpers/avatar");
+/* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _EditEventModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./EditEventModal */ "./src/forum/Components/EditEventModal.js");
+
+
 
 
 
@@ -18628,16 +18648,18 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
     this.name = m.prop('');
     this.description = m.prop('');
     this.user = m.prop('');
-    this.event_start = m.prop();
-    this.event_end = m.prop();
+    this.start = m.prop();
+    this.end = m.prop();
+    this.eventId = m.prop();
 
     if (this.props.event) {
       var event = this.props.event;
+      this.eventId(event.extendedProps.eventId);
       this.name(event.title);
       this.description(event.extendedProps.description);
       this.user(event.extendedProps.user);
-      this.event_start(event.start);
-      this.event_end(event.end);
+      this.start(event.start);
+      this.end(event.end);
     }
   };
 
@@ -18657,7 +18679,11 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
     }), m("p", null, "Hosted by: ", m("a", {
       href: app.route.user(this.user()),
       config: m.route
-    }, flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_4___default()(this.user()), flarum_helpers_username__WEBPACK_IMPORTED_MODULE_2___default()(this.user()))), m("p", null, this.event_start().toLocaleDateString() + ", " + this.event_start().toLocaleTimeString(), " - ", this.event_end().toLocaleDateString() + ", " + this.event_end().toLocaleTimeString()))];
+    }, flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_5___default()(this.user()), flarum_helpers_username__WEBPACK_IMPORTED_MODULE_3___default()(this.user()))), m("p", null, this.start().toLocaleDateString() + ", " + this.start().toLocaleTimeString(), " - ", this.end().toLocaleDateString() + ", " + this.end().toLocaleTimeString()), m("div", null, flarum_components_Button__WEBPACK_IMPORTED_MODULE_2___default.a.component({
+      icon: 'fas fa-edit',
+      onclick: this.editLaunch.bind(this),
+      className: 'Button Button--icon Button--link'
+    })))];
   };
 
   _proto.config = function config() {
@@ -18670,8 +18696,6 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
   ;
 
   _proto.view = function view() {
-    var user = this.props.event.extendedProps.user;
-
     if (this.alertAttrs) {
       this.alertAttrs.dismissible = false;
     }
@@ -18682,7 +18706,7 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
       className: "Modal-content"
     }, this.constructor.isDismissible ? m("div", {
       className: "Modal-close App-backControl"
-    }, Button.component({
+    }, flarum_components_Button__WEBPACK_IMPORTED_MODULE_2___default.a.component({
       icon: 'fas fa-times',
       onclick: this.hide.bind(this),
       className: 'Button Button--icon Button--link'
@@ -18695,11 +18719,21 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
       style: "margin-right:1em"
     }, this.title())), m("div", {
       className: "fa-pull-right"
-    }, flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_5___default()(this.user())), m("div", {
+    }, flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_6___default()(this.user())), m("div", {
       style: "clear:both"
     })), this.alertAttrs ? m("div", {
       className: "Modal-alert"
     }, Alert.component(this.alertAttrs)) : '', this.content())));
+  };
+
+  _proto.editLaunch = function editLaunch() {
+    console.log({
+      "message": "[webbinaro/flarum-calendar] edit event ",
+      "event": this.props
+    });
+    app.modal.show(new _EditEventModal__WEBPACK_IMPORTED_MODULE_7__["default"]({
+      "event": this.props.event
+    }));
   };
 
   return EventDetailsModal;

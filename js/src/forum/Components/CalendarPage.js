@@ -58,7 +58,7 @@ export default class CalendarPage extends Page {
       Button.component({
         children: "Add New Event",
         buttonClassName: 'Button',
-        className: 'App-titleControl',
+        className: 'Button Button--primary PollModal-SubmitButton',
         onclick: this.openCreateModal
       })
     );
@@ -142,6 +142,7 @@ export default class CalendarPage extends Page {
           "extendedProps": {
             "description": eventData.description(),
             "user":eventData.user() ,
+            "eventId": eventData.id(),
           },
         };
       }

@@ -1,8 +1,10 @@
 import Modal from 'flarum/components/Modal';
+import Button from 'flarum/components/Button';
 import username from 'flarum/helpers/username';
 import User from 'flarum/models/User'
 import userOnline from 'flarum/helpers/userOnline';
 import avatar from 'flarum/helpers/avatar';
+import EditEventModal from "./EditEventModal";
 
 
 
@@ -13,16 +15,17 @@ export default class EventDetailsModal extends Modal {
     this.name = m.prop('');
     this.description = m.prop('');
     this.user = m.prop('');
-    this.event_start = m.prop();
-    this.event_end = m.prop();
+    this.start = m.prop();
+    this.end = m.prop();
+    this.eventId = m.prop();
     if (this.props.event) {
       const event = this.props.event;
-
+      this.eventId(event.extendedProps.eventId);
       this.name(event.title);
       this.description(event.extendedProps.description);
       this.user(event.extendedProps.user)
-      this.event_start(event.start);
-      this.event_end(event.end);
+      this.start(event.start);
+      this.end(event.end);
     }
   }
 
@@ -43,7 +46,14 @@ export default class EventDetailsModal extends Modal {
           {userOnline(this.user())}
           {username(this.user())}
         </a></p>
-        <p>{this.event_start().toLocaleDateString() + ", " + this.event_start().toLocaleTimeString()} - {this.event_end().toLocaleDateString() + ", " + this.event_end().toLocaleTimeString()}</p>
+        <p>{this.start().toLocaleDateString() + ", " + this.start().toLocaleTimeString()} - {this.end().toLocaleDateString() + ", " + this.end().toLocaleTimeString()}</p>
+        <div>
+          {Button.component({
+            icon: 'fas fa-edit',
+            onclick: this.editLaunch.bind(this),
+            className: 'Button Button--icon Button--link',
+          })}
+        </div>
       </div>,
     ];
   }
@@ -58,8 +68,6 @@ export default class EventDetailsModal extends Modal {
    */
 
   view() {
-
-    const user =  this.props.event.extendedProps.user;
     if (this.alertAttrs) {
       this.alertAttrs.dismissible = false;
     }
@@ -98,6 +106,12 @@ export default class EventDetailsModal extends Modal {
     );
   }
 
+  editLaunch(){
+    console.log({"message":"[webbinaro/flarum-calendar] edit event ","event":this.props})
+    app.modal.show(
+      new EditEventModal({"event":this.props.event})
+    );
+  }
 
 
 
