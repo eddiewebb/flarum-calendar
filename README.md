@@ -15,13 +15,14 @@ Collaborators welcome!
 - [x] New UI route to calendar
 - [x] JS Frontend (I was exploring ["fullcalendar"](https://fullcalendar.io/) as a nice looking option) 
 - [x] Events details modal or page (exists, can be prettier)
+- [x] Events create modal or page
+- [x] API to update/delete events 
 
 #### In Progress
-- [ ] Events create modal or page
-- [ ] API to update/delete events 
-  
-#### Up Next / Need Help
+- [ ] mobile view is broke
 - [ ] Permissions
+  
+#### Up Next 
 - [ ] Hosts and Attendees (currently just actor)
 
 #### Open Decisions
