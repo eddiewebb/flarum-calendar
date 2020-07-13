@@ -18807,17 +18807,18 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
     var events = this.props.events;
     var calendar = this.props.calendar;
     var eventRecord = app.store.getById('events', this.eventId());
-
-    for (var eventIndex in events) {
-      if (events[eventIndex].data.id === eventRecord.id()) {
-        console.log("found");
-        calendar.removeAllEvents();
-        calendar.addEventSource(events);
-        break;
+    eventRecord["delete"]().then(function () {
+      for (var eventIndex in events) {
+        if (events[eventIndex].data.id === eventRecord.id()) {
+          events.splice(eventIndex, 1);
+          break;
+        }
       }
-    }
 
-    eventRecord["delete"]().then(this.hide());
+      calendar.removeAllEvents();
+      calendar.addEventSource(events);
+      this.hide();
+    }.bind(this));
   };
 
   return EventDetailsModal;

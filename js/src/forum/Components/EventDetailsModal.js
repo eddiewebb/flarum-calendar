@@ -127,18 +127,18 @@ export default class EventDetailsModal extends Modal {
     const events = this.props.events;
     const calendar = this.props.calendar;
     let eventRecord = app.store.getById('events',this.eventId());
-    for(var eventIndex in events) {
-      if (events[eventIndex].data.id === eventRecord.id()) {
-        console.log("found");
-        calendar.removeAllEvents();
-        calendar.addEventSource(events);
-        break;
+    eventRecord.delete().then(function() {
+      for(var eventIndex in events)
+      {
+        if (events[eventIndex].data.id === eventRecord.id()) {
+          events.splice(eventIndex, 1);
+          break;
+        }
       }
-    }
-    eventRecord.delete().then(
-
+      calendar.removeAllEvents();
+      calendar.addEventSource(events);
       this.hide()
-    );
+    }.bind(this) );
   }
 
 
