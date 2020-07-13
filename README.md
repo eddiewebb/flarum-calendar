@@ -22,6 +22,8 @@ Collaborators welcome!
 - [x] mobile view is broke
 
 #### In Progress
+- [ ] Pondering - SEO content, how to do this..perhaps replacemmodal 
+        (perhaps replace modeal with discussionpage)
   
 #### Up Next 
 - [ ] Hosts and Attendees (currently just actor)

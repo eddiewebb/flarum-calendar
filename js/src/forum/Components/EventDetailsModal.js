@@ -6,7 +6,6 @@ import userOnline from 'flarum/helpers/userOnline';
 import avatar from 'flarum/helpers/avatar';
 import EditEventModal from "./EditEventModal";
 
-import flatpickr from 'flatpickr';
 
 
 export default class EventDetailsModal extends Modal {
@@ -21,7 +20,6 @@ export default class EventDetailsModal extends Modal {
     this.eventId = m.prop();
     if (this.props.event) {
       const event = this.props.event;
-      console.log(flatpickr.parseDate(event.end,"Y-m-d h:i K"))
       this.eventId(event.extendedProps.eventId);
       this.name(event.title);
       this.description(event.extendedProps.description);

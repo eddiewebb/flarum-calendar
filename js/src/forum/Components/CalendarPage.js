@@ -160,7 +160,6 @@ export default class CalendarPage extends Page {
   }
 
   flarumToFullCalendarEvent(eventData){
-    console.log("from: " + eventData.event_start() + " to " + eventData.event_end());
       return {
         "title": eventData.name(),
         "end": eventData.event_end(),

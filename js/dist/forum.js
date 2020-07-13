@@ -18440,7 +18440,6 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
   };
 
   _proto.flarumToFullCalendarEvent = function flarumToFullCalendarEvent(eventData) {
-    console.log("from: " + eventData.event_start() + " to " + eventData.event_end());
     return {
       "title": eventData.name(),
       "end": eventData.event_end(),
@@ -18680,9 +18679,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! flarum/helpers/avatar */ "flarum/helpers/avatar");
 /* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _EditEventModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./EditEventModal */ "./src/forum/Components/EditEventModal.js");
-/* harmony import */ var flatpickr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! flatpickr */ "./node_modules/flatpickr/dist/flatpickr.js");
-/* harmony import */ var flatpickr__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(flatpickr__WEBPACK_IMPORTED_MODULE_8__);
-
 
 
 
@@ -18713,7 +18709,6 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
 
     if (this.props.event) {
       var event = this.props.event;
-      console.log(flatpickr__WEBPACK_IMPORTED_MODULE_8___default.a.parseDate(event.end, "Y-m-d h:i K"));
       this.eventId(event.extendedProps.eventId);
       this.name(event.title);
       this.description(event.extendedProps.description);
