@@ -15,7 +15,6 @@ class EventsListController extends AbstractListController
      */
     public $serializer = EventSerializer::class;
     public $include = ['user'];
-
     protected function data(Request $request, Document $document)
     {
         //$relations = $this->extractInclude($request);

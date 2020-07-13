@@ -29,6 +29,6 @@ class EventsUpdateController extends AbstractShowController
         }
         $event->replace($requestData['name'],$requestData['description'],$requestData['event_start'], $requestData['event_end']);
         $event->save();
-
+        return $event;
     }
 }

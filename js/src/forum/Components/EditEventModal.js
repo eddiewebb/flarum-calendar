@@ -1,6 +1,5 @@
 import Modal from 'flarum/components/Modal';
 import Button from 'flarum/components/Button';
-
 import flatpickr from 'flatpickr';
 require("flatpickr/dist/flatpickr.css");
 
@@ -9,7 +8,6 @@ require("flatpickr/dist/flatpickr.css");
  * THis builds event details based on a FullCalendar concept of object.  CalendarPage talks to api, sends us FC payload
  */
 export default class EditEventModal extends Modal{
-
 
   init() {
     super.init();
@@ -91,21 +89,25 @@ export default class EditEventModal extends Modal{
     });
   }
 
-  config(isInitialized){
+  config(isInitialized, context){
     this.configDatePicker("#startpicker",isInitialized);
   }
 
 
   onsubmit(e) {
     e.preventDefault();
+    const calendar = this.props.calendar;
+    const events = this.props.events;
     if (this.name() === '' || this.description() === '') {
       alert("Please provide an event name and description");
       return;
     }
     let eventRecord = app.store.getById('events',this.eventId());
+    let fresh = false;
     if (!eventRecord){
       console.log("submitting new event")
       eventRecord = app.store.createRecord('events');
+      fresh = true;
     }
     eventRecord.save({
       name: this.name(),
@@ -113,8 +115,24 @@ export default class EditEventModal extends Modal{
       event_start: flatpickr.parseDate(this.start(),"Y-m-d h:i K"),
       event_end: flatpickr.parseDate(this.end(),"Y-m-d h:i K"),
     }).then(result => {
-        console.log(result);
-        this.hide();
+      console.log("Saves");
+      console.log(result);
+      if(fresh) {
+       result = app.store.getById('events',result.id())
+        console.log("new")
+        console.log(result)
+       events.push(result);
+      }else{
+        for(var eventIndex in events) {
+          if (events[eventIndex].data.id === result.id()) {
+            events[eventIndex] = result;
+            break;
+          }
+        }
+      }
+      calendar.removeAllEvents();
+      calendar.addEventSource(events);
+      this.hide();
       }
     ).catch(
       console.log

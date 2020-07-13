@@ -18290,6 +18290,9 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
 
   _proto.init = function init() {
     _Page.prototype.init.call(this);
+
+    this.calendar = m.prop();
+    this.events = m.prop();
   };
 
   _proto.onunload = function onunload() {};
@@ -18366,14 +18369,25 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
   ;
 
   _proto.config = function config(isInitialized, context) {
+    var _this = this;
+
+    if (isInitialized) {
+      return;
+    }
+
     console.log("[webbinaro/flarum-calendar] loading events..");
     flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.store.find('events', {
       sort: 'createdAt'
-    }).then(this.renderCalendarEvents.bind(this));
+    }).then(function (results) {
+      _this.events(results);
+
+      _this.renderCalendarEvents(results);
+    });
   };
 
   _proto.renderCalendarEvents = function renderCalendarEvents(data) {
-    //Flarum payload includes an array + payload object [0, 1, 2, payload] - probably a better way to filter..
+    console.log("rendering events"); //Flarum payload includes an array + payload object [0, 1, 2, payload] - probably a better way to filter..
+
     var cleanedEvents = [];
 
     for (var eventKey in data) {
@@ -18383,7 +18397,7 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
     }
 
     var calendarEl = document.getElementById('calendar');
-    var deferredFunction = this.openCreateModal;
+    var openModal = this.openCreateModal.bind(this);
     var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_7__["Calendar"](calendarEl, {
       headerToolbar: {
         center: 'dayGridMonth,listYear'
@@ -18393,40 +18407,50 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
       plugins: [_fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_8__["default"], _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_9__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_10__["default"]],
       eventClick: function eventClick(info) {
         flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.modal.show(new _EventDetailsModal__WEBPACK_IMPORTED_MODULE_11__["default"]({
-          "event": info.event
+          "event": info.event,
+          "calendar": this,
+          "events": data
         }));
       },
-      dateClick: deferredFunction,
+      dateClick: function dateClick(info) {
+        openModal(info);
+      },
       events: cleanedEvents,
-      eventDataTransform: function eventDataTransform(eventData) {
-        return {
-          "id": eventData.id,
-          "title": eventData.name(),
-          "end": eventData.event_end(),
-          "start": eventData.event_start(),
-          "extendedProps": {
-            "description": eventData.description(),
-            "user": eventData.user(),
-            "eventId": eventData.id()
-          }
-        };
-      }
+      eventDataTransform: this.flarumToFullCalendarEvent
     });
     calendar.render();
+    this.calendar(calendar);
   };
 
   _proto.openCreateModal = function openCreateModal(info) {
     if (flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.session.user != undefined) {
-      var modal = new _EditEventModal__WEBPACK_IMPORTED_MODULE_13__["default"]();
+      var modal = new _EditEventModal__WEBPACK_IMPORTED_MODULE_13__["default"]({
+        "calendar": this.calendar(),
+        "events": this.events()
+      });
 
       if (info.date) {
-        modal = new _EditEventModal__WEBPACK_IMPORTED_MODULE_13__["default"]().withStart(info.date);
+        modal = modal.withStart(info.date);
       }
 
       flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.modal.show(modal);
     } else {
       flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.modal.show(new flarum_components_LogInModal__WEBPACK_IMPORTED_MODULE_14___default.a());
     }
+  };
+
+  _proto.flarumToFullCalendarEvent = function flarumToFullCalendarEvent(eventData) {
+    console.log("from: " + eventData.event_start() + " to " + eventData.event_end());
+    return {
+      "title": eventData.name(),
+      "end": eventData.event_end(),
+      "start": eventData.event_start(),
+      "extendedProps": {
+        "description": eventData.description(),
+        "user": eventData.user(),
+        "eventId": eventData.id()
+      }
+    };
   };
 
   return CalendarPage;
@@ -18570,7 +18594,7 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
     });
   };
 
-  _proto.config = function config(isInitialized) {
+  _proto.config = function config(isInitialized, context) {
     this.configDatePicker("#startpicker", isInitialized);
   };
 
@@ -18578,6 +18602,8 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
     var _this2 = this;
 
     e.preventDefault();
+    var calendar = this.props.calendar;
+    var events = this.props.events;
 
     if (this.name() === '' || this.description() === '') {
       alert("Please provide an event name and description");
@@ -18585,10 +18611,12 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
     }
 
     var eventRecord = app.store.getById('events', this.eventId());
+    var fresh = false;
 
     if (!eventRecord) {
       console.log("submitting new event");
       eventRecord = app.store.createRecord('events');
+      fresh = true;
     }
 
     eventRecord.save({
@@ -18597,7 +18625,25 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
       event_start: flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.start(), "Y-m-d h:i K"),
       event_end: flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.end(), "Y-m-d h:i K")
     }).then(function (result) {
+      console.log("Saves");
       console.log(result);
+
+      if (fresh) {
+        result = app.store.getById('events', result.id());
+        console.log("new");
+        console.log(result);
+        events.push(result);
+      } else {
+        for (var eventIndex in events) {
+          if (events[eventIndex].data.id === result.id()) {
+            events[eventIndex] = result;
+            break;
+          }
+        }
+      }
+
+      calendar.removeAllEvents();
+      calendar.addEventSource(events);
 
       _this2.hide();
     })["catch"](console.log);
@@ -18747,7 +18793,9 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
       "event": this.props
     });
     app.modal.show(new _EditEventModal__WEBPACK_IMPORTED_MODULE_7__["default"]({
-      "event": this.props.event
+      "event": this.props.event,
+      "calendar": this.props.calendar,
+      "events": this.props.events
     }));
   };
 
@@ -18756,8 +18804,19 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
       "message": "[webbinaro/flarum-calendar] delete event ",
       "event": this.props
     });
+    var events = this.props.events;
+    var calendar = this.props.calendar;
     var eventRecord = app.store.getById('events', this.eventId());
-    console.log(eventRecord);
+
+    for (var eventIndex in events) {
+      if (events[eventIndex].data.id === eventRecord.id()) {
+        console.log("found");
+        calendar.removeAllEvents();
+        calendar.addEventSource(events);
+        break;
+      }
+    }
+
     eventRecord["delete"]().then(this.hide());
   };
 

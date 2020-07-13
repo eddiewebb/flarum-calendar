@@ -118,15 +118,27 @@ export default class EventDetailsModal extends Modal {
   editLaunch(){
     console.log({"message":"[webbinaro/flarum-calendar] edit event ","event":this.props})
     app.modal.show(
-      new EditEventModal({"event":this.props.event})
+      new EditEventModal({"event":this.props.event,"calendar":this.props.calendar,"events":this.props.events})
     );
   }
 
   deleteEvent(){
     console.log({"message":"[webbinaro/flarum-calendar] delete event ","event":this.props})
+    const events = this.props.events;
+    const calendar = this.props.calendar;
     let eventRecord = app.store.getById('events',this.eventId());
-    console.log(eventRecord);
-    eventRecord.delete().then(this.hide());
+    for(var eventIndex in events) {
+      if (events[eventIndex].data.id === eventRecord.id()) {
+        console.log("found");
+        calendar.removeAllEvents();
+        calendar.addEventSource(events);
+        break;
+      }
+    }
+    eventRecord.delete().then(
+
+      this.hide()
+    );
   }
 
 

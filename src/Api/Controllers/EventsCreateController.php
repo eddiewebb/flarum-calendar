@@ -14,6 +14,7 @@ class EventsCreateController extends AbstractCreateController
 {
     use AssertPermissionTrait;
     public $serializer = EventSerializer::class;
+    public $include = ['user'];
 
     protected function data(Request $request, Document $document)
     {
@@ -25,5 +26,6 @@ class EventsCreateController extends AbstractCreateController
         $requestData = array_get($request->getParsedBody(), 'data.attributes');
         $event = Event::build( $requestData['name'], $requestData['description'], $actor->id, $requestData['event_start'], $requestData['event_end'] );
         $event->saveOrFail();
+        return $event;
     }
 }

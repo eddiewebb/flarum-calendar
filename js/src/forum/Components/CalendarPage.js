@@ -17,6 +17,8 @@ import LogInModal from 'flarum/components/LogInModal'
 export default class CalendarPage extends Page {
   init() {
     super.init();
+    this.calendar = m.prop();
+    this.events = m.prop();
   }
 
   onunload() {
@@ -52,7 +54,6 @@ export default class CalendarPage extends Page {
    */
   sidebarItems() {
     const items = IndexPage.prototype.sidebarItems();
-
     //new evemt
     items.replace('newDiscussion',
       Button.component({
@@ -104,15 +105,20 @@ export default class CalendarPage extends Page {
    */
   config(isInitialized, context) {
 
+    if(isInitialized){
+      return;
+    }
     console.log("[webbinaro/flarum-calendar] loading events..");
-    app.store.find('events', {sort: 'createdAt'}).then(
-      this.renderCalendarEvents.bind(this)
+    app.store.find('events', {sort: 'createdAt'}).then(results => {
+        this.events(results);
+        this.renderCalendarEvents(results)
+    }
     );
   }
 
 
   renderCalendarEvents(data){
-
+    console.log("rendering events")
     //Flarum payload includes an array + payload object [0, 1, 2, payload] - probably a better way to filter..
     let cleanedEvents = [];
     for (const eventKey in data) {
@@ -121,48 +127,50 @@ export default class CalendarPage extends Page {
       }
     }
     const calendarEl = document.getElementById('calendar');
-    const deferredFunction = this.openCreateModal
+    const openModal = this.openCreateModal.bind(this);
     const calendar = new Calendar(calendarEl, {
       headerToolbar: {center: 'dayGridMonth,listYear'}, // buttons for switching between views
       initialView: 'dayGridMonth',
       plugins: [dayGridPlugin, interactionPlugin, listPlugin],
       eventClick: function (info) {
         app.modal.show(
-          new EventDetailsModal({"event": info.event})
+          new EventDetailsModal({"event": info.event, "calendar":this,"events":data})
         );
       },
-      dateClick:      deferredFunction,
+      dateClick:  function(info){
+        openModal(info);
+      },
       events: cleanedEvents,
-      eventDataTransform: function (eventData) {
-        return {
-          "id": eventData.id,
-          "title": eventData.name(),
-          "end": eventData.event_end(),
-          "start": eventData.event_start(),
-          "extendedProps": {
-            "description": eventData.description(),
-            "user":eventData.user() ,
-            "eventId": eventData.id(),
-          },
-        };
-      }
+      eventDataTransform: this.flarumToFullCalendarEvent,
     });
     calendar.render();
-
+    this.calendar(calendar);
   }
 
   openCreateModal(info) {
     if(app.session.user != undefined){
-      let modal = new EditEventModal();
+      let modal = new EditEventModal({"calendar":this.calendar(),"events":this.events()});
       if(info.date){
-        modal = new EditEventModal().withStart(info.date);
+        modal = modal.withStart(info.date);
       }
-      app.modal.show( modal
-      );
+      app.modal.show( modal );
     }else{
       app.modal.show(new LogInModal());
     }
+  }
 
+  flarumToFullCalendarEvent(eventData){
+    console.log("from: " + eventData.event_start() + " to " + eventData.event_end());
+      return {
+        "title": eventData.name(),
+        "end": eventData.event_end(),
+        "start": eventData.event_start(),
+        "extendedProps": {
+          "description": eventData.description(),
+          "user":eventData.user() ,
+          "eventId": eventData.id(),
+        },
+      };
   }
 }
 
