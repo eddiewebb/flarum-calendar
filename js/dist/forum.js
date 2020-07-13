@@ -18369,7 +18369,7 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
     console.log("[webbinaro/flarum-calendar] loading events..");
     flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.store.find('events', {
       sort: 'createdAt'
-    }).then(this.renderCalendarEvents);
+    }).then(this.renderCalendarEvents.bind(this));
   };
 
   _proto.renderCalendarEvents = function renderCalendarEvents(data) {
@@ -18383,6 +18383,7 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
     }
 
     var calendarEl = document.getElementById('calendar');
+    var deferredFunction = this.openCreateModal;
     var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_7__["Calendar"](calendarEl, {
       headerToolbar: {
         center: 'dayGridMonth,listYear'
@@ -18393,10 +18394,9 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
       eventClick: function eventClick(info) {
         flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.modal.show(new _EventDetailsModal__WEBPACK_IMPORTED_MODULE_11__["default"]({
           "event": info.event
-        })); // change the border color just for fun
-
-        info.el.style.borderColor = 'red';
+        }));
       },
+      dateClick: deferredFunction,
       events: cleanedEvents,
       eventDataTransform: function eventDataTransform(eventData) {
         return {
@@ -18415,11 +18415,15 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
     calendar.render();
   };
 
-  _proto.openCreateModal = function openCreateModal() {
-    console.log(flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.session.user);
-
+  _proto.openCreateModal = function openCreateModal(info) {
     if (flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.session.user != undefined) {
-      flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.modal.show(new _EditEventModal__WEBPACK_IMPORTED_MODULE_13__["default"]());
+      var modal = new _EditEventModal__WEBPACK_IMPORTED_MODULE_13__["default"]();
+
+      if (info.date) {
+        modal = new _EditEventModal__WEBPACK_IMPORTED_MODULE_13__["default"]().withStart(info.date);
+      }
+
+      flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.modal.show(modal);
     } else {
       flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.modal.show(new flarum_components_LogInModal__WEBPACK_IMPORTED_MODULE_14___default.a());
     }
@@ -18488,6 +18492,11 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
       this.start(event.start);
       this.end(event.end);
     }
+  };
+
+  _proto.withStart = function withStart(startDate) {
+    this.start(startDate);
+    return this;
   };
 
   _proto.title = function title() {

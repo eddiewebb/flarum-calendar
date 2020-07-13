@@ -8,7 +8,8 @@ require("flatpickr/dist/flatpickr.css");
 /**
  * THis builds event details based on a FullCalendar concept of object.  CalendarPage talks to api, sends us FC payload
  */
-export default class EditEventModal extends Modal {
+export default class EditEventModal extends Modal{
+
 
   init() {
     super.init();
@@ -27,6 +28,12 @@ export default class EditEventModal extends Modal {
       this.start(event.start );
       this.end(event.end );
     }
+  }
+
+  withStart(startDate)
+  {
+    this.start(startDate);
+    return this;
   }
 
   title() {

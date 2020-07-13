@@ -106,7 +106,7 @@ export default class CalendarPage extends Page {
 
     console.log("[webbinaro/flarum-calendar] loading events..");
     app.store.find('events', {sort: 'createdAt'}).then(
-      this.renderCalendarEvents
+      this.renderCalendarEvents.bind(this)
     );
   }
 
@@ -121,6 +121,7 @@ export default class CalendarPage extends Page {
       }
     }
     const calendarEl = document.getElementById('calendar');
+    const deferredFunction = this.openCreateModal
     const calendar = new Calendar(calendarEl, {
       headerToolbar: {center: 'dayGridMonth,listYear'}, // buttons for switching between views
       initialView: 'dayGridMonth',
@@ -129,10 +130,8 @@ export default class CalendarPage extends Page {
         app.modal.show(
           new EventDetailsModal({"event": info.event})
         );
-
-        // change the border color just for fun
-        info.el.style.borderColor = 'red';
       },
+      dateClick:      deferredFunction,
       events: cleanedEvents,
       eventDataTransform: function (eventData) {
         return {
@@ -152,11 +151,13 @@ export default class CalendarPage extends Page {
 
   }
 
-  openCreateModal() {
-    console.log(app.session.user)
-    if(app.session.user != undefined) {
-      app.modal.show(
-        new EditEventModal()
+  openCreateModal(info) {
+    if(app.session.user != undefined){
+      let modal = new EditEventModal();
+      if(info.date){
+        modal = new EditEventModal().withStart(info.date);
+      }
+      app.modal.show( modal
       );
     }else{
       app.modal.show(new LogInModal());
