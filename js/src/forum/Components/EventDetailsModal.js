@@ -6,6 +6,7 @@ import userOnline from 'flarum/helpers/userOnline';
 import avatar from 'flarum/helpers/avatar';
 import EditEventModal from "./EditEventModal";
 
+import flatpickr from 'flatpickr';
 
 
 export default class EventDetailsModal extends Modal {
@@ -20,12 +21,13 @@ export default class EventDetailsModal extends Modal {
     this.eventId = m.prop();
     if (this.props.event) {
       const event = this.props.event;
+      console.log(flatpickr.parseDate(event.end,"Y-m-d h:i K"))
       this.eventId(event.extendedProps.eventId);
       this.name(event.title);
       this.description(event.extendedProps.description);
       this.user(event.extendedProps.user)
       this.start(event.start);
-      this.end(event.end);
+      this.end(event.end?event.end:event.start);
     }
   }
 
@@ -47,7 +49,7 @@ export default class EventDetailsModal extends Modal {
           {username(this.user())}
         </a></p>
         <p>{this.start().toLocaleDateString() + ", " + this.start().toLocaleTimeString()} - {this.end().toLocaleDateString() + ", " + this.end().toLocaleTimeString()}</p>
-          { (app.session.user.canModerateEvents() || this.user.id === app.session.user.id) ?
+          { (app.session.user && (app.session.user.canModerateEvents() || this.user.id === app.session.user.id)) ?
             (<div>
               {Button.component({
                   icon: 'fas fa-edit',
@@ -67,7 +69,6 @@ export default class EventDetailsModal extends Modal {
   }
 
   config(){
-    console.log(app.session.user.canModerateEvents());
     const descElement = document.getElementById("eventdescription");
     s9e.TextFormatter.preview(this.description(),descElement);
   }
