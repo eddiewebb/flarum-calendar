@@ -27,6 +27,7 @@ Collaborators welcome!
   
 #### Up Next 
 - [ ] Hosts and Attendees (currently just actor)
+- [ ] Pagination and date filtering.
 
 #### Open Decisions
 - [ ] Relationships 
