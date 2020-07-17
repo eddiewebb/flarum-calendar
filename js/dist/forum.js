@@ -18326,13 +18326,28 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
   _proto.sidebarItems = function sidebarItems() {
     var items = flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_5___default.a.prototype.sidebarItems(); //new evemt
 
-    items.replace('newDiscussion', flarum_components_Button__WEBPACK_IMPORTED_MODULE_12___default.a.component({
-      children: flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.translator.trans('flarum-calendar.forum.button.create'),
-      icon: 'fas fa-calendar-plus',
-      className: 'Button Button--primary PollModal-SubmitButton',
-      itemClassName: 'App-primaryControl',
-      onclick: this.openCreateModal.bind(this)
-    }));
+    if (flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.session.user) {
+      if (flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.session.user.canStartEvents()) {
+        items.replace('newDiscussion', flarum_components_Button__WEBPACK_IMPORTED_MODULE_12___default.a.component({
+          children: flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.translator.trans('flarum-calendar.forum.button.create'),
+          icon: 'fas fa-calendar-plus',
+          className: 'Button Button--primary PollModal-SubmitButton',
+          itemClassName: 'App-primaryControl',
+          onclick: this.openCreateModal.bind(this)
+        }));
+      } else {
+        items.remove('newDiscussion');
+      }
+    } else {
+      items.replace('newDiscussion', flarum_components_Button__WEBPACK_IMPORTED_MODULE_12___default.a.component({
+        children: flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.translator.trans('flarum-calendar.forum.button.login'),
+        icon: 'fas fa-calendar-plus',
+        className: 'Button Button--primary PollModal-SubmitButton',
+        itemClassName: 'App-primaryControl',
+        onclick: this.openCreateModal.bind(this)
+      }));
+    }
+
     items.replace('nav', flarum_components_SelectDropdown__WEBPACK_IMPORTED_MODULE_6___default.a.component({
       children: this.navItems(this).toArray(),
       buttonClassName: 'Button',

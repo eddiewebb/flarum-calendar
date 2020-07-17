@@ -55,15 +55,34 @@ export default class CalendarPage extends Page {
   sidebarItems() {
     const items = IndexPage.prototype.sidebarItems();
     //new evemt
-    items.replace('newDiscussion',
-      Button.component({
-        children: app.translator.trans('flarum-calendar.forum.button.create'),
-        icon: 'fas fa-calendar-plus',
-        className: 'Button Button--primary PollModal-SubmitButton',
-        itemClassName: 'App-primaryControl',
-        onclick: this.openCreateModal.bind(this)
-      })
-    );
+    if(app.session.user){
+      if(app.session.user.canStartEvents()) {
+        items.replace('newDiscussion',
+          Button.component({
+            children: app.translator.trans('flarum-calendar.forum.button.create'),
+            icon: 'fas fa-calendar-plus',
+            className: 'Button Button--primary PollModal-SubmitButton',
+            itemClassName: 'App-primaryControl',
+            onclick: this.openCreateModal.bind(this)
+          })
+        );
+      }else{
+        items.remove('newDiscussion');
+      }
+    }else{
+
+      items.replace('newDiscussion',
+        Button.component({
+          children: app.translator.trans('flarum-calendar.forum.button.login'),
+          icon: 'fas fa-calendar-plus',
+          className: 'Button Button--primary PollModal-SubmitButton',
+          itemClassName: 'App-primaryControl',
+          onclick: this.openCreateModal.bind(this)
+        })
+      );
+    }
+
+
 
 
     items.replace('nav',
