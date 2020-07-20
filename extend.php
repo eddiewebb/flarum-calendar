@@ -12,6 +12,7 @@
 namespace Webbinaro\AdvCalendar;
 
 use Flarum\Extend;
+use Flarum\Http\RouteHandlerFactory;
 use Webbinaro\AdvCalendar\Api\Controllers as ControllersAlias;
 use Illuminate\Events\Dispatcher;
 use Webbinaro\AdvCalendar\Listeners;
@@ -20,7 +21,13 @@ return [
     (new Extend\Frontend('forum'))
         ->js(__DIR__.'/js/dist/forum.js')
         ->css(__DIR__.'/resources/less/forum.less')
-        ->route('/events', 'advevents'),
+        ->route('/events', 'advevents')
+        ->route(
+            '/events/{id}[/{filter:[0-9]*}]',
+            'advevent',
+            Content\Event::class),
+
+
 
     (new Extend\Frontend('admin'))
         ->js(__DIR__.'/js/dist/admin.js')
