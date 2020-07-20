@@ -18265,6 +18265,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flarum_components_LogInModal__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(flarum_components_LogInModal__WEBPACK_IMPORTED_MODULE_14__);
 
 
+function _createForOfIteratorHelperLoose(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; return function () { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } it = o[Symbol.iterator](); return it.next.bind(it); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
 
 
 
@@ -18391,17 +18398,6 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
   };
 
   _proto.renderCalendarEvents = function renderCalendarEvents() {
-    console.log("rendering events");
-    console.log(this.events); //Flarum payload includes an array + payload object [0, 1, 2, payload] - probably a better way to filter..
-
-    var cleanedEvents = [];
-
-    for (var eventKey in this.events) {
-      if (this.events[eventKey].hasOwnProperty('createdAt')) {
-        cleanedEvents.push(this.events[eventKey]);
-      }
-    }
-
     var calendarEl = document.getElementById('calendar');
     var openModal = this.openCreateModal.bind(this);
     var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_7__["Calendar"](calendarEl, {
@@ -18411,16 +18407,25 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
       // buttons for switching between views
       initialView: 'dayGridMonth',
       plugins: [_fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_8__["default"], _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_9__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_10__["default"]],
-      eventClick: function eventClick(info) {
-        console.log(events);
-        flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.modal.show(new _EventDetailsModal__WEBPACK_IMPORTED_MODULE_11__["default"]({
-          "event": this.event
-        }));
-      },
+      eventClick: function (info) {
+        console.log("Show event detail");
+
+        for (var _iterator = _createForOfIteratorHelperLoose(this.events), _step; !(_step = _iterator()).done;) {
+          var event = _step.value;
+
+          if (event.id() === info.event.extendedProps.eventId) {
+            console.log(event.user());
+            flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.modal.show(new _EventDetailsModal__WEBPACK_IMPORTED_MODULE_11__["default"]({
+              "event": event
+            }));
+            break;
+          }
+        }
+      }.bind(this),
       dateClick: function dateClick(info) {
         openModal(info);
       },
-      events: cleanedEvents,
+      events: this.events,
       eventDataTransform: this.flarumToFullCalendarEvent
     });
     calendar.render();
@@ -18658,23 +18663,10 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
 
   _proto.init = function init() {
     _Modal.prototype.init.call(this);
+  };
 
-    this.name = m.prop('');
-    this.description = m.prop('');
-    this.user = m.prop('');
-    this.start = m.prop();
-    this.end = m.prop();
-    this.eventId = m.prop();
-
-    if (this.props.event) {
-      var event = this.props.event;
-      this.eventId(event.id());
-      this.name(event.name());
-      this.description(event.description());
-      this.user(event.user());
-      this.start(event.event_start());
-      this.end(event.event_end() ? event.event_end() : event.event_start());
-    }
+  _proto.title = function title() {
+    return this.props.event.name();
   }
   /*
   * Override parent modal so we can have avatar in title bar
@@ -18705,11 +18697,13 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
       style: "margin-right:1em"
     }, this.title())), m("div", {
       className: "fa-pull-right"
-    }, flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_3___default()(this.user())), m("div", {
+    }, flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_3___default()(this.props.event.user())), m("div", {
       style: "clear:both"
     })), this.alertAttrs ? m("div", {
       className: "Modal-alert"
-    }, Alert.component(this.alertAttrs)) : '', m(_EventFragment__WEBPACK_IMPORTED_MODULE_4__["default"], null))));
+    }, Alert.component(this.alertAttrs)) : '', m(_EventFragment__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      event: this.props.event
+    }))));
   };
 
   return EventDetailsModal;

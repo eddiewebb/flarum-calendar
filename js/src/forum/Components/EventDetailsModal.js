@@ -9,24 +9,12 @@ export default class EventDetailsModal extends Modal {
 
   init() {
     super.init();
-    this.name = m.prop('');
-    this.description = m.prop('');
-    this.user = m.prop('');
-    this.start = m.prop();
-    this.end = m.prop();
-    this.eventId = m.prop();
-    if (this.props.event) {
-      const event = this.props.event;
-      this.eventId(event.id());
-      this.name(event.name());
-      this.description(event.description());
-      this.user(event.user() )
-      this.start(event.event_start());
-      this.end(event.event_end()?event.event_end():event.event_start());
-    }
   }
 
 
+  title(){
+    return this.props.event.name();
+  }
   /*
   * Override parent modal so we can have avatar in title bar
    */
@@ -56,14 +44,14 @@ export default class EventDetailsModal extends Modal {
                 <div>
                   <h3 className="fa-pull-left App-titleControl App-titleControl--text" style="margin-right:1em">{this.title()}</h3>
                 </div>
-                <div className="fa-pull-right" >{avatar(this.user())}</div>
+                <div className="fa-pull-right" >{avatar(this.props.event.user())}</div>
                 <div style="clear:both">
               </div>
             </div>
 
             {this.alertAttrs ? <div className="Modal-alert">{Alert.component(this.alertAttrs)}</div> : ''}
 
-            <EventFragment />
+            <EventFragment event={this.props.event}/>
           </form>
         </div>
       </div>

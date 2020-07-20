@@ -127,15 +127,6 @@ export default class CalendarPage extends Page {
 
 
   renderCalendarEvents(){
-    console.log("rendering events")
-    console.log(this.events)
-    //Flarum payload includes an array + payload object [0, 1, 2, payload] - probably a better way to filter..
-    let cleanedEvents = [];
-    for (const eventKey in this.events) {
-      if(this.events[eventKey].hasOwnProperty('createdAt')){
-        cleanedEvents.push(this.events[eventKey]);
-      }
-    }
     const calendarEl = document.getElementById('calendar');
     const openModal = this.openCreateModal.bind(this);
     const calendar = new Calendar(calendarEl, {
@@ -143,15 +134,21 @@ export default class CalendarPage extends Page {
       initialView: 'dayGridMonth',
       plugins: [dayGridPlugin, interactionPlugin, listPlugin],
       eventClick: function (info) {
-        console.log(events);
-        app.modal.show(
-          new EventDetailsModal({"event": this.event})
-        );
-      },
+        console.log("Show event detail");
+        for(var event of this.events){
+          if(event.id() === info.event.extendedProps.eventId ){
+            console.log(event.user())
+            app.modal.show(
+              new EventDetailsModal({"event": event})
+            );
+            break;
+          }
+        }
+      }.bind(this),
       dateClick:  function(info){
         openModal(info);
       },
-      events: cleanedEvents,
+      events: this.events,
       eventDataTransform: this.flarumToFullCalendarEvent,
     });
     calendar.render();
