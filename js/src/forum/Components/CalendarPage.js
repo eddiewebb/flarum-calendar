@@ -123,7 +123,6 @@ export default class CalendarPage extends Page {
    * @param context
    */
   config(isInitialized, context) {
-
     if(isInitialized){
       return;
     }
@@ -168,7 +167,7 @@ export default class CalendarPage extends Page {
 
   openCreateModal(info) {
     if(app.session.user != undefined){
-      let modal = new EditEventModal({"calendar":this.calendar(),"events":this.events()});
+      let modal = new EditEventModal();
       if(info.date){
         modal = modal.withStart(info.date);
       }

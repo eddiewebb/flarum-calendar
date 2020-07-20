@@ -18439,10 +18439,7 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
 
   _proto.openCreateModal = function openCreateModal(info) {
     if (flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.session.user != undefined) {
-      var modal = new _EditEventModal__WEBPACK_IMPORTED_MODULE_13__["default"]({
-        "calendar": this.calendar(),
-        "events": this.events()
-      });
+      var modal = new _EditEventModal__WEBPACK_IMPORTED_MODULE_13__["default"]();
 
       if (info.date) {
         modal = modal.withStart(info.date);
@@ -18596,9 +18593,9 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
       defaultDate: [flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.event_start(), "Y-m-d h:i K"), flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.event_end(), "Y-m-d h:i K")],
       //inline: true
       onChange: function onChange(dates) {
-        _this.start(dates[0]);
+        _this.event_start(dates[0]);
 
-        _this.end(dates[1]);
+        _this.event_end(dates[1]);
       }
     });
   };
@@ -18610,9 +18607,15 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
   _proto.onsubmit = function onsubmit(e) {
     e.preventDefault();
 
-    if (this.name() === '' || this.description() === '') {
-      alert("Please provide an event name and description");
+    if (!this.name() || !this.description()) {
+      app.alerts.show(new Alert({
+        children: "Events require a name and description"
+      }));
       return;
+    }
+
+    if (!this.props.event) {
+      this.props.event = app.store.createRecord('events');
     }
 
     this.props.event.save({
@@ -18750,6 +18753,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! flarum/helpers/avatar */ "flarum/helpers/avatar");
 /* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _EditEventModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./EditEventModal */ "./src/forum/Components/EditEventModal.js");
+/* harmony import */ var flarum_components_Alert__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! flarum/components/Alert */ "flarum/components/Alert");
+/* harmony import */ var flarum_components_Alert__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Alert__WEBPACK_IMPORTED_MODULE_8__);
+
 
 
 
@@ -18820,20 +18826,12 @@ var EventFragment = /*#__PURE__*/function (_Component) {
       "event": this.props
     });
     var events = this.props.events;
-    var calendar = this.props.calendar;
-    var eventRecord = app.store.getById('events', this.eventId());
-    eventRecord["delete"]().then(function () {
-      for (var eventIndex in events) {
-        if (events[eventIndex].data.id === eventRecord.id()) {
-          events.splice(eventIndex, 1);
-          break;
-        }
-      }
-
-      calendar.removeAllEvents();
-      calendar.addEventSource(events);
-      this.hide();
-    }.bind(this));
+    this.props.event["delete"]().then(function () {
+      app.alerts.show(new flarum_components_Alert__WEBPACK_IMPORTED_MODULE_8___default.a({
+        children: "Event Deleted"
+      }));
+      app.history.back();
+    });
   };
 
   return EventFragment;
@@ -19159,6 +19157,17 @@ module.exports = flarum.core.compat['Model'];
 /***/ (function(module, exports) {
 
 module.exports = flarum.core.compat['app'];
+
+/***/ }),
+
+/***/ "flarum/components/Alert":
+/*!*********************************************************!*\
+  !*** external "flarum.core.compat['components/Alert']" ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/Alert'];
 
 /***/ }),
 

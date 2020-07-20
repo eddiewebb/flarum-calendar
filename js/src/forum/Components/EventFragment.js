@@ -5,7 +5,7 @@ import User from 'flarum/models/User'
 import userOnline from 'flarum/helpers/userOnline';
 import avatar from 'flarum/helpers/avatar';
 import EditEventModal from "./EditEventModal";
-
+import Alert from 'flarum/components/Alert'
 
 
 export default class EventFragment extends Component {
@@ -66,19 +66,10 @@ export default class EventFragment extends Component {
   deleteEvent() {
     console.log({"message": "[webbinaro/flarum-calendar] delete event ", "event": this.props})
     const events = this.props.events;
-    const calendar = this.props.calendar;
-    let eventRecord = app.store.getById('events', this.eventId());
-    eventRecord.delete().then(function () {
-      for (var eventIndex in events) {
-        if (events[eventIndex].data.id === eventRecord.id()) {
-          events.splice(eventIndex, 1);
-          break;
-        }
-      }
-      calendar.removeAllEvents();
-      calendar.addEventSource(events);
-      this.hide()
-    }.bind(this));
+    this.props.event.delete().then(()=>{
+      app.alerts.show(new Alert({children:"Event Deleted"}));
+      app.history.back();
+    });
   }
 
 }

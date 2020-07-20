@@ -81,8 +81,8 @@ export default class EditEventModal extends Modal{
       defaultDate: [flatpickr.parseDate(this.event_start(),"Y-m-d h:i K"),flatpickr.parseDate(this.event_end(),"Y-m-d h:i K")],
       //inline: true
       onChange: dates => {
-        this.start(dates[0]);
-        this.end(dates[1])
+        this.event_start(dates[0]);
+        this.event_end(dates[1])
       }
     });
   }
@@ -94,9 +94,13 @@ export default class EditEventModal extends Modal{
 
   onsubmit(e) {
     e.preventDefault();
-    if (this.name() === '' || this.description() === '') {
-      alert("Please provide an event name and description");
+    if (!this.name() || !this.description() ) {
+
+      app.alerts.show(new Alert({children:"Events require a name and description"}));
       return;
+    }
+    if(!this.props.event){
+      this.props.event = app.store.createRecord('events');
     }
     this.props.event.save({
       name: this.name(),
