@@ -12,25 +12,10 @@ export default class EventFragment extends Component {
 
   init() {
     super.init();
-    this.name = m.prop('');
-    this.description = m.prop('');
-    this.user = m.prop('');
-    this.start = m.prop();
-    this.end = m.prop();
-    this.eventId = m.prop();
-    if (this.props.event) {
-      const event = this.props.event;
-      this.eventId(event.id());
-      this.name(event.name());
-      this.description(event.description());
-      this.user(event.user())
-      this.start(event.event_start());
-      this.end(event.event_end() ? event.event_end() : event.event_start());
-    }
   }
 
   title() {
-    return this.name();
+    return this.props.event.name();
   }
 
   className() {
@@ -41,12 +26,12 @@ export default class EventFragment extends Component {
   view() {
       return <div className="Modal-body">
         <p id="eventdescription"/>
-        <p>Hosted by: <a href={app.route.user(this.user())} config={m.route}>
-          {userOnline(this.user())}
-          {username(this.user())}
+        <p>Hosted by: <a href={app.route.user(this.props.event.user())} config={m.route}>
+          {userOnline(this.props.event.user())}
+          {username(this.props.event.user())}
         </a></p>
-        <p>{this.start().toLocaleDateString() + ", " + this.start().toLocaleTimeString()} - {this.end().toLocaleDateString() + ", " + this.end().toLocaleTimeString()}</p>
-        {(app.session.user && (app.session.user.canModerateEvents() || this.user.id === app.session.user.id)) ?
+        <p>{this.props.event.event_start().toLocaleDateString() + ", " + this.props.event.event_start().toLocaleTimeString()} - {this.props.event.event_end().toLocaleDateString() + ", " + this.props.event.event_end().toLocaleTimeString()}</p>
+        {(app.session.user && (app.session.user.canModerateEvents() || this.props.event.user.id === app.session.user.id)) ?
           (<div>
               {Button.component({
                 icon: 'fas fa-edit',
@@ -66,7 +51,7 @@ export default class EventFragment extends Component {
 
   config() {
     const descElement = document.getElementById("eventdescription");
-    s9e.TextFormatter.preview(this.description(), descElement);
+    s9e.TextFormatter.preview(this.props.event.description(), descElement);
   }
 
 

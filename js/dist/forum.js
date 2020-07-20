@@ -18770,27 +18770,10 @@ var EventFragment = /*#__PURE__*/function (_Component) {
 
   _proto.init = function init() {
     _Component.prototype.init.call(this);
-
-    this.name = m.prop('');
-    this.description = m.prop('');
-    this.user = m.prop('');
-    this.start = m.prop();
-    this.end = m.prop();
-    this.eventId = m.prop();
-
-    if (this.props.event) {
-      var event = this.props.event;
-      this.eventId(event.id());
-      this.name(event.name());
-      this.description(event.description());
-      this.user(event.user());
-      this.start(event.event_start());
-      this.end(event.event_end() ? event.event_end() : event.event_start());
-    }
   };
 
   _proto.title = function title() {
-    return this.name();
+    return this.props.event.name();
   };
 
   _proto.className = function className() {
@@ -18803,9 +18786,9 @@ var EventFragment = /*#__PURE__*/function (_Component) {
     }, m("p", {
       id: "eventdescription"
     }), m("p", null, "Hosted by: ", m("a", {
-      href: app.route.user(this.user()),
+      href: app.route.user(this.props.event.user()),
       config: m.route
-    }, flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_5___default()(this.user()), flarum_helpers_username__WEBPACK_IMPORTED_MODULE_3___default()(this.user()))), m("p", null, this.start().toLocaleDateString() + ", " + this.start().toLocaleTimeString(), " - ", this.end().toLocaleDateString() + ", " + this.end().toLocaleTimeString()), app.session.user && (app.session.user.canModerateEvents() || this.user.id === app.session.user.id) ? m("div", null, flarum_components_Button__WEBPACK_IMPORTED_MODULE_2___default.a.component({
+    }, flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_5___default()(this.props.event.user()), flarum_helpers_username__WEBPACK_IMPORTED_MODULE_3___default()(this.props.event.user()))), m("p", null, this.props.event.event_start().toLocaleDateString() + ", " + this.props.event.event_start().toLocaleTimeString(), " - ", this.props.event.event_end().toLocaleDateString() + ", " + this.props.event.event_end().toLocaleTimeString()), app.session.user && (app.session.user.canModerateEvents() || this.props.event.user.id === app.session.user.id) ? m("div", null, flarum_components_Button__WEBPACK_IMPORTED_MODULE_2___default.a.component({
       icon: 'fas fa-edit',
       onclick: this.editLaunch.bind(this),
       className: 'Button Button--icon Button--link'
@@ -18818,7 +18801,7 @@ var EventFragment = /*#__PURE__*/function (_Component) {
 
   _proto.config = function config() {
     var descElement = document.getElementById("eventdescription");
-    s9e.TextFormatter.preview(this.description(), descElement);
+    s9e.TextFormatter.preview(this.props.event.description(), descElement);
   };
 
   _proto.editLaunch = function editLaunch() {
