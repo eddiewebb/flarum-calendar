@@ -12,6 +12,10 @@ import Model from "flarum/Model";
 app.initializers.add('webbinaro/flarum-calendar', () => {
   app.routes.advevents = {path: '/events', component: <CalendarPage />};
   app.routes.advevent = {path: '/events/:id', component: <EventPage  /> };
+
+  //allows easy route generation by passing an event from components (see EventFragment)
+  app.route.advevent = event => app.route('advevent', {id: event.id()});
+
 	//add events to side nav
   extend(IndexPage.prototype, 'navItems', function (items) {
     items.add(

@@ -6,7 +6,7 @@ import userOnline from 'flarum/helpers/userOnline';
 import avatar from 'flarum/helpers/avatar';
 import EditEventModal from "./EditEventModal";
 import Alert from 'flarum/components/Alert'
-
+import fullTime from 'flarum/helpers/fullTime';
 
 export default class EventFragment extends Component {
 
@@ -19,18 +19,20 @@ export default class EventFragment extends Component {
   }
 
   className() {
-    return 'EventDetailsModal Modal--small';
+    return 'EventTeaser Modal--small';
   }
 
-
   view() {
-      return <div className="Modal-body">
+      return <div>
         <p id="eventdescription"/>
         <p>Hosted by: <a href={app.route.user(this.props.event.user())} config={m.route}>
           {userOnline(this.props.event.user())}
           {username(this.props.event.user())}
         </a></p>
-        <p>{this.props.event.event_start().toLocaleDateString() + ", " + this.props.event.event_start().toLocaleTimeString()} - {this.props.event.event_end().toLocaleDateString() + ", " + this.props.event.event_end().toLocaleTimeString()}</p>
+        <p>
+          Starts: { fullTime(this.props.event.event_start()) } <br/>
+          Ends: { fullTime(this.props.event.event_end())}
+        </p>
         {(app.session.user && (app.session.user.canModerateEvents() || this.props.event.user.id === app.session.user.id)) ?
           (<div>
               {Button.component({
@@ -68,7 +70,8 @@ export default class EventFragment extends Component {
     const events = this.props.events;
     this.props.event.delete().then(()=>{
       app.alerts.show(new Alert({children:"Event Deleted"}));
-      app.history.back();
+      m.route(app.route('advevents'));
+      //app.history.back();
     });
   }
 

@@ -8,7 +8,7 @@ import LinkButton from 'flarum/components/LinkButton';
 import Separator from 'flarum/components/Separator';
 import listItems from 'flarum/helpers/listItems';
 import Event from "../Models/Event";
-import EventDetailsModal from "./EventDetailsModal";
+import EventTeaser from "./EventTeaser";
 import EventFragment from "./EventFragment";
 
 /**

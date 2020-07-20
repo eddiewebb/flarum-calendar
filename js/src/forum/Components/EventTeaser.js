@@ -4,8 +4,10 @@ import avatar from 'flarum/helpers/avatar';
 import EventFragment from "./EventFragment";
 
 
-
-export default class EventDetailsModal extends Modal {
+/**
+ * This is intended as a "teaser" to link to full event page
+ */
+export default class EventTeaser extends Modal {
 
   init() {
     super.init();
@@ -50,8 +52,18 @@ export default class EventDetailsModal extends Modal {
             </div>
 
             {this.alertAttrs ? <div className="Modal-alert">{Alert.component(this.alertAttrs)}</div> : ''}
-
-            <EventFragment event={this.props.event}/>
+            <div className="Modal-body">
+              <EventFragment event={this.props.event} />
+              <p>
+                <a href={app.route.advevent(this.props.event)} config={function(element, isInitialized) {
+                  if (isInitialized) return;
+                  $(element).on('click', e => e.stopPropagation());
+                  m.route.apply(this, arguments);
+                }}>
+                  More details about this event
+                </a>
+              </p>
+            </div>
           </form>
         </div>
       </div>

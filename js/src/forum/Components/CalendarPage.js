@@ -8,7 +8,7 @@ import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
-import EventDetailsModal from "./EventDetailsModal";
+import EventTeaser from "./EventTeaser";
 import Button from 'flarum/components/Button'
 import EditEventModal from "./EditEventModal";
 import LogInModal from 'flarum/components/LogInModal'
@@ -139,7 +139,7 @@ export default class CalendarPage extends Page {
           if(event.id() === info.event.extendedProps.eventId ){
             console.log(event.user())
             app.modal.show(
-              new EventDetailsModal({"event": event})
+              new EventTeaser({"event": event})
             );
             break;
           }

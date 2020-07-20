@@ -26,10 +26,16 @@ export default class EditEventModal extends Modal{
         this.event_end(event.event_end() ? event.event_end() : event.event_start());
       }
     }
+
+
+  /**
+   * Builder to create new modal *with empty event* but pre-populated date field.
+    * @param startDate
+   * @returns {EditEventModal}
+   */
   withStart(startDate)
   {
     this.event_start(startDate);
-    this.event.event_start(startDate);
     return this;
   }
 
