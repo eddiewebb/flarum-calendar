@@ -29,6 +29,7 @@ export default class EditEventModal extends Modal{
   withStart(startDate)
   {
     this.event_start(startDate);
+    this.event.event_start(startDate);
     return this;
   }
 
@@ -97,8 +98,12 @@ export default class EditEventModal extends Modal{
       alert("Please provide an event name and description");
       return;
     }
-    this.props.event.save();
-    this.hide();
+    this.props.event.save({
+      name: this.name(),
+      description: this.description(),
+      event_start: this.event_start(),
+      event_end: this.event_end()
+    }).then(this.hide());
 
   }
 

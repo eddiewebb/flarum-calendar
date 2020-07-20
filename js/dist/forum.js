@@ -18532,6 +18532,7 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
 
   _proto.withStart = function withStart(startDate) {
     this.event_start(startDate);
+    this.event.event_start(startDate);
     return this;
   };
 
@@ -18614,8 +18615,12 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
       return;
     }
 
-    this.props.event.save();
-    this.hide();
+    this.props.event.save({
+      name: this.name(),
+      description: this.description(),
+      event_start: this.event_start(),
+      event_end: this.event_end()
+    }).then(this.hide());
   };
 
   return EditEventModal;
