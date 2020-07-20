@@ -18289,6 +18289,8 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
   var _proto = CalendarPage.prototype;
 
   _proto.init = function init() {
+    console.log("initializing");
+
     _Page.prototype.init.call(this);
 
     this.calendar = m.prop();
@@ -18298,6 +18300,17 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
   _proto.onunload = function onunload() {};
 
   _proto.view = function view() {
+    var _this = this;
+
+    console.log("Vieieoing");
+    flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.store.find('events', {
+      sort: 'createdAt'
+    }).then(function (results) {
+      _this.events = results;
+      console.log(results);
+
+      _this.renderCalendarEvents();
+    });
     return m("div", {
       className: "IndexPage"
     }, flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_5___default.a.prototype.hero(), m("div", {
@@ -18375,39 +18388,17 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
      );*/
 
     return items;
-  }
-  /**
-   * Config runs after the elemtns are rendered on page, perfect to run any script against the repainted DOM.
-   * @param isInitialized
-   * @param context
-   */
-  ;
-
-  _proto.config = function config(isInitialized, context) {
-    var _this = this;
-
-    if (isInitialized) {
-      return;
-    }
-
-    console.log("[webbinaro/flarum-calendar] loading events..");
-    flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.store.find('events', {
-      sort: 'createdAt'
-    }).then(function (results) {
-      _this.events(results);
-
-      _this.renderCalendarEvents(results);
-    });
   };
 
-  _proto.renderCalendarEvents = function renderCalendarEvents(data) {
-    console.log("rendering events"); //Flarum payload includes an array + payload object [0, 1, 2, payload] - probably a better way to filter..
+  _proto.renderCalendarEvents = function renderCalendarEvents() {
+    console.log("rendering events");
+    console.log(this.events); //Flarum payload includes an array + payload object [0, 1, 2, payload] - probably a better way to filter..
 
     var cleanedEvents = [];
 
-    for (var eventKey in data) {
-      if (data[eventKey].hasOwnProperty('createdAt')) {
-        cleanedEvents.push(data[eventKey]);
+    for (var eventKey in this.events) {
+      if (this.events[eventKey].hasOwnProperty('createdAt')) {
+        cleanedEvents.push(this.events[eventKey]);
       }
     }
 
@@ -18421,10 +18412,9 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
       initialView: 'dayGridMonth',
       plugins: [_fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_8__["default"], _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_9__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_10__["default"]],
       eventClick: function eventClick(info) {
+        console.log(events);
         flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.modal.show(new _EventDetailsModal__WEBPACK_IMPORTED_MODULE_11__["default"]({
-          "event": info.event,
-          "calendar": this,
-          "events": data
+          "event": this.event
         }));
       },
       dateClick: function dateClick(info) {

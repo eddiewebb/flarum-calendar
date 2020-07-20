@@ -16,15 +16,25 @@ import LogInModal from 'flarum/components/LogInModal'
 
 export default class CalendarPage extends Page {
   init() {
+    console.log("initializing")
     super.init();
     this.calendar = m.prop();
     this.events = m.prop();
+
+
   }
 
   onunload() {
   }
 
   view() {
+    console.log("Vieieoing")
+    app.store.find('events', {sort: 'createdAt'}).then(results => {
+        this.events = results;
+        console.log(results)
+        this.renderCalendarEvents();
+      }
+    );
     return (
       <div className="IndexPage">
         {IndexPage.prototype.hero()}
@@ -83,8 +93,6 @@ export default class CalendarPage extends Page {
     }
 
 
-
-
     items.replace('nav',
       SelectDropdown.component({
         children: this.navItems(this).toArray(),
@@ -117,31 +125,15 @@ export default class CalendarPage extends Page {
     return items;
   }
 
-  /**
-   * Config runs after the elemtns are rendered on page, perfect to run any script against the repainted DOM.
-   * @param isInitialized
-   * @param context
-   */
-  config(isInitialized, context) {
-    if(isInitialized){
-      return;
-    }
-    console.log("[webbinaro/flarum-calendar] loading events..");
-    app.store.find('events', {sort: 'createdAt'}).then(results => {
-        this.events(results);
-        this.renderCalendarEvents(results)
-    }
-    );
-  }
 
-
-  renderCalendarEvents(data){
+  renderCalendarEvents(){
     console.log("rendering events")
+    console.log(this.events)
     //Flarum payload includes an array + payload object [0, 1, 2, payload] - probably a better way to filter..
     let cleanedEvents = [];
-    for (const eventKey in data) {
-      if(data[eventKey].hasOwnProperty('createdAt')){
-        cleanedEvents.push(data[eventKey]);
+    for (const eventKey in this.events) {
+      if(this.events[eventKey].hasOwnProperty('createdAt')){
+        cleanedEvents.push(this.events[eventKey]);
       }
     }
     const calendarEl = document.getElementById('calendar');
@@ -151,8 +143,9 @@ export default class CalendarPage extends Page {
       initialView: 'dayGridMonth',
       plugins: [dayGridPlugin, interactionPlugin, listPlugin],
       eventClick: function (info) {
+        console.log(events);
         app.modal.show(
-          new EventDetailsModal({"event": info.event, "calendar":this,"events":data})
+          new EventDetailsModal({"event": this.event})
         );
       },
       dateClick:  function(info){
