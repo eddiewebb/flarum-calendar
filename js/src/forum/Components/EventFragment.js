@@ -71,10 +71,11 @@ export default class EventFragment extends Component {
 
 
   editLaunch() {
-    console.log({"message": "[webbinaro/flarum-calendar] edit event ", "event": this.props})
+    console.log({"message": "[webbinaro/flarum-calendar] edit event ", "props": this.props})
     app.modal.show(
-      new EditEventModal({"event": this.props.event, "calendar": this.props.calendar, "events": this.props.events})
+      new EditEventModal({"event": this.props.event})
     );
+
   }
 
   deleteEvent() {

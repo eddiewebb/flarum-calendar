@@ -1,10 +1,6 @@
 import Modal from 'flarum/components/Modal';
 import Button from 'flarum/components/Button';
-import username from 'flarum/helpers/username';
-import User from 'flarum/models/User'
-import userOnline from 'flarum/helpers/userOnline';
 import avatar from 'flarum/helpers/avatar';
-import EditEventModal from "./EditEventModal";
 import EventFragment from "./EventFragment";
 
 

@@ -18515,30 +18515,28 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
     _Modal.prototype.init.call(this);
 
     this.name = m.prop('');
-    this.description = m.prop('');
     this.user = m.prop('');
-    this.start = m.prop();
-    this.end = m.prop();
-    this.eventId = m.prop();
+    this.description = m.prop('');
+    this.event_start = m.prop();
+    this.event_end = m.prop();
 
     if (this.props.event) {
       var event = this.props.event;
-      this.eventId(event.extendedProps.eventId);
-      this.name(event.title);
-      this.description(event.extendedProps.description);
-      this.user(event.extendedProps.user);
-      this.start(event.start);
-      this.end(event.end);
+      this.name(event.name());
+      this.description(event.description());
+      this.user(event.user());
+      this.event_start(event.event_start());
+      this.event_end(event.event_end() ? event.event_end() : event.event_start());
     }
   };
 
   _proto.withStart = function withStart(startDate) {
-    this.start(startDate);
+    this.event_start(startDate);
     return this;
   };
 
   _proto.title = function title() {
-    return "Create new calendar event";
+    return this.name() ? "Edit event details" : "Create new calendar event";
   };
 
   _proto.className = function className() {
@@ -18548,11 +18546,7 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
   _proto.content = function content() {
     return [m("div", {
       className: "Modal-body"
-    }, m("input", {
-      type: "hidden",
-      name: "id",
-      bidi: this.eventId
-    }), m("div", {
+    }, m("div", {
       className: "Form-group"
     }, m("label", {
       className: "label"
@@ -18598,7 +18592,7 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
       enableTime: true,
       dateFormat: 'Y-m-d H:i',
       mode: "range",
-      defaultDate: [flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.start(), "Y-m-d h:i K"), flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.end(), "Y-m-d h:i K")],
+      defaultDate: [flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.event_start(), "Y-m-d h:i K"), flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.event_end(), "Y-m-d h:i K")],
       //inline: true
       onChange: function onChange(dates) {
         _this.start(dates[0]);
@@ -18613,54 +18607,15 @@ var EditEventModal = /*#__PURE__*/function (_Modal) {
   };
 
   _proto.onsubmit = function onsubmit(e) {
-    var _this2 = this;
-
     e.preventDefault();
-    var calendar = this.props.calendar;
-    var events = this.props.events;
 
     if (this.name() === '' || this.description() === '') {
       alert("Please provide an event name and description");
       return;
     }
 
-    var eventRecord = app.store.getById('events', this.eventId());
-    var fresh = false;
-
-    if (!eventRecord) {
-      console.log("submitting new event");
-      eventRecord = app.store.createRecord('events');
-      fresh = true;
-    }
-
-    eventRecord.save({
-      name: this.name(),
-      description: this.description(),
-      event_start: flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.start(), "Y-m-d h:i K"),
-      event_end: flatpickr__WEBPACK_IMPORTED_MODULE_3___default.a.parseDate(this.end(), "Y-m-d h:i K")
-    }).then(function (result) {
-      console.log("Saves");
-      console.log(result);
-
-      if (fresh) {
-        result = app.store.getById('events', result.id());
-        console.log("new");
-        console.log(result);
-        events.push(result);
-      } else {
-        for (var eventIndex in events) {
-          if (events[eventIndex].data.id === result.id()) {
-            events[eventIndex] = result;
-            break;
-          }
-        }
-      }
-
-      calendar.removeAllEvents();
-      calendar.addEventSource(events);
-
-      _this2.hide();
-    })["catch"](console.log);
+    this.props.event.save();
+    this.hide();
   };
 
   return EditEventModal;
@@ -18685,20 +18640,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flarum_components_Modal__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Modal__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/components/Button */ "flarum/components/Button");
 /* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Button__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var flarum_helpers_username__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/helpers/username */ "flarum/helpers/username");
-/* harmony import */ var flarum_helpers_username__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_username__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var flarum_models_User__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/models/User */ "flarum/models/User");
-/* harmony import */ var flarum_models_User__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_models_User__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! flarum/helpers/userOnline */ "flarum/helpers/userOnline");
-/* harmony import */ var flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_userOnline__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! flarum/helpers/avatar */ "flarum/helpers/avatar");
-/* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _EditEventModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./EditEventModal */ "./src/forum/Components/EditEventModal.js");
-/* harmony import */ var _EventFragment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./EventFragment */ "./src/forum/Components/EventFragment.js");
-
-
-
-
+/* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/helpers/avatar */ "flarum/helpers/avatar");
+/* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _EventFragment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./EventFragment */ "./src/forum/Components/EventFragment.js");
 
 
 
@@ -18763,11 +18707,11 @@ var EventDetailsModal = /*#__PURE__*/function (_Modal) {
       style: "margin-right:1em"
     }, this.title())), m("div", {
       className: "fa-pull-right"
-    }, flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_6___default()(this.user())), m("div", {
+    }, flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_3___default()(this.user())), m("div", {
       style: "clear:both"
     })), this.alertAttrs ? m("div", {
       className: "Modal-alert"
-    }, Alert.component(this.alertAttrs)) : '', m(_EventFragment__WEBPACK_IMPORTED_MODULE_8__["default"], null))));
+    }, Alert.component(this.alertAttrs)) : '', m(_EventFragment__WEBPACK_IMPORTED_MODULE_4__["default"], null))));
   };
 
   return EventDetailsModal;
@@ -18875,12 +18819,10 @@ var EventFragment = /*#__PURE__*/function (_Component) {
   _proto.editLaunch = function editLaunch() {
     console.log({
       "message": "[webbinaro/flarum-calendar] edit event ",
-      "event": this.props
+      "props": this.props
     });
     app.modal.show(new _EditEventModal__WEBPACK_IMPORTED_MODULE_7__["default"]({
-      "event": this.props.event,
-      "calendar": this.props.calendar,
-      "events": this.props.events
+      "event": this.props.event
     }));
   };
 
@@ -18990,18 +18932,18 @@ var EventPage = /*#__PURE__*/function (_Page) {
   _proto.view = function view() {
     return m("div", {
       className: "EventPage"
-    }, this.event ? [m(_EventFragment__WEBPACK_IMPORTED_MODULE_12__["default"], {
-      event: this.event
-    }), m("div", {
+    }, this.event ? m("div", {
       className: "container"
     }, m("div", {
       className: "sideNavContainer"
     }, m("nav", {
-      className: "TagsPage-nav IndexPage-nav sideNav",
+      className: "IndexPage-nav sideNav",
       config: flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype.affixSidebar
     }, m("ul", null, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_9___default()(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype.sidebarItems().toArray()))), m("div", {
-      className: "sideNavOffset UserPage-content"
-    }, this.content())))] : [flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_5___default.a.component({
+      className: "sideNavOffset IndexPage-results"
+    }, m(_EventFragment__WEBPACK_IMPORTED_MODULE_12__["default"], {
+      event: this.event
+    })))) : [flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_5___default.a.component({
       className: 'LoadingIndicator--block'
     })]);
   }
@@ -19026,7 +18968,7 @@ var EventPage = /*#__PURE__*/function (_Page) {
     this.event = event;
     this.user = event.user(); //app.current.set('event', event);
 
-    app.setTitle(event.name);
+    app.setTitle(event.name() + " | ADK Adventure Riders");
     m.redraw();
   }
   /**

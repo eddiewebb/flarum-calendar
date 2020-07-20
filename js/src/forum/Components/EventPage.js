@@ -34,16 +34,16 @@ export default class EventPage extends Page {
     return (
       <div className="EventPage">
         {this.event
-          ? [<EventFragment event={this.event}/>,
+          ?
             <div className="container">
               <div className="sideNavContainer">
-                <nav className="TagsPage-nav IndexPage-nav sideNav" config={IndexPage.prototype.affixSidebar}>
+                <nav className="IndexPage-nav sideNav" config={IndexPage.prototype.affixSidebar}>
                   <ul>{listItems(IndexPage.prototype.sidebarItems().toArray())}</ul>
                 </nav>
-                <div className="sideNavOffset UserPage-content">{this.content()}</div>
+                <div className="sideNavOffset IndexPage-results"><EventFragment event={this.event}/></div>
               </div>
-            </div>,
-          ]
+            </div>
+
           : [LoadingIndicator.component({ className: 'LoadingIndicator--block' })]}
       </div>
     );
@@ -69,7 +69,7 @@ export default class EventPage extends Page {
 
     //app.current.set('event', event);
 
-    app.setTitle(event.name);
+    app.setTitle( event.name() + " | ADK Adventure Riders");
 
     m.redraw();
   }
