@@ -9,33 +9,38 @@ require("flatpickr/dist/flatpickr.css");
  */
 export default class EditEventModal extends Modal{
 
-  init() {
-    super.init();
-    this.name = m.prop('');
-    this.description = m.prop('');
-    this.user = m.prop('');
-    this.start = m.prop();
-    this.end = m.prop();
-    this.eventId = m.prop();
-    if (this.props.event) {
-      const event = this.props.event;
-      this.eventId(event.extendedProps.eventId);
-      this.name(event.title);
-      this.description(event.extendedProps.description);
-      this.user(event.extendedProps.user)
-      this.start(event.start );
-      this.end(event.end );
-    }
-  }
 
+    init() {
+      super.init();
+      this.name = m.prop('');
+      this.user = m.prop('');
+      this.description = m.prop('');
+      this.event_start = m.prop();
+      this.event_end = m.prop();
+      if (this.props.event) {
+        const event = this.props.event;
+        this.name(event.name());
+        this.description(event.description());
+        this.user(event.user())
+        this.event_start(event.event_start());
+        this.event_end(event.event_end() ? event.event_end() : event.event_start());
+      }
+    }
+
+
+  /**
+   * Builder to create new modal *with empty event* but pre-populated date field.
+    * @param startDate
+   * @returns {EditEventModal}
+   */
   withStart(startDate)
   {
-    this.start(startDate);
+    this.event_start(startDate);
     return this;
   }
 
   title() {
-    return "Create new calendar event";
+    return this.name()?"Edit event details":"Create new calendar event";
   }
 
   className() {
@@ -46,7 +51,6 @@ export default class EditEventModal extends Modal{
   content() {
     return [
       <div className="Modal-body">
-        <input type="hidden" name="id" bidi={this.eventId} />
         <div className="Form-group">
           <label className="label">What</label>
           <input type="text" name="title" className="FormControl" bidi={this.name} />
@@ -80,11 +84,11 @@ export default class EditEventModal extends Modal{
       enableTime: true,
       dateFormat: 'Y-m-d H:i',
       mode: "range",
-      defaultDate: [flatpickr.parseDate(this.start(),"Y-m-d h:i K"),flatpickr.parseDate(this.end(),"Y-m-d h:i K")],
+      defaultDate: [flatpickr.parseDate(this.event_start(),"Y-m-d h:i K"),flatpickr.parseDate(this.event_end(),"Y-m-d h:i K")],
       //inline: true
       onChange: dates => {
-        this.start(dates[0]);
-        this.end(dates[1])
+        this.event_start(dates[0]);
+        this.event_end(dates[1])
       }
     });
   }
@@ -96,48 +100,20 @@ export default class EditEventModal extends Modal{
 
   onsubmit(e) {
     e.preventDefault();
-    const calendar = this.props.calendar;
-    const events = this.props.events;
-    if (this.name() === '' || this.description() === '') {
-      alert("Please provide an event name and description");
+    if (!this.name() || !this.description() ) {
+
+      app.alerts.show(new Alert({children:"Events require a name and description"}));
       return;
     }
-    let eventRecord = app.store.getById('events',this.eventId());
-    let fresh = false;
-    if (!eventRecord){
-      console.log("submitting new event")
-      eventRecord = app.store.createRecord('events');
-      fresh = true;
+    if(!this.props.event){
+      this.props.event = app.store.createRecord('events');
     }
-    eventRecord.save({
+    this.props.event.save({
       name: this.name(),
       description: this.description(),
-      event_start: flatpickr.parseDate(this.start(),"Y-m-d h:i K"),
-      event_end: flatpickr.parseDate(this.end(),"Y-m-d h:i K"),
-    }).then(result => {
-      console.log("Saves");
-      console.log(result);
-      if(fresh) {
-       result = app.store.getById('events',result.id())
-        console.log("new")
-        console.log(result)
-       events.push(result);
-      }else{
-        for(var eventIndex in events) {
-          if (events[eventIndex].data.id === result.id()) {
-            events[eventIndex] = result;
-            break;
-          }
-        }
-      }
-      calendar.removeAllEvents();
-      calendar.addEventSource(events);
-      this.hide();
-      }
-    ).catch(
-      console.log
-    );
-
+      event_start: this.event_start(),
+      event_end: this.event_end()
+    }).then(this.hide());
 
   }
 

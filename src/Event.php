@@ -3,6 +3,7 @@
 namespace Webbinaro\AdvCalendar;
 
 use Flarum\Database\AbstractModel;
+use Flarum\Database\ScopeVisibilityTrait;
 use Flarum\User\User;
 use Carbon\Carbon;
 
@@ -19,6 +20,7 @@ use Carbon\Carbon;
  */
 class Event extends AbstractModel
 {
+    use ScopeVisibilityTrait;
     /**
      * {@inheritdoc}
      */
@@ -30,6 +32,12 @@ class Event extends AbstractModel
         'event_start',
         'event_end'
     ];
+
+    // The default sort field and order to use.
+    public $sort = ['event_start' => 'asc'];
+
+    // The fields that are available to be sorted by.
+    public $sortFields = ['name'];
 
     /**
      * @param $name

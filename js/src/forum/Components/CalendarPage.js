@@ -8,7 +8,7 @@ import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
-import EventDetailsModal from "./EventDetailsModal";
+import EventTeaser from "./EventTeaser";
 import Button from 'flarum/components/Button'
 import EditEventModal from "./EditEventModal";
 import LogInModal from 'flarum/components/LogInModal'
@@ -16,15 +16,25 @@ import LogInModal from 'flarum/components/LogInModal'
 
 export default class CalendarPage extends Page {
   init() {
+    console.log("initializing")
     super.init();
     this.calendar = m.prop();
     this.events = m.prop();
+
+
   }
 
   onunload() {
   }
 
   view() {
+    console.log("Vieieoing")
+    app.store.find('events', {sort: 'createdAt'}).then(results => {
+        this.events = results;
+        console.log(results)
+        this.renderCalendarEvents();
+      }
+    );
     return (
       <div className="IndexPage">
         {IndexPage.prototype.hero()}
@@ -83,8 +93,6 @@ export default class CalendarPage extends Page {
     }
 
 
-
-
     items.replace('nav',
       SelectDropdown.component({
         children: this.navItems(this).toArray(),
@@ -117,34 +125,8 @@ export default class CalendarPage extends Page {
     return items;
   }
 
-  /**
-   * Config runs after the elemtns are rendered on page, perfect to run any script against the repainted DOM.
-   * @param isInitialized
-   * @param context
-   */
-  config(isInitialized, context) {
 
-    if(isInitialized){
-      return;
-    }
-    console.log("[webbinaro/flarum-calendar] loading events..");
-    app.store.find('events', {sort: 'createdAt'}).then(results => {
-        this.events(results);
-        this.renderCalendarEvents(results)
-    }
-    );
-  }
-
-
-  renderCalendarEvents(data){
-    console.log("rendering events")
-    //Flarum payload includes an array + payload object [0, 1, 2, payload] - probably a better way to filter..
-    let cleanedEvents = [];
-    for (const eventKey in data) {
-      if(data[eventKey].hasOwnProperty('createdAt')){
-        cleanedEvents.push(data[eventKey]);
-      }
-    }
+  renderCalendarEvents(){
     const calendarEl = document.getElementById('calendar');
     const openModal = this.openCreateModal.bind(this);
     const calendar = new Calendar(calendarEl, {
@@ -152,14 +134,21 @@ export default class CalendarPage extends Page {
       initialView: 'dayGridMonth',
       plugins: [dayGridPlugin, interactionPlugin, listPlugin],
       eventClick: function (info) {
-        app.modal.show(
-          new EventDetailsModal({"event": info.event, "calendar":this,"events":data})
-        );
-      },
+        console.log("Show event detail");
+        for(var event of this.events){
+          if(event.id() === info.event.extendedProps.eventId ){
+            console.log(event.user())
+            app.modal.show(
+              new EventTeaser({"event": event})
+            );
+            break;
+          }
+        }
+      }.bind(this),
       dateClick:  function(info){
         openModal(info);
       },
-      events: cleanedEvents,
+      events: this.events,
       eventDataTransform: this.flarumToFullCalendarEvent,
     });
     calendar.render();
@@ -168,7 +157,7 @@ export default class CalendarPage extends Page {
 
   openCreateModal(info) {
     if(app.session.user != undefined){
-      let modal = new EditEventModal({"calendar":this.calendar(),"events":this.events()});
+      let modal = new EditEventModal();
       if(info.date){
         modal = modal.withStart(info.date);
       }
