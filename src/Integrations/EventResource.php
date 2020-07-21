@@ -7,10 +7,17 @@ use FoF\Sitemap\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
 use Carbon\Carbon;
 
-class SitemapsResource extends Resource
+class EventResource extends Resource
 {
+    public function __construct()
+    {
+        app('log')->debug("[Webbinaro\AdvCalendar] Resource Initialized");
+    }
+
+
     public function query(): Builder
     {
+        app('log')->debug("[Webbinaro\AdvCalendar] Resource Queried");
         return Model::query();
     }
 

@@ -16,22 +16,17 @@ import LogInModal from 'flarum/components/LogInModal'
 
 export default class CalendarPage extends Page {
   init() {
-    console.log("initializing")
     super.init();
     this.calendar = m.prop();
     this.events = m.prop();
-
-
   }
 
   onunload() {
   }
 
   view() {
-    console.log("Vieieoing")
     app.store.find('events', {sort: 'createdAt'}).then(results => {
         this.events = results;
-        console.log(results)
         this.renderCalendarEvents();
       }
     );
