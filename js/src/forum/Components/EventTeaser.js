@@ -1,5 +1,6 @@
 import Modal from 'flarum/components/Modal';
 import Button from 'flarum/components/Button';
+import LinkButton from 'flarum/components/LinkButton';
 import avatar from 'flarum/helpers/avatar';
 import EventFragment from "./EventFragment";
 
@@ -55,13 +56,10 @@ export default class EventTeaser extends Modal {
             <div className="Modal-body">
               <EventFragment event={this.props.event} />
               <p>
-                <a href={app.route.advevent(this.props.event)} config={function(element, isInitialized) {
-                  if (isInitialized) return;
-                  $(element).on('click', e => e.stopPropagation());
-                  m.route.apply(this, arguments);
-                }}>
-                  More details about this event
-                </a>
+                {LinkButton.component({
+                  children:"More details about this event",
+                  href: app.route.advevent(this.props.event),
+                })}
               </p>
             </div>
           </form>

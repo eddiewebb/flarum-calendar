@@ -18940,9 +18940,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flarum_components_Modal__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Modal__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/components/Button */ "flarum/components/Button");
 /* harmony import */ var flarum_components_Button__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_components_Button__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/helpers/avatar */ "flarum/helpers/avatar");
-/* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _EventFragment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./EventFragment */ "./src/forum/Components/EventFragment.js");
+/* harmony import */ var flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! flarum/components/LinkButton */ "flarum/components/LinkButton");
+/* harmony import */ var flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! flarum/helpers/avatar */ "flarum/helpers/avatar");
+/* harmony import */ var flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _EventFragment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./EventFragment */ "./src/forum/Components/EventFragment.js");
+
 
 
 
@@ -18997,24 +19000,18 @@ var EventTeaser = /*#__PURE__*/function (_Modal) {
       style: "margin-right:1em"
     }, this.title())), m("div", {
       className: "fa-pull-right"
-    }, flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_3___default()(this.props.event.user())), m("div", {
+    }, flarum_helpers_avatar__WEBPACK_IMPORTED_MODULE_4___default()(this.props.event.user())), m("div", {
       style: "clear:both"
     })), this.alertAttrs ? m("div", {
       className: "Modal-alert"
     }, Alert.component(this.alertAttrs)) : '', m("div", {
       className: "Modal-body"
-    }, m(_EventFragment__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }, m(_EventFragment__WEBPACK_IMPORTED_MODULE_5__["default"], {
       event: this.props.event
-    }), m("p", null, m("a", {
-      href: app.route.advevent(this.props.event),
-      config: function config(element, isInitialized) {
-        if (isInitialized) return;
-        $(element).on('click', function (e) {
-          return e.stopPropagation();
-        });
-        m.route.apply(this, arguments);
-      }
-    }, "More details about this event"))))));
+    }), m("p", null, flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_3___default.a.component({
+      children: "More details about this event",
+      href: app.route.advevent(this.props.event)
+    }))))));
   };
 
   return EventTeaser;
