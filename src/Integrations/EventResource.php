@@ -4,6 +4,7 @@
 namespace Webbinaro\AdvCalendar\Integrations;
 use Webbinaro\AdvCalendar\Event as Model;
 use FoF\Sitemap\Resources\Resource;
+use FoF\Sitemap\Sitemap\Frequency;
 use Illuminate\Database\Eloquent\Builder;
 use Carbon\Carbon;
 
@@ -24,7 +25,7 @@ class EventResource extends Resource
     public function url($model): string
     {
         return $this->generateRouteUrl('advevent', [
-            'id' => $model->id(),
+            'id' => $model['id'],
         ]);
     }
 
