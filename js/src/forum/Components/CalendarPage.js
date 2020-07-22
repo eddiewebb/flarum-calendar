@@ -129,6 +129,7 @@ export default class CalendarPage extends Page {
       initialView: 'dayGridMonth',
       plugins: [dayGridPlugin, interactionPlugin, listPlugin],
       eventClick: function (info) {
+        info.jsEvent.preventDefault();
         console.log("Show event detail");
         for(var event of this.events){
           if(event.id() === info.event.extendedProps.eventId ){
@@ -172,6 +173,8 @@ export default class CalendarPage extends Page {
           "user":eventData.user() ,
           "eventId": eventData.id(),
         },
+        // for link awareness each event includes link evem though we use event  modal
+        "url": app.route('advevent', {id: eventData.id()}),
       };
   }
 }

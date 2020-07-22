@@ -18296,8 +18296,6 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
   var _proto = CalendarPage.prototype;
 
   _proto.init = function init() {
-    console.log("initializing");
-
     _Page.prototype.init.call(this);
 
     this.calendar = m.prop();
@@ -18309,12 +18307,10 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
   _proto.view = function view() {
     var _this = this;
 
-    console.log("Vieieoing");
     flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.store.find('events', {
       sort: 'createdAt'
     }).then(function (results) {
       _this.events = results;
-      console.log(results);
 
       _this.renderCalendarEvents();
     });
@@ -18408,6 +18404,7 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
       initialView: 'dayGridMonth',
       plugins: [_fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_8__["default"], _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_9__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_10__["default"]],
       eventClick: function (info) {
+        info.jsEvent.preventDefault();
         console.log("Show event detail");
 
         for (var _iterator = _createForOfIteratorHelperLoose(this.events), _step; !(_step = _iterator()).done;) {
@@ -18455,7 +18452,11 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
         "description": eventData.description(),
         "user": eventData.user(),
         "eventId": eventData.id()
-      }
+      },
+      // for link awareness each event includes link evem though we use event  modal
+      "url": flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.route('advevent', {
+        id: eventData.id()
+      })
     };
   };
 
