@@ -42,6 +42,21 @@ export default class EventPage extends Page {
                 </nav>
                 <div className="sideNavOffset IndexPage-results"><EventFragment event={this.event}/></div>
               </div>
+              <script type="application/ld+json">
+                {
+                  "{\n" +
+                  "  \"@context\": \"http://schema.org/\",\n" +
+                  "  \"@type\": \"Event\",\n" +
+                  "  \"name\": \""  + this.event.name() +  "\",\n" +
+                  "      \"location\": {\n" +
+                  "        \"@type\": \"VirtualLocation\",\n" +
+                  "        \"url\": \"https://adkadv.com/\"\n" +
+                  "        },\n" +
+                  "  \"startDate\": \""  + this.event.event_start() +  "\",\n" +
+                  "  \"endDate\": \""  + this.event.event_end() +  "\"\n" +
+                  "}\n"
+                }
+              </script>
             </div>
 
           : [LoadingIndicator.component({ className: 'LoadingIndicator--block' })]}
@@ -126,9 +141,6 @@ export default class EventPage extends Page {
   navItems() {
     const items = new ItemList();
     const user = this.user;
-
-
-
 
     return items;
   }

@@ -54,6 +54,8 @@ class Event
         $document->title = $event->name;
         $document->canonicalUrl = $this->url->to('forum')->route('advevent', ['id' => $eventId]);
 
+
+
         $document->payload['apiDocument'] = $apiDocument;
         return $document;
     }

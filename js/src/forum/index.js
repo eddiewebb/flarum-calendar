@@ -36,6 +36,8 @@ app.initializers.add('webbinaro/flarum-calendar', () => {
 
   app.store.models.users.prototype.canModerateEvents = Model.attribute('canModerateEvents');
   app.store.models.users.prototype.canStartEvents = Model.attribute('canStartEvents');
+
+
 }); //end initalizer
 
 

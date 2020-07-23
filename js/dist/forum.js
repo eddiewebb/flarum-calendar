@@ -18835,7 +18835,9 @@ var EventPage = /*#__PURE__*/function (_Page) {
       className: "sideNavOffset IndexPage-results"
     }, m(_EventFragment__WEBPACK_IMPORTED_MODULE_12__["default"], {
       event: this.event
-    })))) : [flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_5___default.a.component({
+    }))), m("script", {
+      type: "application/ld+json"
+    }, "{\n" + "  \"@context\": \"http://schema.org/\",\n" + "  \"@type\": \"Event\",\n" + "  \"name\": \"" + this.event.name() + "\",\n" + "      \"location\": {\n" + "        \"@type\": \"VirtualLocation\",\n" + "        \"url\": \"https://adkadv.com/\"\n" + "        },\n" + "  \"startDate\": \"" + this.event.event_start() + "\",\n" + "  \"endDate\": \"" + this.event.event_end() + "\"\n" + "}\n")) : [flarum_components_LoadingIndicator__WEBPACK_IMPORTED_MODULE_5___default.a.component({
       className: 'LoadingIndicator--block'
     })]);
   }
