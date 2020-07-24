@@ -40,7 +40,10 @@ export default class EventPage extends Page {
                 <nav className="IndexPage-nav sideNav" config={IndexPage.prototype.affixSidebar}>
                   <ul>{listItems(IndexPage.prototype.sidebarItems().toArray())}</ul>
                 </nav>
-                <div className="sideNavOffset IndexPage-results"><EventFragment event={this.event}/></div>
+                <div className="sideNavOffset IndexPage-results">
+                  <h2>{this.event.name()}</h2>
+                  <EventFragment event={this.event}/>
+                </div>
               </div>
               <script type="application/ld+json">
                 {

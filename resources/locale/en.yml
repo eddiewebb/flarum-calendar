@@ -2,6 +2,7 @@ flarum-calendar:
   forum:
     button:
       create: "New Event"
+      login: "Add Your Event "
     modal:
       submit: "Submit"
 

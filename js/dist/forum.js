@@ -18833,7 +18833,7 @@ var EventPage = /*#__PURE__*/function (_Page) {
       config: flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype.affixSidebar
     }, m("ul", null, flarum_helpers_listItems__WEBPACK_IMPORTED_MODULE_9___default()(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype.sidebarItems().toArray()))), m("div", {
       className: "sideNavOffset IndexPage-results"
-    }, m(_EventFragment__WEBPACK_IMPORTED_MODULE_12__["default"], {
+    }, m("h2", null, this.event.name()), m(_EventFragment__WEBPACK_IMPORTED_MODULE_12__["default"], {
       event: this.event
     }))), m("script", {
       type: "application/ld+json"
