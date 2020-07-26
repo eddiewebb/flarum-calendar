@@ -1,6 +1,9 @@
 import { extend } from 'flarum/extend';
 import PermissionGrid from 'flarum/components/PermissionGrid';
 
+import BasicsPage from 'flarum/components/BasicsPage';
+
+
 app.initializers.add('webbinaro/adv-extras', () => {
   console.log('[webbinaro/adv-extras] Hello, admin!');
   extend(PermissionGrid.prototype, 'moderateItems', items => {
@@ -27,4 +30,26 @@ app.initializers.add('webbinaro/adv-extras', () => {
     );
   });
 
+  app.extensionSettings['webbinaro/adv-extras'] = () =>
+    app.modal.show(
+      new SettingsModal({
+        title: app.translator.trans('flarum-calendar.admin.title'),
+        type: 'small',
+        items: [
+          <legend class="categories-legend">{app.translator.trans('flarum-calendar.admin.welcome.widget')}</legend>,
+          <BooleanItem key="flarum-calendar.admin.welcome.widget" required>
+            <span class="categories-label">{app.translator.trans('flarum-calendar.admin.welcome.widget')}</span>
+          </BooleanItem>,
+        ],
+      })
+    );
+  extend(BasicsPage.prototype, 'homePageItems', (items) => {
+    items.add('events', {
+      path: '/events',
+      label: app.translator.trans('flarum-calendar.admin.basics.homepage'),
+    });
+  });
+
 });
+
+

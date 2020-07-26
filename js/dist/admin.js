@@ -114,6 +114,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var flarum_extend__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flarum_extend__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var flarum_components_PermissionGrid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/components/PermissionGrid */ "flarum/components/PermissionGrid");
 /* harmony import */ var flarum_components_PermissionGrid__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_components_PermissionGrid__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var flarum_components_BasicsPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/components/BasicsPage */ "flarum/components/BasicsPage");
+/* harmony import */ var flarum_components_BasicsPage__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_components_BasicsPage__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 app.initializers.add('webbinaro/adv-extras', function () {
@@ -132,7 +135,40 @@ app.initializers.add('webbinaro/adv-extras', function () {
       permission: 'event.create'
     }, 95);
   });
+
+  app.extensionSettings['webbinaro/adv-extras'] = function () {
+    return app.modal.show(new SettingsModal({
+      title: app.translator.trans('flarum-calendar.admin.title'),
+      type: 'small',
+      items: [m("legend", {
+        "class": "categories-legend"
+      }, app.translator.trans('flarum-calendar.admin.welcome.widget')), m(BooleanItem, {
+        key: "flarum-calendar.admin.welcome.widget",
+        required: true
+      }, m("span", {
+        "class": "categories-label"
+      }, app.translator.trans('flarum-calendar.admin.welcome.widget')))]
+    }));
+  };
+
+  Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_BasicsPage__WEBPACK_IMPORTED_MODULE_2___default.a.prototype, 'homePageItems', function (items) {
+    items.add('events', {
+      path: '/events',
+      label: app.translator.trans('flarum-calendar.admin.basics.homepage')
+    });
+  });
 });
+
+/***/ }),
+
+/***/ "flarum/components/BasicsPage":
+/*!**************************************************************!*\
+  !*** external "flarum.core.compat['components/BasicsPage']" ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['components/BasicsPage'];
 
 /***/ }),
 

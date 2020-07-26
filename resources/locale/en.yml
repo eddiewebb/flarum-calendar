@@ -10,4 +10,6 @@ flarum-calendar:
     permissions:
       add: Create new Calendar Events
       moderate: Remove or edit calendar events (all users can edit their own)
+    basics:
+      homepage: Current Calendar Month
 
