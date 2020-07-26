@@ -24,12 +24,8 @@ export default class CalendarPage extends Page {
   onunload() {
   }
 
+
   view() {
-    app.store.find('events', {sort: 'createdAt'}).then(results => {
-        this.events = results;
-        this.renderCalendarEvents();
-      }
-    );
     return (
       <div className="IndexPage">
         {IndexPage.prototype.hero()}
@@ -40,7 +36,6 @@ export default class CalendarPage extends Page {
             </nav>
             <div className="IndexPage-results sideNavOffset">
               <div className="IndexPage-toolbar">
-
               </div>
               <div id="calendar" />
             </div>
@@ -121,7 +116,13 @@ export default class CalendarPage extends Page {
   }
 
 
+  config(){
+
+    this.renderCalendarEvents();
+  }
+
   renderCalendarEvents(){
+
     const calendarEl = document.getElementById('calendar');
     const openModal = this.openCreateModal.bind(this);
     const calendar = new Calendar(calendarEl, {
@@ -144,7 +145,13 @@ export default class CalendarPage extends Page {
       dateClick:  function(info){
         openModal(info);
       },
-      events: this.events,
+      events: function(info, successCallback, failureCallbacks){
+        app.store.find('events', {start: info.start.toISOString(), end: info.end.toISOString(), sort: 'event_start'}).then(results => {
+          this.events = results;
+          successCallback( results);
+          }
+        )
+      }.bind(this) ,
       eventDataTransform: this.flarumToFullCalendarEvent,
     });
     calendar.render();
@@ -164,7 +171,8 @@ export default class CalendarPage extends Page {
   }
 
   flarumToFullCalendarEvent(eventData){
-      return {
+    console.log(eventData);
+    return {
         "title": eventData.name(),
         "end": eventData.event_end(),
         "start": eventData.event_start(),

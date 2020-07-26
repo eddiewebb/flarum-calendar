@@ -18305,15 +18305,6 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
   _proto.onunload = function onunload() {};
 
   _proto.view = function view() {
-    var _this = this;
-
-    flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.store.find('events', {
-      sort: 'createdAt'
-    }).then(function (results) {
-      _this.events = results;
-
-      _this.renderCalendarEvents();
-    });
     return m("div", {
       className: "IndexPage"
     }, flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_5___default.a.prototype.hero(), m("div", {
@@ -18393,6 +18384,10 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
     return items;
   };
 
+  _proto.config = function config() {
+    this.renderCalendarEvents();
+  };
+
   _proto.renderCalendarEvents = function renderCalendarEvents() {
     var calendarEl = document.getElementById('calendar');
     var openModal = this.openCreateModal.bind(this);
@@ -18422,7 +18417,18 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
       dateClick: function dateClick(info) {
         openModal(info);
       },
-      events: this.events,
+      events: function (info, successCallback, failureCallbacks) {
+        var _this = this;
+
+        flarum_app__WEBPACK_IMPORTED_MODULE_1___default.a.store.find('events', {
+          start: info.start.toISOString(),
+          end: info.end.toISOString(),
+          sort: 'event_start'
+        }).then(function (results) {
+          _this.events = results;
+          successCallback(results);
+        });
+      }.bind(this),
       eventDataTransform: this.flarumToFullCalendarEvent
     });
     calendar.render();
@@ -18444,6 +18450,7 @@ var CalendarPage = /*#__PURE__*/function (_Page) {
   };
 
   _proto.flarumToFullCalendarEvent = function flarumToFullCalendarEvent(eventData) {
+    console.log(eventData);
     return {
       "title": eventData.name(),
       "end": eventData.event_end(),
