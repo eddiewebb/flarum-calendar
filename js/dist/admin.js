@@ -119,8 +119,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-app.initializers.add('webbinaro/adv-extras', function () {
-  console.log('[webbinaro/adv-extras] Hello, admin!');
+app.initializers.add('webbinaro/flarum-calendar', function () {
+  console.log('[webbinaro/flarum-calendar] Hello, admin!');
   Object(flarum_extend__WEBPACK_IMPORTED_MODULE_0__["extend"])(flarum_components_PermissionGrid__WEBPACK_IMPORTED_MODULE_1___default.a.prototype, 'moderateItems', function (items) {
     items.add('webbinaro-calendar', {
       icon: 'fa fa-calendar-times',
@@ -136,7 +136,7 @@ app.initializers.add('webbinaro/adv-extras', function () {
     }, 95);
   });
 
-  app.extensionSettings['webbinaro/adv-extras'] = function () {
+  app.extensionSettings['flarum-calendar'] = function () {
     return app.modal.show(new SettingsModal({
       title: app.translator.trans('flarum-calendar.admin.title'),
       type: 'small',

@@ -4,8 +4,8 @@ import PermissionGrid from 'flarum/components/PermissionGrid';
 import BasicsPage from 'flarum/components/BasicsPage';
 
 
-app.initializers.add('webbinaro/adv-extras', () => {
-  console.log('[webbinaro/adv-extras] Hello, admin!');
+app.initializers.add('webbinaro/flarum-calendar', () => {
+  console.log('[webbinaro/flarum-calendar] Hello, admin!');
   extend(PermissionGrid.prototype, 'moderateItems', items => {
     items.add(
       'webbinaro-calendar',
@@ -30,7 +30,7 @@ app.initializers.add('webbinaro/adv-extras', () => {
     );
   });
 
-  app.extensionSettings['webbinaro/adv-extras'] = () =>
+  app.extensionSettings['flarum-calendar'] = () =>
     app.modal.show(
       new SettingsModal({
         title: app.translator.trans('flarum-calendar.admin.title'),

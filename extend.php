@@ -14,7 +14,7 @@ namespace Webbinaro\AdvCalendar;
 use Flarum\Extend;
 use Webbinaro\AdvCalendar\Api\Controllers as ControllersAlias;
 use Illuminate\Events\Dispatcher;
-use Webbinaro\AdvCalendar\Integrations\EventResource;
+use Webbinaro\AdvCalendar\Integrations\EventResourceRegister;
 use Webbinaro\AdvCalendar\Integrations\SitemapsResource;
 use Webbinaro\AdvCalendar\Listeners;
 
@@ -48,7 +48,7 @@ return [
         $events->subscribe(Listeners\AdvEventListener::class);
     }),
 
-    new \FoF\Sitemap\Extend\RegisterResource(EventResource::class),
+    new EventResourceRegister(),
 
 ];
 
