@@ -1,0 +1,14 @@
+flarum-calendar:
+  forum:
+    button:
+      create: "新事件"
+      login: "添加你的事件"
+    modal:
+      submit: "提交"
+
+  admin:
+    permissions:
+      add: 創建新的日曆事件
+      moderate: 移除或編輯日曆事件 (所有用戶都可編輯他們自己創建的)
+    basics:
+      homepage: 本日曆月
