@@ -1,0 +1,14 @@
+flarum-calendar:
+  forum:
+    button:
+      create: "新イベント"
+      login: "あなたの新イベントを追加"
+    modal:
+      submit: "確認"
+
+  admin:
+    permissions:
+      add: カレンダーに新イベントを追加する
+      moderate: カレンダーに新イベントを削除、編集する (誰でも自分のイベントを編集できます)
+    basics:
+      homepage: カレンダー・今月
