@@ -22,7 +22,7 @@ app.initializers.add('webbinaro/flarum-calendar', () => {
       'events',
       LinkButton.component({
         icon: 'fas fa-calendar-alt',
-        children: 'Event Calendar',
+        children: app.translator.trans('flarum-calendar.forum.button.landing'),
         href: app.route('advevents'),
       }),
       -9.5

@@ -19132,7 +19132,7 @@ app.initializers.add('webbinaro/flarum-calendar', function () {
   Object(flarum_extend__WEBPACK_IMPORTED_MODULE_2__["extend"])(flarum_components_IndexPage__WEBPACK_IMPORTED_MODULE_3___default.a.prototype, 'navItems', function (items) {
     items.add('events', flarum_components_LinkButton__WEBPACK_IMPORTED_MODULE_4___default.a.component({
       icon: 'fas fa-calendar-alt',
-      children: 'Event Calendar',
+      children: app.translator.trans('flarum-calendar.forum.button.landing'),
       href: app.route('advevents')
     }), -9.5);
     return items;

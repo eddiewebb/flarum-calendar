@@ -1,10 +1,12 @@
 flarum-calendar:
   forum:
     button:
+      landing: Events Calendar
       create: "New Event"
       login: "Add Your Event "
     modal:
       submit: "Submit"
+
 
   admin:
     permissions:
