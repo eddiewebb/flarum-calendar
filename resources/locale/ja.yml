@@ -1,6 +1,7 @@
 flarum-calendar:
   forum:
     button:
+      landing: "イベントカレンダー"
       create: "新イベント"
       login: "あなたの新イベントを追加"
     modal:
