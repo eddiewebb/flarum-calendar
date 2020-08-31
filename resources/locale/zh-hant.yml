@@ -1,6 +1,7 @@
 flarum-calendar:
   forum:
     button:
+      landing: "事件日曆"
       create: "新事件"
       login: "添加你的事件"
     modal:
