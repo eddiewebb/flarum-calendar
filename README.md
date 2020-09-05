@@ -35,8 +35,7 @@ Collaborators welcome!
     - roles: single owner, what about hosts, attendees, what are the cardinality
 
 ### Installation
-
-Use [Bazaar](https://discuss.flarum.org/d/5151-flagrow-bazaar-the-extension-marketplace) or install manually with composer:
+Install with composer:
 
 ```sh
 composer require webbinaro/flarum-calendar
