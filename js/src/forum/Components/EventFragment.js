@@ -10,8 +10,8 @@ import fullTime from 'flarum/helpers/fullTime';
 
 export default class EventFragment extends Component {
 
-  init() {
-    super.init();
+  oninit(vnode) {
+    super.oninit(vnode);
   }
 
   title() {
@@ -51,25 +51,23 @@ export default class EventFragment extends Component {
       </div>
   }
 
-  config() {
+  oncreate(vnode) {
     const descElement = document.getElementById("eventdescription");
     s9e.TextFormatter.preview(this.props.event.description(), descElement);
   }
 
-
   editLaunch() {
-    console.log({"message": "[webbinaro/flarum-calendar] edit event ", "props": this.props})
+    console.log({"message": "[webbinaro/flarum-calendar] edit event ", "props": this.attrs.event})
     app.modal.show(
-      new EditEventModal({"event": this.props.event})
+      EditEventModal, {"event": this.attrs.event}
     );
-
   }
 
   deleteEvent() {
-    console.log({"message": "[webbinaro/flarum-calendar] delete event ", "event": this.props})
-    const events = this.props.events;
-    this.props.event.delete().then(()=>{
-      app.alerts.show(new Alert({children:"Event Deleted"}));
+    console.log({"message": "[webbinaro/flarum-calendar] delete event ", "event": this.attrs.event})
+    const events = this.attrs.events;
+    this.attrs.event.delete().then(()=>{
+      app.alerts.show("Event Deleted");
       m.route(app.route('advevents'));
       //app.history.back();
     });

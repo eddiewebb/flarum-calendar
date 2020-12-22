@@ -2,6 +2,7 @@
 
 namespace Webbinaro\AdvCalendar\Api\Controllers;
 
+use Illuminate\Support\Arr;
 use Flarum\Api\Controller\AbstractShowController;
 use Flarum\User\Exception\PermissionDeniedException;
 use Webbinaro\AdvCalendar\Api\Serializers\EventSerializer;
@@ -17,10 +18,10 @@ class EventsUpdateController extends AbstractShowController
 
     protected function data(Request $request, Document $document)
     {
-        $id = array_get($request->getQueryParams(), 'id');
+        $id = Arr::get($request->getQueryParams(), 'id');
         $actor = $request->getAttribute('actor');
         $this->assertRegistered($actor);
-        $requestData = array_get($request->getParsedBody(), 'data.attributes');
+        $requestData = Arr::get($request->getParsedBody(), 'data.attributes');
 
         $event = Event::findOrFail($id);
 

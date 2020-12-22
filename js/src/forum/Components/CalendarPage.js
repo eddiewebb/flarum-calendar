@@ -12,21 +12,18 @@ import EventTeaser from "./EventTeaser";
 import Button from 'flarum/components/Button'
 import EditEventModal from "./EditEventModal";
 import LogInModal from 'flarum/components/LogInModal'
+import Stream from 'flarum/utils/Stream';
 
+const calendar = Stream();
+const events = Stream();
 
 export default class CalendarPage extends Page {
-  init() {
-    super.init();
-    this.calendar = m.prop();
-    this.events = m.prop();
+  oninit(vnode) {
+    super.oninit(vnode);
   }
-
-  onunload() {
-  }
-
 
   view() {
-    return (
+    return [
       <div className="IndexPage">
         {IndexPage.prototype.hero()}
         <div className="container">
@@ -42,7 +39,7 @@ export default class CalendarPage extends Page {
           </div>
         </div>
       </div>
-    );
+    ];
   }
 
   /**
@@ -54,75 +51,40 @@ export default class CalendarPage extends Page {
    */
   sidebarItems() {
     const items = IndexPage.prototype.sidebarItems();
-    //new evemt
+    // newDiscussion = newEvent
     if(app.session.user){
       if(app.session.user.canStartEvents()) {
         items.replace('newDiscussion',
           Button.component({
-            children: app.translator.trans('flarum-calendar.forum.button.create'),
             icon: 'fas fa-calendar-plus',
             className: 'Button Button--primary PollModal-SubmitButton',
             itemClassName: 'App-primaryControl',
             onclick: this.openCreateModal.bind(this)
-          })
+          }, app.translator.trans('flarum-calendar.forum.button.create'))
         );
-      }else{
-        items.remove('newDiscussion');
-      }
+      }else{ items.remove('newDiscussion'); }
     }else{
-
       items.replace('newDiscussion',
         Button.component({
-          children: app.translator.trans('flarum-calendar.forum.button.login'),
           icon: 'fas fa-calendar-plus',
           className: 'Button Button--primary PollModal-SubmitButton',
           itemClassName: 'App-primaryControl',
           onclick: this.openCreateModal.bind(this)
-        })
+        }, app.translator.trans('flarum-calendar.forum.button.login'))
       );
     }
-
-
-    items.replace('nav',
-      SelectDropdown.component({
-        children: this.navItems(this).toArray(),
-        buttonClassName: 'Button',
-        className: 'App-titleControl'
-      })
-    );
-
     return items;
   }
 
-  /**
-   * Build an item list for the navigation in the sidebar of the index page. By
-   * default this is just the 'All Discussions' link.
-   *
-   * @return {ItemList}
-   */
-  navItems() {
-    const items = IndexPage.prototype.navItems();
-
-    /* items.add('fof-user-directory',
-         LinkButton.component({
-             href: app.route('advevents'),
-             children: "View a new events",
-             icon: 'far fa-address-book'
-         }),
-         85
-     );*/
-
-    return items;
+  oncreate(vnode){
+    this.renderCalendar(vnode);
   }
 
-
-  config(){
-
-    this.renderCalendarEvents();
+  onupdate(vnode){
+    this.renderCalendar(vnode);
   }
 
-  renderCalendarEvents(){
-
+  renderCalendar(vnode){
     const calendarEl = document.getElementById('calendar');
     const openModal = this.openCreateModal.bind(this);
     const calendar = new Calendar(calendarEl, {
@@ -135,9 +97,7 @@ export default class CalendarPage extends Page {
         for(var event of this.events){
           if(event.id() === info.event.extendedProps.eventId ){
             console.log(event.user())
-            app.modal.show(
-              new EventTeaser({"event": event})
-            );
+            app.modal.show( EventTeaser, {"event": event} );
             break;
           }
         }
@@ -155,18 +115,17 @@ export default class CalendarPage extends Page {
       eventDataTransform: this.flarumToFullCalendarEvent,
     });
     calendar.render();
-    this.calendar(calendar);
   }
 
   openCreateModal(info) {
     if(app.session.user != undefined){
-      let modal = new EditEventModal();
-      if(info.date){
-        modal = modal.withStart(info.date);
+      if(info.dateStr){
+        app.modal.show( EditEventModal, {withStart: info.dateStr});
+      }else{
+        app.modal.show( EditEventModal );
       }
-      app.modal.show( modal );
     }else{
-      app.modal.show(new LogInModal());
+      app.modal.show( LogInModal );
     }
   }
 
@@ -186,5 +145,3 @@ export default class CalendarPage extends Page {
       };
   }
 }
-
-

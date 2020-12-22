@@ -10,13 +10,12 @@ import EventFragment from "./EventFragment";
  */
 export default class EventTeaser extends Modal {
 
-  init() {
-    super.init();
+  oninit(vnode) {
+    super.oninit(vnode);
   }
 
-
   title(){
-    return this.props.event.name();
+    return this.attrs.event.name();
   }
   /*
   * Override parent modal so we can have avatar in title bar
@@ -27,7 +26,7 @@ export default class EventTeaser extends Modal {
       this.alertAttrs.dismissible = false;
     }
 
-    return (
+    return [
       <div className={'Modal modal-dialog ' + this.className()}>
         <div className="Modal-content">
           {this.constructor.isDismissible ? (
@@ -47,28 +46,24 @@ export default class EventTeaser extends Modal {
                 <div>
                   <h3 className="fa-pull-left App-titleControl App-titleControl--text" style="margin-right:1em">{this.title()}</h3>
                 </div>
-                <div className="fa-pull-right" >{avatar(this.props.event.user())}</div>
+                <div className="fa-pull-right" >{avatar(this.attrs.event.user())}</div>
                 <div style="clear:both">
               </div>
             </div>
 
             {this.alertAttrs ? <div className="Modal-alert">{Alert.component(this.alertAttrs)}</div> : ''}
             <div className="Modal-body">
-              <EventFragment event={this.props.event} />
+              <EventFragment event={this.attrs.event} />
               <p>
                 {LinkButton.component({
-                  children:"More details about this event",
-                  href: app.route.advevent(this.props.event),
-                })}
+                  href: app.route.advevent(this.attrs.event),
+                }, "More details about this event" )}
               </p>
             </div>
           </form>
         </div>
       </div>
-    );
+    ];
   }
-
-
-
 
 }

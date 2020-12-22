@@ -9,13 +9,18 @@
   "type": "flarum-extension",
   "license": "MIT",
   "require": {
-    "flarum/core": "^0.1.0-beta.13",
+    "flarum/core": "^0.1.0-beta.14",
     "fof/sitemap": "^0.5.1"
   },
   "authors": [
     {
       "name": "Eddie Webbinaro",
       "email": "dubblabubbla@gmail.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Lier0",
+      "email": "lier00@protonmail.com",
       "role": "Developer"
     }
   ],
