@@ -15,7 +15,7 @@ export default class EventFragment extends Component {
   }
 
   title() {
-    return this.props.event.name();
+    return this.attrs.event.name();
   }
 
   className() {
@@ -25,15 +25,15 @@ export default class EventFragment extends Component {
   view() {
       return <div>
         <p id="eventdescription"/>
-        <p>Hosted by: <a href={app.route.user(this.props.event.user())} config={m.route}>
-          {userOnline(this.props.event.user())}
-          {username(this.props.event.user())}
+        <p>Hosted by: <a href={app.route.user(this.attrs.event.user())} config={m.route}>
+          {userOnline(this.attrs.event.user())}
+          {username(this.attrs.event.user())}
         </a></p>
         <p>
-          Starts: { fullTime(this.props.event.event_start()) } <br/>
-          Ends: { fullTime(this.props.event.event_end())}
+          Starts: { fullTime(this.attrs.event.event_start()) } <br/>
+          Ends: { fullTime(this.attrs.event.event_end())}
         </p>
-        {(app.session.user && (app.session.user.canModerateEvents() || this.props.event.user.id === app.session.user.id)) ?
+        {(app.session.user && (app.session.user.canModerateEvents() || this.attrs.event.user.id === app.session.user.id)) ?
           (<div>
               {Button.component({
                 icon: 'fas fa-edit',
@@ -53,7 +53,7 @@ export default class EventFragment extends Component {
 
   oncreate(vnode) {
     const descElement = document.getElementById("eventdescription");
-    s9e.TextFormatter.preview(this.props.event.description(), descElement);
+    s9e.TextFormatter.preview(this.attrs.event.description(), descElement);
   }
 
   editLaunch() {

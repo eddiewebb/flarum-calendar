@@ -23,8 +23,8 @@ export default class EventUser extends Component {
   }
 
   view() {
-    const post = this.props.post;
-    const user = this.props.user;
+    const post = this.attrs.post;
+    const user = this.attrs.user;
 
     if (!user) {
       return (
