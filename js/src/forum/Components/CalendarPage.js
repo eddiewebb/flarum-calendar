@@ -62,7 +62,9 @@ export default class CalendarPage extends Page {
             onclick: this.openCreateModal.bind(this)
           }, app.translator.trans('flarum-calendar.forum.button.create'))
         );
-      }else{ items.remove('newDiscussion'); }
+      }else{
+        items.remove('newDiscussion');
+      }
     }else{
       items.replace('newDiscussion',
         Button.component({
