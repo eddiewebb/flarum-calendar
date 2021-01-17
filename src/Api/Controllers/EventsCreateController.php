@@ -8,19 +8,17 @@ use Webbinaro\AdvCalendar\Api\Serializers\EventSerializer;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Tobscure\JsonApi\Document;
 use Webbinaro\AdvCalendar\Event;
-use Flarum\User\AssertPermissionTrait;
 use Flarum\User\Exception\PermissionDeniedException;
 
 class EventsCreateController extends AbstractCreateController
 {
-    use AssertPermissionTrait;
     public $serializer = EventSerializer::class;
     public $include = ['user'];
 
     protected function data(Request $request, Document $document)
     {
         $actor = $request->getAttribute('actor');
-        $this->assertRegistered($actor);
+        $actor->assertRegistered();
         if(!$actor->can('event.create')){
             throw new PermissionDeniedException();
         }
