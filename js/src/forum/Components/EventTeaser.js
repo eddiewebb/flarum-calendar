@@ -57,7 +57,7 @@ export default class EventTeaser extends Modal {
               <p>
                 {LinkButton.component({
                   href: app.route.advevent(this.attrs.event),
-                }, "More details about this event" )}
+                }, app.translator.trans('flarum-calendar.forum.event.details'))}
               </p>
             </div>
           </form>
