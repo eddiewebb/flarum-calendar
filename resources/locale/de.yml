@@ -1,0 +1,19 @@
+flarum-calendar:
+  forum:
+    button:
+      landing: Eventkalender
+      create: "Neues Event"
+      login: "Event hinzufügen "
+    modal:
+      submit: "Hinzufügen"
+    event:
+      details: "Mehr Details über dieses Event"
+
+
+  admin:
+    permissions:
+      add: Neue Kalender-Events erzeugen
+      moderate: Kalender-Events hinzufügen/entfernen (Benutzer können eigene Events bearbeiten)
+    basics:
+      homepage: Aktueller Kalendermonat
+

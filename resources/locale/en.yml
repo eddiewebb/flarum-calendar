@@ -6,6 +6,8 @@ flarum-calendar:
       login: "Add Your Event "
     modal:
       submit: "Submit"
+    event:
+      details: "More details about this event"
 
 
   admin:

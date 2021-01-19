@@ -3,6 +3,7 @@
 namespace Webbinaro\AdvCalendar\Api\Controllers;
 
 use Flarum\Api\Controller\AbstractShowController;
+use Illuminate\Support\Arr;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Tobscure\JsonApi\Document;
 use Webbinaro\AdvCalendar\Api\Serializers\EventSerializer;
@@ -14,7 +15,7 @@ class EventsShowController extends AbstractShowController
     public $include = ['user'];
     protected function data(Request $request, Document $document)
     {
-        $id = array_get($request->getQueryParams(), 'id');
+        $id = Arr::get($request->getQueryParams(), 'id');
         //$relations = $this->extractInclude($request);
         return Event::findOrFail($id);
     }
