@@ -14,6 +14,7 @@ flarum-calendar:
     permissions:
       add: Neue Kalender-Events erzeugen
       moderate: Kalender-Events hinzufügen/entfernen (Benutzer können eigene Events bearbeiten)
+      view: Events anzeigen
     basics:
       homepage: Aktueller Kalendermonat
 
