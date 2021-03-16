@@ -15,6 +15,9 @@ class EventsShowController extends AbstractShowController
     public $include = ['user'];
     protected function data(Request $request, Document $document)
     {
+        $actor = $request->getAttribute('actor');
+        $actor->assertCan('event.view');
+
         $id = Arr::get($request->getQueryParams(), 'id');
         //$relations = $this->extractInclude($request);
         return Event::findOrFail($id);

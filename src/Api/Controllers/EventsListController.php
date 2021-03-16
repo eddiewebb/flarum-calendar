@@ -21,6 +21,12 @@ class EventsListController extends AbstractListController
     {
         //$relations = $this->extractInclude($request);
         //var_dump($request);
+        $actor = $request->getAttribute('actor');
+
+        if (!$actor->can('event.view')) {
+            return array();
+        }
+
         $starting = Arr::get($request->getQueryParams(), 'start',Carbon::now());
         $ending = Arr::get($request->getQueryParams(), 'end',Carbon::now()->endOfMonth());
         return AdvEvent::whereBetween('event_start', [$starting, $ending])->get();

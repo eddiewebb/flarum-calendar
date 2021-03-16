@@ -30,6 +30,19 @@ app.initializers.add('webbinaro/flarum-calendar', () => {
     );
   });
 
+  extend(PermissionGrid.prototype, 'viewItems', items => {
+    items.add(
+      'webbinaro-calendar-view',
+      {
+        icon: 'fa fa-calendar',
+        label: app.translator.trans('flarum-calendar.admin.permissions.view'),
+        permission: 'event.view',
+        allowGuest: true,
+      },
+      95
+    );
+  });
+
   app.extensionSettings['flarum-calendar'] = () =>
     app.modal.show(
       new SettingsModal({
