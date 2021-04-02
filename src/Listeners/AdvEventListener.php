@@ -24,6 +24,7 @@ class AdvEventListener
         if ($event->isSerializer(UserSerializer::class)) {
             $event->attributes['canModerateEvents'] = $event->actor->can('event.moderate');
             $event->attributes['canStartEvents'] = $event->actor->can('event.create');
+            $event->attributes['canViewEvents'] = $event->actor->can('event.view');
         }
     }
 

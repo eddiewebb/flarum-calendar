@@ -9,8 +9,8 @@
   "type": "flarum-extension",
   "license": "MIT",
   "require": {
-    "flarum/core": "^0.1.0-beta.15",
-    "fof/sitemap": "^0.6.0"
+    "flarum/core": "^0.1.0-beta.16",
+    "fof/sitemap": "^0.7.0"
   },
   "authors": [
     {

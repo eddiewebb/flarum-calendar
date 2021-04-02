@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of webbinaro/adv-extras.
+ * This file is part of webbinaro/flarum-calendar.
  *
  * Copyright (c) 2020 Eddie Webbinaro.
  *
