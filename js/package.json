@@ -1,5 +1,5 @@
 {
-  "name": "@webbinaro/adv-extras",
+  "name": "@webbinaro/flarum-calendar",
   "version": "0.0.0",
   "private": true,
   "dependencies": {
@@ -8,7 +8,6 @@
     "@fullcalendar/interaction": "^5.1.0",
     "@fullcalendar/list": "^5.1.0",
     "css-loader": "^3.6.0",
-    "flarum": "^1.0.2",
     "flarum-webpack-config": "^0.1.0-beta.10",
     "flatpickr": "^4.6.3",
     "style-loader": "^1.2.1",
@@ -19,5 +18,8 @@
   "scripts": {
     "dev": "webpack --mode development --watch",
     "build": "webpack --mode production"
+  },
+  "devDependencies": {
+    "flarum": "0.1.0-beta.16"
   }
 }
