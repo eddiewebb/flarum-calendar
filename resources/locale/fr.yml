@@ -1,0 +1,20 @@
+flarum-calendar:
+  forum:
+    button:
+      landing: Calendrier
+      create: "Nouvel Événement"
+      login: "Ajouter votre Événement"
+    modal:
+      submit: "Envoyer"
+    event:
+      details: "Plus de détails à propos de cet événement"
+
+
+  admin:
+    permissions:
+      add: Créer de nouveaux événements
+      moderate: Effacer ou éditer les événements (tous les utilisateurs peuvent éditer leur propre événement)
+      view: Voir les événements
+    basics:
+      homepage: Mois courant du calendrier
+
