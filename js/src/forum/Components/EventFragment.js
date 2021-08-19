@@ -1,11 +1,11 @@
-import Component from 'flarum/Component';
-import Button from 'flarum/components/Button';
+import Component from 'flarum/common/Component';
+import Button from 'flarum/common/components/Button';
 import username from 'flarum/helpers/username';
 import User from 'flarum/models/User'
 import userOnline from 'flarum/helpers/userOnline';
 import avatar from 'flarum/helpers/avatar';
 import EditEventModal from "./EditEventModal";
-import Alert from 'flarum/components/Alert'
+import Alert from 'flarum/common/components/Alert'
 import fullTime from 'flarum/helpers/fullTime';
 
 export default class EventFragment extends Component {
@@ -33,7 +33,7 @@ export default class EventFragment extends Component {
           Starts: { fullTime(this.attrs.event.event_start()) } <br/>
           Ends: { fullTime(this.attrs.event.event_end())}
         </p>
-        {(app.session.user && (app.session.user.canModerateEvents() || this.attrs.event.user.id === app.session.user.id)) ?
+        {(app.session.user && (app.session.user.canModerateEvents || this.attrs.event.user.id === app.session.user.id)) ?
           (<div>
               {Button.component({
                 icon: 'fas fa-edit',
@@ -57,7 +57,7 @@ export default class EventFragment extends Component {
   }
 
   editLaunch() {
-    console.log({"message": "[webbinaro/flarum-calendar] edit event ", "props": this.attrs.event})
+    console.log({"message": "[webbinaro/flarum-calendar] edit event ", "attrs": this.attrs.event})
     app.modal.show(
       EditEventModal, {"event": this.attrs.event}
     );

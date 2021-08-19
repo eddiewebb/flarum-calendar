@@ -13,10 +13,6 @@ namespace Webbinaro\AdvCalendar;
 
 use Flarum\Extend;
 use Webbinaro\AdvCalendar\Api\Controllers as ControllersAlias;
-use Illuminate\Events\Dispatcher;
-use Webbinaro\AdvCalendar\Integrations\EventResourceRegister;
-use Webbinaro\AdvCalendar\Integrations\SitemapsResource;
-use Webbinaro\AdvCalendar\Listeners;
 
 return [
     (new Extend\Frontend('forum'))
@@ -44,12 +40,4 @@ return [
 
     new Extend\Locales(__DIR__ . '/resources/locale'),
 
-    new Extend\Compat(function (Dispatcher $events) {
-        $events->subscribe(Listeners\AdvEventListener::class);
-    }),
-
-    new EventResourceRegister(),
-
 ];
-
-

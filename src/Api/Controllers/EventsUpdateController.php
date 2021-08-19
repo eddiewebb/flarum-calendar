@@ -9,6 +9,7 @@ use Webbinaro\AdvCalendar\Api\Serializers\EventSerializer;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Tobscure\JsonApi\Document;
 use Webbinaro\AdvCalendar\Event;
+use Flarum\User\User;
 
 class EventsUpdateController extends AbstractShowController
 {

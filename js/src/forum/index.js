@@ -7,7 +7,8 @@ import LinkButton from 'flarum/components/LinkButton';
 import Event from "./Models/Event";
 import Model from "flarum/Model";
 
-app.initializers.add('webbinaro/flarum-calendar', () => {
+//app.initializers.add('webbinaro/flarum-calendar', () => {
+app.initializers.add('webbinaro-calendar', () => {
   app.routes.advevents = {path: '/events', component: CalendarPage };
   app.routes.advevent = {path: '/events/:id', component: EventPage };
 
