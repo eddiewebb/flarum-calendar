@@ -8,6 +8,7 @@ use Webbinaro\AdvCalendar\Api\Serializers\EventSerializer;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Tobscure\JsonApi\Document;
 use Webbinaro\AdvCalendar\Event;
+use Flarum\User\User;
 use Flarum\User\Exception\PermissionDeniedException;
 
 class EventsCreateController extends AbstractCreateController

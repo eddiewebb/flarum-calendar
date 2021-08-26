@@ -44,12 +44,9 @@ return [
 
     new Extend\Locales(__DIR__ . '/resources/locale'),
 
-    new Extend\Compat(function (Dispatcher $events) {
-        $events->subscribe(Listeners\AdvEventListener::class);
-    }),
+    (new Extend\Event)
+        ->subscribe(Listeners\AdvEventListener::class),
 
     new EventResourceRegister(),
 
 ];
-
-

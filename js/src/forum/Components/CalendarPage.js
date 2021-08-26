@@ -53,7 +53,7 @@ export default class CalendarPage extends Page {
     const items = IndexPage.prototype.sidebarItems();
     // newDiscussion = newEvent
     if(app.session.user){
-      if(app.session.user.canStartEvents()) {
+      if(app.session.user.canStartEvents) {
         items.replace('newDiscussion',
           Button.component({
             icon: 'fas fa-calendar-plus',

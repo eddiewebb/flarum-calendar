@@ -1,10 +1,8 @@
 import { extend } from 'flarum/extend';
 import BasicsPage from 'flarum/components/BasicsPage';
 
-
 app.initializers.add('webbinaro/flarum-calendar', () => {
   console.log('[webbinaro/flarum-calendar] Hello, admin!');
-
 
   app.extensionData
     .for('webbinaro-calendar')
@@ -53,5 +51,3 @@ app.initializers.add('webbinaro/flarum-calendar', () => {
   });
 
 });
-
-
