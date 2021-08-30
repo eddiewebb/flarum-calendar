@@ -1,6 +1,6 @@
 import CalendarPage  from './Components/CalendarPage.js';
 import EventPage from "./Components/EventPage";
-
+import registerWidget from '../common/registerWidget';
 import { extend } from 'flarum/extend';
 import IndexPage from 'flarum/components/IndexPage';
 import LinkButton from 'flarum/components/LinkButton';
@@ -9,6 +9,7 @@ import Model from "flarum/Model";
 
 //app.initializers.add('webbinaro/flarum-calendar', () => {
 app.initializers.add('webbinaro-calendar', () => {
+  registerWidget(app);
   app.routes.advevents = {path: '/events', component: CalendarPage };
   app.routes.advevent = {path: '/events/:id', component: EventPage };
 
@@ -21,7 +22,7 @@ app.initializers.add('webbinaro-calendar', () => {
   app.store.models.users.prototype.canStartEvents = Model.attribute('canStartEvents');
   app.store.models.users.prototype.canViewEvents = Model.attribute('canViewEvents');
 
- 
+
     //add events to side nav
     extend(IndexPage.prototype, 'navItems', function (items) {
       items.add(
@@ -33,5 +34,5 @@ app.initializers.add('webbinaro-calendar', () => {
       );
       return items;
     });
-  
+
 }); //end initalizer

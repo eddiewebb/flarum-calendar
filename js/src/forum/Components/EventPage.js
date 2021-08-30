@@ -21,10 +21,10 @@ export default class EventPage extends Page {
     app.store.all('events').some((event) => {
       if (event.data.id === m.route.param('id')) {
 	//show(event)
-        this.event = event; 
-        this.user = event.user(); 
-        app.current.set('event', event); 
-        app.setTitle(event.name()); 
+        this.event = event;
+        this.user = event.user();
+        app.current.set('event', event);
+        app.setTitle(event.name());
 	return true;
       }
     });
@@ -54,6 +54,7 @@ export default class EventPage extends Page {
           : [LoadingIndicator.component({ className: 'LoadingIndicator--block' })]}
       </div>
     );
+
   }
 
 }
