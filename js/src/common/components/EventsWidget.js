@@ -9,13 +9,21 @@
  */
 
 import Widget from 'flarum/extensions/afrux-forum-widgets-core/common/components/Widget';
-import CalendarPage from "../../forum/Components/CalendarPage";
+import app from 'flarum/forum/app';
+
 
 export default class EventsWidget extends Widget {
 
 
   oncreate(vnode) {
-
+    const todayDate = new Date().toISOString().slice(0, 10);
+    console.log(todayDate);
+    const apiUrl = app.forum.attribute('baseUrl') + '/api/events?start=allDay';
+    console.log(apiUrl)
+    fetch(apiUrl)
+      .then(res => res.json())
+      .then(out =>
+        console.log('Checkout this JSON! ', out))
   }
 
   className() {
@@ -36,7 +44,9 @@ export default class EventsWidget extends Widget {
     return (
       <div className="eventss-widget-content">
         <div className="EventPage">
+          <div id="myData">
 
+          </div>
         </div>
       </div>
     );

@@ -22828,7 +22828,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_helpers_esm_inheritsLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inheritsLoose */ "./node_modules/@babel/runtime/helpers/esm/inheritsLoose.js");
 /* harmony import */ var flarum_extensions_afrux_forum_widgets_core_common_components_Widget__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flarum/extensions/afrux-forum-widgets-core/common/components/Widget */ "flarum/extensions/afrux-forum-widgets-core/common/components/Widget");
 /* harmony import */ var flarum_extensions_afrux_forum_widgets_core_common_components_Widget__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flarum_extensions_afrux_forum_widgets_core_common_components_Widget__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _forum_Components_CalendarPage__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../forum/Components/CalendarPage */ "./src/forum/Components/CalendarPage.js");
+/* harmony import */ var flarum_forum_app__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! flarum/forum/app */ "flarum/forum/app");
+/* harmony import */ var flarum_forum_app__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(flarum_forum_app__WEBPACK_IMPORTED_MODULE_2__);
 
 
 /*
@@ -22852,7 +22853,17 @@ var EventsWidget = /*#__PURE__*/function (_Widget) {
 
   var _proto = EventsWidget.prototype;
 
-  _proto.oncreate = function oncreate(vnode) {};
+  _proto.oncreate = function oncreate(vnode) {
+    var todayDate = new Date().toISOString().slice(0, 10);
+    console.log(todayDate);
+    var apiUrl = flarum_forum_app__WEBPACK_IMPORTED_MODULE_2___default.a.forum.attribute('baseUrl') + '/api/events?start=allDay';
+    console.log(apiUrl);
+    fetch(apiUrl).then(function (res) {
+      return res.json();
+    }).then(function (out) {
+      return console.log('Checkout this JSON! ', out);
+    });
+  };
 
   _proto.className = function className() {
     return 'events-widget';
@@ -22865,7 +22876,7 @@ var EventsWidget = /*#__PURE__*/function (_Widget) {
 
   _proto.title = function title() {
     // Widget title.
-    return app.translator.trans('flarum-calendar.forum.widget-title');
+    return flarum_forum_app__WEBPACK_IMPORTED_MODULE_2___default.a.translator.trans('flarum-calendar.forum.widget-title');
   };
 
   _proto.content = function content() {
@@ -22873,7 +22884,9 @@ var EventsWidget = /*#__PURE__*/function (_Widget) {
       className: "eventss-widget-content"
     }, m("div", {
       className: "EventPage"
-    }));
+    }, m("div", {
+      id: "myData"
+    })));
   };
 
   return EventsWidget;
@@ -23879,6 +23892,17 @@ module.exports = flarum.core.compat['extensions/afrux-forum-widgets-core/common/
 /***/ (function(module, exports) {
 
 module.exports = flarum.core.compat['extensions/afrux-forum-widgets-core/common/extend/Widgets'];
+
+/***/ }),
+
+/***/ "flarum/forum/app":
+/*!**************************************************!*\
+  !*** external "flarum.core.compat['forum/app']" ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = flarum.core.compat['forum/app'];
 
 /***/ }),
 
