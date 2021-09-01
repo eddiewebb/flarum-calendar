@@ -4,7 +4,9 @@
     "keywords": [
         "flarum",
         "calendar",
-        "events"
+        "events",
+        "afrux",
+        "widget"
     ],
     "type": "flarum-extension",
     "license": "MIT",
