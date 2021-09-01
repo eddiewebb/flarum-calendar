@@ -964,6 +964,11 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
+"@flarum/prettier-config@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@flarum/prettier-config/-/prettier-config-1.0.0.tgz#3ce431fa376994e8133e313dbe7c4ee3d3fe1a39"
+  integrity sha512-3/AcliIi5jPt4i7COb5hsLv6hm4EeXT9yI9I2EuEvhPi2QR+O9Y/8wrqRuO5mDkRzCIhUY+mjIL/f9770Zwfqg==
+
 "@fullcalendar/common@~5.9.0":
   version "5.9.0"
   resolved "https://registry.yarnpkg.com/@fullcalendar/common/-/common-5.9.0.tgz#e920ebddb5a144b0ec1e3f184dbbbf442ba46d65"

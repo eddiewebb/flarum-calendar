@@ -1,6 +1,6 @@
 flarum-calendar:
   forum:
-    widget-title: Title Widget
+    widget-title: Today/Tomorrow Events
     button:
       landing: Events Calendar
       create: "New Event"
