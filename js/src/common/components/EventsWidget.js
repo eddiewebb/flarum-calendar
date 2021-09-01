@@ -13,7 +13,6 @@ import app from 'flarum/forum/app';
 import LoadingIndicator from "flarum/common/components/LoadingIndicator";
 import Separator from "flarum/common/components/Separator";
 
-
 export default class EventsWidget extends Widget {
 
   oninit(vnode) {
@@ -23,16 +22,19 @@ export default class EventsWidget extends Widget {
 
   oncreate(vnode) {
     const todayDate = new Date().toISOString().slice(0, 10);
+    // for the end parameter i'm using today date + 1
     let NextDayEvents = new Date();
     NextDayEvents.setDate(NextDayEvents.getDate() + 1);
     NextDayEvents = NextDayEvents.toISOString().slice(0, 10);
+    // get events object
     app.store.find('events', {
+      // seems that not accept the end parameter as the same day of start
       allDay: true,
       start: todayDate,
       end: NextDayEvents,
     }).then(results => {
       this.events = results;
-      console.log(results)
+      // console.log(results) <-------------------------------- debug line
       this.loading = false;
       m.redraw();
     });
@@ -63,7 +65,7 @@ export default class EventsWidget extends Widget {
             <li><i className="far fa-calendar-alt"></i>
               {event.event_start().toISOString().slice(0, 10)}
               <br></br>
-                <i className="far fa-check-square"></i>
+              <i className="far fa-check-square"></i>
               {event.description()}
               {Separator.component()}
             </li>
