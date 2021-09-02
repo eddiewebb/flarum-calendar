@@ -1,5 +1,4 @@
 /*
- * This file is part of justoverclock/last-tweet.
  *
  * Copyright (c) 2021 Marco Colia.
  * https://flarum.it
