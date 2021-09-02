@@ -5,6 +5,7 @@ use Flarum\Api\Serializer\AbstractSerializer;
 use Flarum\Api\Serializer\UserSerializer;
 use Webbinaro\AdvCalendar\Event;
 
+
 class EventSerializer extends AbstractSerializer
 {
 

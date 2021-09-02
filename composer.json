@@ -1,50 +1,58 @@
 {
-  "name": "webbinaro/flarum-calendar",
-  "description": "Adds a calendar of events created by users",
-  "keywords": [
-    "flarum",
-    "calendar",
-    "events"
-  ],
-  "type": "flarum-extension",
-  "license": "MIT",
-  "require": {
-    "flarum/core": "^1.0",
-    "fof/sitemap": "^1.0"
-  },
-  "authors": [
-    {
-      "name": "Eddie Webbinaro",
-      "email": "dubblabubbla@gmail.com",
-      "role": "Developer"
+    "name": "webbinaro/flarum-calendar",
+    "description": "Adds a calendar of events created by users",
+    "keywords": [
+        "flarum",
+        "calendar",
+        "events",
+        "afrux",
+        "widget"
+    ],
+    "type": "flarum-extension",
+    "license": "MIT",
+    "require": {
+        "flarum/core": "^1.0",
+        "fof/sitemap": "^1.0",
+        "afrux/forum-widgets-core": "^0.1.0"
     },
-    {
-      "name": "Lier0",
-      "email": "lier00@protonmail.com",
-      "role": "Developer"
+    "authors": [
+        {
+            "name": "Eddie Webbinaro",
+            "email": "dubblabubbla@gmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Marco Colia",
+            "email": "info@flarum.it",
+            "role": "Developer"
+        },
+        {
+            "name": "Lier0",
+            "email": "lier00@protonmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "Andreas Hofmann",
+            "email": "github@andreas-hofmann.org",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Webbinaro\\AdvCalendar\\": "src/"
+        }
     },
-    {
-      "name": "Andreas Hofmann",
-      "email": "github@andreas-hofmann.org",
-      "role": "Developer"
+    "extra": {
+        "flarum-extension": {
+            "title": "Calendar(Events)",
+            "icon": {
+                "name": "fas fa-calendar-alt",
+                "backgroundColor": "",
+                "color": ""
+            }
+        },
+        "flagrow": {
+            "discuss": "https://discuss.flarum.org/d/24429-events-calendar-wip-help-wanted"
+        }
     }
-  ],
-  "autoload": {
-    "psr-4": {
-      "Webbinaro\\AdvCalendar\\": "src/"
-    }
-  },
-  "extra": {
-    "flarum-extension": {
-      "title": "Calendar(Events)",
-      "icon": {
-        "name": "fas fa-calendar-alt",
-        "backgroundColor": "",
-        "color": ""
-      }
-    },
-    "flagrow": {
-      "discuss": "https://discuss.flarum.org/d/24429-events-calendar-wip-help-wanted"
-    }
-  }
 }
