@@ -8,18 +8,18 @@
     "@fullcalendar/interaction": "^5.1.0",
     "@fullcalendar/list": "^5.1.0",
     "css-loader": "^3.6.0",
-    "flarum-webpack-config": "^0.1.0-beta.10",
+    "flarum-webpack-config": "^2.0.0",
     "flatpickr": "^4.6.3",
     "style-loader": "^1.2.1",
-    "webpack": "^4.26.0",
-    "webpack-cli": "^3.0.7",
+    "webpack": "^5.56.0",
+    "webpack-cli": "^4.9.1",
     "webpack-merge": "^4.2.2"
   },
   "scripts": {
     "dev": "webpack --mode development --watch",
     "build": "webpack --mode production"
   },
-  "devDependencies": {
-    "flarum": "0.1.0-beta.16"
+  "devDependencies": { 
+       "flarum-tsconfig": "^1.0.2"
   }
 }
