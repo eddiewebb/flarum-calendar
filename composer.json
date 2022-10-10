@@ -10,7 +10,7 @@
   "license": "MIT",
   "require": {
     "flarum/core": "^1.0",
-    "fof/sitemap": "^1.0"
+    "fof/sitemap": "^2.0"
   },
   "authors": [
     {
