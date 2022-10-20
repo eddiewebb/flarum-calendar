@@ -90,6 +90,8 @@ export default class CalendarPage extends Page {
   renderCalendar(vnode){
     const calendarEl = document.getElementById('calendar');
     const openModal = this.openCreateModal.bind(this);
+
+    console.debug(`Loading Full Calendar with locale: ${app.translator.getLocale()}`);
     const calendar = new Calendar(calendarEl, {
       locales: allLocales,
       locale: app.translator.getLocale(), // the initial locale
@@ -98,10 +100,8 @@ export default class CalendarPage extends Page {
       plugins: [dayGridPlugin, interactionPlugin, listPlugin],
       eventClick: function (info) {
         info.jsEvent.preventDefault();
-        console.log("Show event detail");
         for(var event of this.events){
           if(event.id() === info.event.extendedProps.eventId ){
-            console.log(event.user())
             app.modal.show( EventTeaser, {"event": event} );
             break;
           }
@@ -135,7 +135,6 @@ export default class CalendarPage extends Page {
   }
 
   flarumToFullCalendarEvent(eventData){
-    console.log(eventData);
     return {
         "title": eventData.name(),
         "end": eventData.event_end(),
