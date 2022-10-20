@@ -5,6 +5,7 @@ import listItems from 'flarum/helpers/listItems';
 import IndexPage from 'flarum/components/IndexPage';
 import SelectDropdown from 'flarum/components/SelectDropdown';
 import { Calendar } from '@fullcalendar/core';
+import allLocales from '@fullcalendar/core/locales-all';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
@@ -90,6 +91,8 @@ export default class CalendarPage extends Page {
     const calendarEl = document.getElementById('calendar');
     const openModal = this.openCreateModal.bind(this);
     const calendar = new Calendar(calendarEl, {
+      locales: allLocales,
+      locale: app.translator.getLocale(), // the initial locale
       headerToolbar: {center: 'dayGridMonth,listYear'}, // buttons for switching between views
       initialView: 'dayGridMonth',
       plugins: [dayGridPlugin, interactionPlugin, listPlugin],
