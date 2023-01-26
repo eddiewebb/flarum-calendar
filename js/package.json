@@ -7,6 +7,7 @@
     "@fullcalendar/daygrid": "^5.1.0",
     "@fullcalendar/interaction": "^5.1.0",
     "@fullcalendar/list": "^5.1.0",
+    "caniuse-lite": "^1.0.30001448",
     "css-loader": "^3.6.0",
     "flarum-webpack-config": "^1.0.0",
     "flatpickr": "^4.6.3",
