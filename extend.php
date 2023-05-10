@@ -11,11 +11,10 @@
 
 namespace Webbinaro\AdvCalendar;
 
+use Flarum\Api\Serializer\UserSerializer;
 use Flarum\Extend;
 use Webbinaro\AdvCalendar\Api\Controllers as ControllersAlias;
-use Illuminate\Events\Dispatcher;
 use Webbinaro\AdvCalendar\Integrations\EventResourceRegister;
-use Webbinaro\AdvCalendar\Integrations\SitemapsResource;
 use Webbinaro\AdvCalendar\Listeners;
 
 return [
@@ -44,12 +43,19 @@ return [
 
     new Extend\Locales(__DIR__ . '/resources/locale'),
 
-    (new Extend\Event)
-        ->subscribe(Listeners\AdvEventListener::class),
-
     new EventResourceRegister(),
 
     (new Extend\Settings)
         ->serializeToForum('webbinaro-calendar.hide_host', 'webbinaro-calendar.hide_host', 'boolval', false),
 
+    (new Extend\ApiSerializer(UserSerializer::class))
+        ->attribute('canModerateEvents', function (UserSerializer $serializer) {
+            return $serializer->getActor()->can('event.moderate');
+        })
+        ->attribute('canStartEvents', function (UserSerializer $serializer) {
+            return $serializer->getActor()->can('event.create');
+        })
+        ->attribute('canViewEvents', function (UserSerializer $serializer) {
+            return $serializer->getActor()->can('event.view');
+        }),
 ];

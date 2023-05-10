@@ -3,7 +3,6 @@ import Page from 'flarum/components/Page';
 import ItemList from 'flarum/utils/ItemList';
 import listItems from 'flarum/helpers/listItems';
 import IndexPage from 'flarum/components/IndexPage';
-import SelectDropdown from 'flarum/components/SelectDropdown';
 import { Calendar } from '@fullcalendar/core';
 import allLocales from '@fullcalendar/core/locales-all';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -13,10 +12,6 @@ import EventTeaser from "./EventTeaser";
 import Button from 'flarum/components/Button'
 import EditEventModal from "./EditEventModal";
 import LogInModal from 'flarum/components/LogInModal'
-import Stream from 'flarum/utils/Stream';
-
-const calendar = Stream();
-const events = Stream();
 
 export default class CalendarPage extends Page {
   oninit(vnode) {
@@ -54,7 +49,7 @@ export default class CalendarPage extends Page {
     const items = IndexPage.prototype.sidebarItems();
     // newDiscussion = newEvent
     if(app.session.user){
-      if(app.session.user.canStartEvents) {
+      if(app.session.user.canStartEvents()) {
         items.replace('newDiscussion',
           Button.component({
             icon: 'fas fa-calendar-plus',
@@ -123,6 +118,10 @@ export default class CalendarPage extends Page {
   }
 
   openCreateModal(info) {
+    if (!app.session.user.canStartEvents()) {
+      return;
+    }
+
     if(app.session.user != undefined){
       if(info.dateStr){
         app.modal.show( EditEventModal, {withStart: info.dateStr});
