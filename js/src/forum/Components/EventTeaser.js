@@ -53,7 +53,7 @@ export default class EventTeaser extends Modal {
 
             {this.alertAttrs ? <div className="Modal-alert">{Alert.component(this.alertAttrs)}</div> : ''}
             <div className="Modal-body">
-              <EventFragment event={this.attrs.event} />
+              <EventFragment event={this.attrs.event} modal={this} />
               <p>
                 {LinkButton.component({
                   href: app.route.advevent(this.attrs.event),

@@ -8,6 +8,11 @@ flarum-calendar:
       submit: "Submit"
     event:
       details: "More details about this event"
+      hosted_by: "Hosted by:"
+      starts: "Starts:"
+      ends: "Ends:"
+      confirm_delete: "Are you sure you want to delete this event?"
+      deleted: "This event has been deleted"
 
 
   admin:
