@@ -91,7 +91,7 @@ export default class CalendarPage extends Page {
     const calendarEl = document.getElementById('calendar');
     const openModal = this.openCreateModal.bind(this);
 
-    console.debug(`Loading Full Calendar with locale: ${app.translator.getLocale()}`);
+    // console.debug(`Loading Full Calendar with locale: ${app.translator.getLocale()}`);
     const calendar = new Calendar(calendarEl, {
       locales: allLocales,
       locale: app.translator.getLocale(), // the initial locale
