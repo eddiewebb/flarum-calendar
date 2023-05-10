@@ -31,16 +31,24 @@
 .EditEventsModal {
     .Composer {
         margin: 0;
-        height: auto;
+
+        [class^="ComposerBody-"][class$="Wrapper"],
+        textarea {
+            height: 100% !important;
+            resize: none;
+        }
     }
     .TextEditor {
         background: var(--body-bg);
         padding: 10px;
         padding-bottom: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
     }
     
     .TextEditor-editorContainer {
-        min-height: 200px;
+        flex-grow: 1;
     }
 
     .TextEditor-controls {
