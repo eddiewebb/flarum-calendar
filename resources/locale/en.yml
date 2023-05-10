@@ -5,7 +5,15 @@ flarum-calendar:
       create: "New Event"
       login: "Add Your Event "
     modal:
+      title_create: Create new calendar event
+      title_edit: Edit event details
+      title_label: What
+      dates_label: When
+      description_label: Details
+      description_placeholder: Event details
+      requirement_message: Events require a name and description
       submit: "Submit"
+
     event:
       details: "More details about this event"
       hosted_by: "Hosted by:"
@@ -13,7 +21,6 @@ flarum-calendar:
       ends: "Ends:"
       confirm_delete: "Are you sure you want to delete this event?"
       deleted: "This event has been deleted"
-
 
   admin:
     permissions:

@@ -1,4 +1,5 @@
 import Modal from 'flarum/components/Modal';
+import Alert from 'flarum/common/components/Alert';
 import Button from 'flarum/components/Button';
 import flatpickr from 'flatpickr';
 import Stream from 'flarum/utils/Stream';
@@ -43,7 +44,7 @@ export default class EditEventModal extends Modal {
   }*/
 
   title() {
-    return name() ? "Edit event details" : "Create new calendar event";
+    return name() ? app.translator.trans('flarum-calendar.forum.modal.title_edit') : app.translator.trans('flarum-calendar.forum.modal.title_create');
   }
 
   className() {
@@ -54,23 +55,23 @@ export default class EditEventModal extends Modal {
     return [
       <div className="Modal-body">
         <div className="Form-group">
-          <label className="label">What</label>
+          <label className="label">{app.translator.trans('flarum-calendar.forum.modal.title_label')}</label>
           <input type="text" name="title" className="FormControl" bidi={name} />
         </div>
         <div className="Form-group">
-          <label className="label">When</label>
+          <label className="label">{app.translator.trans('flarum-calendar.forum.modal.dates_label')}</label>
           <div className="PollModal--date" >
             <input id="startpicker" style="opacity: 1; color: inherit" className="FormControl" data-input />
           </div>
         </div>
         <div class="Form-group">
-          <label className="label">Details</label>
+          <label className="label">{app.translator.trans('flarum-calendar.forum.modal.description_label')}</label>
           <div className='Composer'>
             <TextEditor
               disabled={this.loading}
               value={description()}
               onchange={description}
-              placeholder={'Event description'}
+              placeholder={app.translator.trans('flarum-calendar.forum.modal.description_placeholder')}
               composer={this.composerState}
             />
           </div>
@@ -110,7 +111,7 @@ export default class EditEventModal extends Modal {
     e.preventDefault();
     if (!name() || !description() ) {
 
-      app.alerts.show("Events require a name and description");
+      app.alerts.show(Alert, {type: 'error'}, app.translator.trans('flarum-calendar.forum.modal.requirement_message'));
       return;
     }
     if(!this.attrs.event){
