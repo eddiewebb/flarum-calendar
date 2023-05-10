@@ -14,6 +14,13 @@ app.initializers.add('webbinaro/flarum-calendar', () => {
       },
       30 // Optional: Priority
     )*/
+    .registerSetting(
+      {
+        setting: 'webbinaro-calendar.hide_host',
+        label: app.translator.trans('flarum-calendar.admin.settings.hide_host'),
+        type: 'boolean',
+      }
+    )
     .registerPermission(
       {
         icon: 'fas fa-calendar', // Font-Awesome Icon

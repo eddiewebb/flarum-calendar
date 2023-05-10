@@ -24,10 +24,12 @@ export default class EventFragment extends Component {
   view() {
       return <div>
         <p id="eventdescription"/>
-        <p>{app.translator.trans('flarum-calendar.forum.event.hosted_by')} <Link href={app.route.user(this.attrs.event.user())}>
-          {userOnline(this.attrs.event.user())}
-          {username(this.attrs.event.user())}
-        </Link></p>
+        {!app.forum.attribute('webbinaro-calendar.hide_host') &&
+          <p>{app.translator.trans('flarum-calendar.forum.event.hosted_by')} <Link href={app.route.user(this.attrs.event.user())}>
+            {userOnline(this.attrs.event.user())}
+            {username(this.attrs.event.user())}
+          </Link></p>
+        }
         <p>
           {app.translator.trans('flarum-calendar.forum.event.starts')} { fullTime(this.attrs.event.event_start()) } <br/>
           {app.translator.trans('flarum-calendar.forum.event.ends')} { fullTime(this.attrs.event.event_end())}

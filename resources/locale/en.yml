@@ -23,6 +23,8 @@ flarum-calendar:
       deleted: "This event has been deleted"
 
   admin:
+    settings:
+      hide_host: Hide host (hosted by...)
     permissions:
       add: Create new Calendar Events
       moderate: Remove or edit calendar events (all users can edit their own)

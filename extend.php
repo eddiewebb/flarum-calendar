@@ -49,4 +49,7 @@ return [
 
     new EventResourceRegister(),
 
+    (new Extend\Settings)
+        ->serializeToForum('webbinaro-calendar.hide_host', 'webbinaro-calendar.hide_host', 'boolval', false),
+
 ];
