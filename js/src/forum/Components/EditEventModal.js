@@ -102,7 +102,7 @@ export default class EditEventModal extends Modal {
 
   oncreate(vnode) {
     super.oncreate(vnode);
-    console.log("startpicker");
+    // console.log("startpicker");
     this.configDatePicker("#startpicker");
   }
 

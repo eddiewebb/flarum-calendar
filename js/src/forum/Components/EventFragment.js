@@ -57,14 +57,14 @@ export default class EventFragment extends Component {
   }
 
   editLaunch() {
-    console.log({"message": "[webbinaro/flarum-calendar] edit event ", "attrs": this.attrs.event})
+    // console.log({"message": "[webbinaro/flarum-calendar] edit event ", "attrs": this.attrs.event})
     app.modal.show(
       EditEventModal, {"event": this.attrs.event}
     );
   }
 
   deleteEvent() {
-    console.log({"message": "[webbinaro/flarum-calendar] delete event ", "event": this.attrs.event})
+    // console.log({"message": "[webbinaro/flarum-calendar] delete event ", "event": this.attrs.event})
     const events = this.attrs.events;
     this.attrs.event.delete().then(()=>{
       app.alerts.show("Event Deleted");
