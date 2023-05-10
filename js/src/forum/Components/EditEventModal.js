@@ -2,6 +2,8 @@ import Modal from 'flarum/components/Modal';
 import Button from 'flarum/components/Button';
 import flatpickr from 'flatpickr';
 import Stream from 'flarum/utils/Stream';
+import CustomComposerState from '../States/CustomCompoerState';
+import TextEditor from 'flarum/common/components/TextEditor';
 require("flatpickr/dist/flatpickr.css");
 
 const name = Stream('');
@@ -25,6 +27,8 @@ export default class EditEventModal extends Modal {
         event_start(event.event_start());
         event_end(event.event_end() ? event.event_end() : event.event_start());
       }
+
+      this.composerState = new CustomComposerState();
     }
 
   /**
@@ -43,7 +47,7 @@ export default class EditEventModal extends Modal {
   }
 
   className() {
-    return 'EditEventsModal Modal--small';
+    return 'EditEventsModal Modal--large';
   }
 
   content() {
@@ -59,10 +63,17 @@ export default class EditEventModal extends Modal {
             <input id="startpicker" style="opacity: 1; color: inherit" className="FormControl" data-input />
           </div>
         </div>
-        <div className="Form-group">
+        <div class="Form-group">
           <label className="label">Details</label>
-          <textarea name="description" className="FormControl" bidi={description} />
-          <small>You may use markdown</small>
+          <div className='Composer'>
+            <TextEditor
+              disabled={this.loading}
+              value={description()}
+              onchange={description}
+              placeholder={'Event description'}
+              composer={this.composerState}
+            />
+          </div>
         </div>
         <div className="Form-group">
           {Button.component({
