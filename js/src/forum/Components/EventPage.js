@@ -1,9 +1,7 @@
 import Page from 'flarum/components/Page';
 import IndexPage from 'flarum/components/IndexPage';
-import affixSidebar from 'flarum/utils/affixSidebar';
 import LoadingIndicator from 'flarum/components/LoadingIndicator';
 import listItems from 'flarum/helpers/listItems';
-import Event from "../Models/Event";
 import EventFragment from "./EventFragment";
 
 /**
@@ -16,23 +14,22 @@ export default class EventPage extends Page {
     super.oninit(vnode);
     this.event = null;
 
-    //loadEvent(  m.route.param('id'));
-    app.preloadedApiDocument();
-    app.store.all('events').some((event) => {
-      if (event.data.id === m.route.param('id')) {
-	//show(event)
-        this.event = event; 
-        this.user = event.user(); 
-        app.current.set('event', event); 
-        app.setTitle(event.name()); 
-	return true;
-      }
-    });
-    if (!this.event) {
+    const event = app.preloadedApiDocument();
+    if (event) {
+      this.show(event);
+    } else {
+      const eventId = m.route.param('id');
       app.store.find('events', eventId).then(this.show.bind(this));
     }
 
     this.bodyClass = 'App--user';
+  }
+
+  show(event) {
+    this.event = event;
+    this.user = event.user(); 
+    app.setTitle(event.name());
+    m.redraw();
   }
 
   view() {

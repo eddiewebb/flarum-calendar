@@ -10,12 +10,12 @@ namespace Webbinaro\AdvCalendar\Content;
 
 use Flarum\Api\Client;
 use Flarum\Frontend\Document;
+use Flarum\Http\Exception\RouteNotFoundException;
 use Flarum\Http\UrlGenerator;
 use Flarum\User\User as FlarumUser;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Webbinaro\AdvCalendar\Api\Controllers\EventsShowController;
 
 class Event
 {
@@ -42,13 +42,9 @@ class Event
     public function __invoke(Document $document, Request $request)
     {
         $queryParams = $request->getQueryParams();
-        $actor = $request->getAttribute('actor');
         $eventId = Arr::get($queryParams, 'id');
-        $params = [
-            'id' => $eventId,
-        ];
 
-        $apiDocument = $this->getApiDocument($actor, $params);
+        $apiDocument = $this->getApiDocument($request, $eventId);
         $event = $apiDocument->data->attributes;
 
         $document->title = $event->name;
@@ -68,14 +64,17 @@ class Event
      * @return object
      * @throws ModelNotFoundException
      */
-    protected function getApiDocument(FlarumUser $actor, array $params)
+    protected function getApiDocument(Request $request, string $id)
     {
-        $response = $this->api->send(EventsShowController::class, $actor, $params);
+        $response = $this->api
+            ->withParentRequest($request)
+            ->get("/events/$id");
         $statusCode = $response->getStatusCode();
 
         if ($statusCode === 404) {
-            throw new ModelNotFoundException;
+            throw new RouteNotFoundException;
         }
+
         return json_decode($response->getBody());
     }
 }
