@@ -3,11 +3,7 @@ import Page from 'flarum/components/Page';
 import ItemList from 'flarum/utils/ItemList';
 import listItems from 'flarum/helpers/listItems';
 import IndexPage from 'flarum/components/IndexPage';
-import { Calendar } from '@fullcalendar/core';
-import allLocales from '@fullcalendar/core/locales-all';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import listPlugin from '@fullcalendar/list';
+import dynamicallyLoadLib from '../utils/dynamicallyLoadLib';
 import EventTeaser from "./EventTeaser";
 import Button from 'flarum/components/Button'
 import EditEventModal from "./EditEventModal";
@@ -82,17 +78,25 @@ export default class CalendarPage extends Page {
     this.renderCalendar(vnode);
   }
 
-  renderCalendar(vnode){
+  async renderCalendar(vnode){
+    await dynamicallyLoadLib('fullcalendarCore');
+    await dynamicallyLoadLib(
+      [
+        'fullcalendarLocales',
+        'fullcalendarDayGrid',
+        'fullcalendarInteraction',
+        'fullcalendarList',
+      ]
+    );
+
     const calendarEl = document.getElementById('calendar');
     const openModal = this.openCreateModal.bind(this);
 
     // console.debug(`Loading Full Calendar with locale: ${app.translator.getLocale()}`);
-    const calendar = new Calendar(calendarEl, {
-      locales: allLocales,
+    const calendar = new FullCalendar.Calendar(calendarEl, {
       locale: app.translator.getLocale(), // the initial locale
       headerToolbar: {center: 'dayGridMonth,listYear'}, // buttons for switching between views
       initialView: 'dayGridMonth',
-      plugins: [dayGridPlugin, interactionPlugin, listPlugin],
       eventClick: function (info) {
         info.jsEvent.preventDefault();
         for(var event of this.events){

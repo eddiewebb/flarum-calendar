@@ -1,11 +1,10 @@
 import Modal from 'flarum/components/Modal';
 import Alert from 'flarum/common/components/Alert';
 import Button from 'flarum/components/Button';
-import flatpickr from 'flatpickr';
+import dynamicallyLoadLib from '../utils/dynamicallyLoadLib';
 import Stream from 'flarum/utils/Stream';
 import CustomComposerState from '../States/CustomCompoerState';
 import TextEditor from 'flarum/common/components/TextEditor';
-require("flatpickr/dist/flatpickr.css");
 
 const name = Stream('');
 const user = Stream('');
@@ -14,7 +13,7 @@ const event_start = Stream();
 const event_end = Stream();
 
 /**
- * THis builds event details based on a FullCalendar concept of object.  CalendarPage talks to api, sends us FC payload
+ * This builds event details based on a FullCalendar concept of object.  CalendarPage talks to api, sends us FC payload
  */
 export default class EditEventModal extends Modal {
     oninit(vnode) {
@@ -61,7 +60,7 @@ export default class EditEventModal extends Modal {
         <div className="Form-group">
           <label className="label">{app.translator.trans('flarum-calendar.forum.modal.dates_label')}</label>
           <div className="PollModal--date" >
-            <input id="startpicker" style="opacity: 1; color: inherit" className="FormControl" data-input />
+            <input style="opacity: 1; color: inherit" className="FormControl" data-input oncreate={this.initDatePicker}/>
           </div>
         </div>
         <div class="Form-group">
@@ -87,24 +86,31 @@ export default class EditEventModal extends Modal {
     ];
   }
 
-  configDatePicker(el) {
-    flatpickr(el, {
+  async initDatePicker(vnode) {
+    const userLang = app.translator.getLocale();
+
+    await dynamicallyLoadLib('flatpickr');
+    await dynamicallyLoadLib('flatpickrLocale', userLang);
+
+    const locale = flatpickr.l10ns[userLang];
+
+    flatpickr(vnode.dom, {
       enableTime: true,
       dateFormat: 'Y-m-d H:i',
       mode: "range",
-      defaultDate: [flatpickr.parseDate(event_start(),"Y-m-d h:i K"),flatpickr.parseDate(event_end(),"Y-m-d h:i K")],
+      locale,
+      defaultDate: [
+        flatpickr.parseDate(event_start(),"Y-m-d h:i K"),
+        flatpickr.parseDate(event_end(),"Y-m-d h:i K"),
+      ],
       inline: true,
       onChange: dates => {
         event_start(dates[0]);
         event_end(dates[1])
       }
     });
-  }
 
-  oncreate(vnode) {
-    super.oncreate(vnode);
-    // console.log("startpicker");
-    this.configDatePicker("#startpicker");
+    m.redraw();
   }
 
   onsubmit(e) {
