@@ -3,6 +3,7 @@ import Button from 'flarum/common/components/Button';
 import LinkButton from 'flarum/common/components/LinkButton';
 import avatar from 'flarum/common/helpers/avatar';
 import EventFragment from './EventFragment';
+import app from 'flarum/forum/app';
 
 /**
  * This is intended as a "teaser" to link to full event page

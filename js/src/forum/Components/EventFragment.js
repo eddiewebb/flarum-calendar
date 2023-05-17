@@ -6,6 +6,7 @@ import username from 'flarum/common/helpers/username';
 import userOnline from 'flarum/common/helpers/userOnline';
 import EditEventModal from './EditEventModal';
 import fullTime from 'flarum/common/helpers/fullTime';
+import app from 'flarum/forum/app';
 
 export default class EventFragment extends Component {
   oninit(vnode) {

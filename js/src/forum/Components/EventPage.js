@@ -3,6 +3,7 @@ import IndexPage from 'flarum/forum/components/IndexPage';
 import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
 import listItems from 'flarum/common/helpers/listItems';
 import EventFragment from './EventFragment';
+import app from 'flarum/forum/app';
 
 /**
  * The `EventPage` component shows a individual event details

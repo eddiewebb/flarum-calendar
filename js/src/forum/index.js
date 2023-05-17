@@ -6,6 +6,7 @@ import IndexPage from 'flarum/forum/components/IndexPage';
 import LinkButton from 'flarum/common/components/LinkButton';
 import Event from './Models/Event';
 import Model from 'flarum/common/Model';
+import app from 'flarum/forum/app.js';
 
 //app.initializers.add('webbinaro/flarum-calendar', () => {
 app.initializers.add('webbinaro-calendar', () => {
