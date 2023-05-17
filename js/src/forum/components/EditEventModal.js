@@ -66,14 +66,9 @@ export default class EditEventModal extends Modal {
           </div>
         </div>
         <div className="Form-group">
-          {Button.component(
-            {
-              type: 'submit',
-              className: 'Button Button--primary PollModal-SubmitButton',
-              loading: this.loading,
-            },
-            app.translator.trans('flarum-calendar.forum.modal.submit')
-          )}
+          <Button type="submit" className="Button Button--primary PollModal-SubmitButton" loading={this.loading}>
+            {app.translator.trans('flarum-calendar.forum.modal.submit')}
+          </Button>
         </div>
       </div>,
     ];

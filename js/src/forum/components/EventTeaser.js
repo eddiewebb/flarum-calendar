@@ -4,6 +4,7 @@ import LinkButton from 'flarum/common/components/LinkButton';
 import avatar from 'flarum/common/helpers/avatar';
 import EventFragment from './EventFragment';
 import app from 'flarum/forum/app';
+import Alert from 'flarum/common/components/Alert';
 
 /**
  * This is intended as a "teaser" to link to full event page
@@ -47,7 +48,11 @@ export default class EventTeaser extends Modal {
               <div style="clear:both"></div>
             </div>
 
-            {this.alertAttrs ? <div className="Modal-alert">{Alert.component(this.alertAttrs)}</div> : ''}
+            {this.alertAttrs && (
+              <div className="Modal-alert">
+                <Alert {...this.alertAttrs} />
+              </div>
+            )}
             <div className="Modal-body">
               <EventFragment event={this.attrs.event} modal={this} />
               <p>
