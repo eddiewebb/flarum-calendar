@@ -1,11 +1,12 @@
 import Component from 'flarum/common/Component';
 import Link from 'flarum/common/components/Link';
-import UserCard from './UserCard';
-import avatar from '../../common/helpers/avatar';
-import username from '../../common/helpers/username';
-import userOnline from '../../common/helpers/userOnline';
-import listItems from '../../common/helpers/listItems';
+import UserCard from 'flarum/forum/components/UserCard';
+import avatar from 'flarum/common/helpers/avatar';
+import username from 'flarum/common/helpers/username';
+import userOnline from 'flarum/common/helpers/userOnline';
+import listItems from 'flarum/common/helpers/listItems';
 import Component from 'flarum/common/Component';
+import app from 'flarum/forum/app';
 /**
  * The `PostUser` component shows the avatar and username of a post's author.
  *

@@ -1,10 +1,10 @@
-import CalendarPage from './Components/CalendarPage.js';
-import EventPage from './Components/EventPage';
+import CalendarPage from './components/CalendarPage.js';
+import EventPage from './components/EventPage.js';
 
 import { extend } from 'flarum/common/extend';
 import IndexPage from 'flarum/forum/components/IndexPage';
 import LinkButton from 'flarum/common/components/LinkButton';
-import Event from './Models/Event';
+import Event from './models/Event.js';
 import Model from 'flarum/common/Model';
 import app from 'flarum/forum/app.js';
 

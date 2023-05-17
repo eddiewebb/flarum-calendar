@@ -3,7 +3,7 @@ import Alert from 'flarum/common/components/Alert';
 import Button from 'flarum/common/components/Button';
 import dynamicallyLoadLib from '../utils/dynamicallyLoadLib';
 import Stream from 'flarum/common/utils/Stream';
-import CustomComposerState from '../States/CustomComposerState';
+import CustomComposerState from '../states/CustomComposerState';
 import TextEditor from 'flarum/common/components/TextEditor';
 
 const name = Stream('');
