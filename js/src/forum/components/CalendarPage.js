@@ -12,11 +12,15 @@ import LogInModal from 'flarum/forum/components/LogInModal';
 export default class CalendarPage extends Page {
   oninit(vnode) {
     super.oninit(vnode);
+
+    app.history.push('advevents');
+    this.bodyClass = 'App--calendar';
+    app.setTitle(app.translator.trans('flarum-calendar.forum.button.landing'));
   }
 
   view() {
-    return [
-      <div className="IndexPage">
+    return (
+      <div className="IndexPage CalendarPage">
         {IndexPage.prototype.hero()}
         <div className="container">
           <div className="sideNavContainer">
@@ -29,8 +33,8 @@ export default class CalendarPage extends Page {
             </div>
           </div>
         </div>
-      </div>,
-    ];
+      </div>
+    );
   }
 
   /**

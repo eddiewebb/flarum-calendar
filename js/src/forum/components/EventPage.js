@@ -24,7 +24,8 @@ export default class EventPage extends Page {
       app.store.find('events', eventId).then(this.show.bind(this));
     }
 
-    this.bodyClass = 'App--user';
+    app.history.push('advevent');
+    this.bodyClass = 'App--event';
   }
 
   show(event) {
