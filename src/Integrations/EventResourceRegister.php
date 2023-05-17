@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Webbinaro\AdvCalendar\Integrations;
 
 use Flarum\Extend\ExtenderInterface;
@@ -26,7 +25,7 @@ class EventResourceRegister implements ExtenderInterface
             if ($resource instanceof Resource) {
                 $resources[] = $resource;
             } else {
-                throw new InvalidArgumentException("{EventResource::class} has to extend ".Resource::class);
+                throw new InvalidArgumentException("{EventResource::class} has to extend " . Resource::class);
             }
 
             return $resources;

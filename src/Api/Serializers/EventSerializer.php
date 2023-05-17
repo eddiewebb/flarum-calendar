@@ -1,4 +1,5 @@
 <?php
+
 namespace Webbinaro\AdvCalendar\Api\Serializers;
 
 use Flarum\Api\Serializer\AbstractSerializer;
@@ -32,8 +33,8 @@ class EventSerializer extends AbstractSerializer
         ];
     }
 
-    protected function user($event){
+    protected function user($event)
+    {
         return $this->hasOne($event, UserSerializer::class);
     }
-
 }

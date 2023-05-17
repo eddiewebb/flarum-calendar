@@ -1,7 +1,7 @@
 <?php
 
-
 namespace Webbinaro\AdvCalendar\Integrations;
+
 use Webbinaro\AdvCalendar\Event as Model;
 use FoF\Sitemap\Resources\Resource;
 use FoF\Sitemap\Sitemap\Frequency;
