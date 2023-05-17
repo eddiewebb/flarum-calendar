@@ -15,8 +15,8 @@ use Carbon\Carbon;
  * @property int $user_id
  * @property Carbon $event_start
  * @property Carbon $event_end
- * @property DateTime $created_at
- * @property DateTime $updated_at
+ * @property \DateTime $created_at
+ * @property \DateTime $updated_at
  */
 class Event extends AbstractModel
 {
