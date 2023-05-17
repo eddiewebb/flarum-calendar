@@ -1,10 +1,10 @@
 import Page from 'flarum/common/components/Page';
-import IndexPage from 'flarum/forum/components/IndexPage';
 import AffixedSidebar from 'flarum/forum/components/AffixedSidebar';
 import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
 import listItems from 'flarum/common/helpers/listItems';
 import EventFragment from './EventFragment';
 import app from 'flarum/forum/app';
+import CalendarPage from './CalendarPage';
 
 /**
  * The `EventPage` component shows a individual event details
@@ -42,7 +42,7 @@ export default class EventPage extends Page {
             <div className="sideNavContainer">
               <AffixedSidebar>
                 <nav className="IndexPage-nav sideNav">
-                  <ul>{listItems(IndexPage.prototype.sidebarItems().toArray())}</ul>
+                  <ul>{listItems(CalendarPage.prototype.sidebarItems().toArray())}</ul>
                 </nav>
               </AffixedSidebar>
               <div className="sideNavOffset IndexPage-results">
