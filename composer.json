@@ -9,8 +9,8 @@
   "type": "flarum-extension",
   "license": "MIT",
   "require": {
-    "flarum/core": "^1.0",
-    "fof/sitemap": "^2.0"
+    "flarum/core": "^1.7.2",
+    "fof/sitemap": "*"
   },
   "authors": [
     {
@@ -26,6 +26,11 @@
     {
       "name": "Andreas Hofmann",
       "email": "github@andreas-hofmann.org",
+      "role": "Developer"
+    },
+    {
+      "name": "Rafael Horvat",
+      "email": "rafael.horvat@icloud.com",
       "role": "Developer"
     }
   ],
