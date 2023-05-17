@@ -1,7 +1,7 @@
-import Modal from 'flarum/components/Modal';
-import Button from 'flarum/components/Button';
-import LinkButton from 'flarum/components/LinkButton';
-import avatar from 'flarum/helpers/avatar';
+import Modal from 'flarum/common/components/Modal';
+import Button from 'flarum/common/components/Button';
+import LinkButton from 'flarum/common/components/LinkButton';
+import avatar from 'flarum/common/helpers/avatar';
 import EventFragment from "./EventFragment";
 
 

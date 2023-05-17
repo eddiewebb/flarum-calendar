@@ -1,5 +1,5 @@
-import { extend } from 'flarum/extend';
-import BasicsPage from 'flarum/components/BasicsPage';
+import { extend } from 'flarum/common/extend';
+import BasicsPage from 'flarum/admin/components/BasicsPage';
 
 app.initializers.add('webbinaro/flarum-calendar', () => {
   // console.log('[webbinaro/flarum-calendar] Hello, admin!');

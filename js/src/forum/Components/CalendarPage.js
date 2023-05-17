@@ -1,13 +1,13 @@
-import app from 'flarum/app';
-import Page from 'flarum/components/Page';
-import ItemList from 'flarum/utils/ItemList';
-import listItems from 'flarum/helpers/listItems';
-import IndexPage from 'flarum/components/IndexPage';
+import app from 'flarum/forum/app';
+import Page from 'flarum/common/components/Page';
+import ItemList from 'flarum/common/utils/ItemList';
+import listItems from 'flarum/common/helpers/listItems';
+import IndexPage from 'flarum/forum/components/IndexPage';
 import dynamicallyLoadLib from '../utils/dynamicallyLoadLib';
 import EventTeaser from "./EventTeaser";
-import Button from 'flarum/components/Button'
+import Button from 'flarum/common/components/Button'
 import EditEventModal from "./EditEventModal";
-import LogInModal from 'flarum/components/LogInModal'
+import LogInModal from 'flarum/forum/components/LogInModal'
 
 export default class CalendarPage extends Page {
   oninit(vnode) {

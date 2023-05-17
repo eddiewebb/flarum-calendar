@@ -1,8 +1,8 @@
-import Modal from 'flarum/components/Modal';
+import Modal from 'flarum/common/components/Modal';
 import Alert from 'flarum/common/components/Alert';
-import Button from 'flarum/components/Button';
+import Button from 'flarum/common/components/Button';
 import dynamicallyLoadLib from '../utils/dynamicallyLoadLib';
-import Stream from 'flarum/utils/Stream';
+import Stream from 'flarum/common/utils/Stream';
 import CustomComposerState from '../States/CustomCompoerState';
 import TextEditor from 'flarum/common/components/TextEditor';
 

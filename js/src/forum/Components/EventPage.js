@@ -1,7 +1,7 @@
-import Page from 'flarum/components/Page';
-import IndexPage from 'flarum/components/IndexPage';
-import LoadingIndicator from 'flarum/components/LoadingIndicator';
-import listItems from 'flarum/helpers/listItems';
+import Page from 'flarum/common/components/Page';
+import IndexPage from 'flarum/forum/components/IndexPage';
+import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
+import listItems from 'flarum/common/helpers/listItems';
 import EventFragment from "./EventFragment";
 
 /**

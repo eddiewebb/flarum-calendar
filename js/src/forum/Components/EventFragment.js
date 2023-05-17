@@ -2,10 +2,10 @@ import Component from 'flarum/common/Component';
 import Alert from 'flarum/common/components/Alert';
 import Button from 'flarum/common/components/Button';
 import Link from 'flarum/common/components/Link';
-import username from 'flarum/helpers/username';
-import userOnline from 'flarum/helpers/userOnline';
+import username from 'flarum/common/helpers/username';
+import userOnline from 'flarum/common/helpers/userOnline';
 import EditEventModal from "./EditEventModal";
-import fullTime from 'flarum/helpers/fullTime';
+import fullTime from 'flarum/common/helpers/fullTime';
 
 export default class EventFragment extends Component {
 

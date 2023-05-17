@@ -1,11 +1,11 @@
 import CalendarPage  from './Components/CalendarPage.js';
 import EventPage from "./Components/EventPage";
 
-import { extend } from 'flarum/extend';
-import IndexPage from 'flarum/components/IndexPage';
-import LinkButton from 'flarum/components/LinkButton';
+import { extend } from 'flarum/common/extend';
+import IndexPage from 'flarum/forum/components/IndexPage';
+import LinkButton from 'flarum/common/components/LinkButton';
 import Event from "./Models/Event";
-import Model from "flarum/Model";
+import Model from "flarum/common/Model";
 
 //app.initializers.add('webbinaro/flarum-calendar', () => {
 app.initializers.add('webbinaro-calendar', () => {
