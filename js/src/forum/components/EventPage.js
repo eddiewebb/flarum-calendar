@@ -1,5 +1,6 @@
 import Page from 'flarum/common/components/Page';
 import IndexPage from 'flarum/forum/components/IndexPage';
+import AffixedSidebar from 'flarum/forum/components/AffixedSidebar';
 import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
 import listItems from 'flarum/common/helpers/listItems';
 import EventFragment from './EventFragment';
@@ -39,9 +40,11 @@ export default class EventPage extends Page {
         {this.event ? (
           <div className="container">
             <div className="sideNavContainer">
-              <nav className="IndexPage-nav sideNav" config={IndexPage.prototype.affixSidebar}>
-                <ul>{listItems(IndexPage.prototype.sidebarItems().toArray())}</ul>
-              </nav>
+              <AffixedSidebar>
+                <nav className="IndexPage-nav sideNav">
+                  <ul>{listItems(IndexPage.prototype.sidebarItems().toArray())}</ul>
+                </nav>
+              </AffixedSidebar>
               <div className="sideNavOffset IndexPage-results">
                 <h2>{this.event.name()}</h2>
                 <EventFragment event={this.event} />
@@ -49,7 +52,7 @@ export default class EventPage extends Page {
             </div>
           </div>
         ) : (
-          [LoadingIndicator.component({ className: 'LoadingIndicator--block' })]
+          <LoadingIndicator className="LoadingIndicator--block" />
         )}
       </div>
     );

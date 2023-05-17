@@ -42,36 +42,33 @@ export default class CalendarPage extends Page {
    */
   sidebarItems() {
     const items = IndexPage.prototype.sidebarItems();
-    // newDiscussion = newEvent
     if (app.session.user) {
       if (app.session.user.canStartEvents()) {
-        items.replace(
+        items.setContent(
           'newDiscussion',
-          Button.component(
-            {
-              icon: 'fas fa-calendar-plus',
-              className: 'Button Button--primary PollModal-SubmitButton',
-              itemClassName: 'App-primaryControl',
-              onclick: this.openCreateModal.bind(this),
-            },
-            app.translator.trans('flarum-calendar.forum.button.create')
-          )
+          <Button
+            icon="fas fa-calendar-plus"
+            className="Button Button--primary PollModal-SubmitButton"
+            itemClassName="App-primaryControl"
+            onclick={this.openCreateModal.bind(this)}
+          >
+            {app.translator.trans('flarum-calendar.forum.button.create')}
+          </Button>
         );
       } else {
         items.remove('newDiscussion');
       }
     } else {
-      items.replace(
+      items.setContent(
         'newDiscussion',
-        Button.component(
-          {
-            icon: 'fas fa-calendar-plus',
-            className: 'Button Button--primary PollModal-SubmitButton',
-            itemClassName: 'App-primaryControl',
-            onclick: this.openCreateModal.bind(this),
-          },
-          app.translator.trans('flarum-calendar.forum.button.login')
-        )
+        <Button
+          icon="fas fa-calendar-plus"
+          className="Button Button--primary PollModal-SubmitButton"
+          itemClassName="App-primaryControl"
+          onclick={this.openCreateModal.bind(this)}
+        >
+          {app.translator.trans('flarum-calendar.forum.button.login')}
+        </Button>
       );
     }
     return items;

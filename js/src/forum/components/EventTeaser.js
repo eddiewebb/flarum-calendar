@@ -16,10 +16,10 @@ export default class EventTeaser extends Modal {
   title() {
     return this.attrs.event.name();
   }
+
   /*
    * Override parent modal so we can have avatar in title bar
    */
-
   view() {
     if (this.alertAttrs) {
       this.alertAttrs.dismissible = false;
@@ -30,11 +30,7 @@ export default class EventTeaser extends Modal {
         <div className="Modal-content">
           {this.constructor.isDismissible ? (
             <div className="Modal-close App-backControl">
-              {Button.component({
-                icon: 'fas fa-times',
-                onclick: this.hide.bind(this),
-                className: 'Button Button--icon Button--link',
-              })}
+              <Button icon="fas fa-times" onclick={this.hide.bind(this)} className="Button Button--icon Button--link" />
             </div>
           ) : (
             ''
@@ -55,12 +51,7 @@ export default class EventTeaser extends Modal {
             <div className="Modal-body">
               <EventFragment event={this.attrs.event} modal={this} />
               <p>
-                {LinkButton.component(
-                  {
-                    href: app.route.advevent(this.attrs.event),
-                  },
-                  app.translator.trans('flarum-calendar.forum.event.details')
-                )}
+                <LinkButton href={app.route.advevent(this.attrs.event)}>{app.translator.trans('flarum-calendar.forum.event.details')}</LinkButton>
               </p>
             </div>
           </form>

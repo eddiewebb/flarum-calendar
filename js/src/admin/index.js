@@ -1,19 +1,10 @@
 import { extend } from 'flarum/common/extend';
 import BasicsPage from 'flarum/admin/components/BasicsPage';
+import app from 'flarum/admin/app';
 
-app.initializers.add('webbinaro/flarum-calendar', () => {
-  // console.log('[webbinaro/flarum-calendar] Hello, admin!');
-
+app.initializers.add('webbinaro-calendar', () => {
   app.extensionData
     .for('webbinaro-calendar')
-    /*.registerSetting(
-      {
-        setting: 'some-key', // This is the key the settings will be saved under in the settings table in the database.
-        label: app.translator.trans('flarum-calendar.admin.title'), // The label to be shown letting the admin know what the setting does.
-        type: 'boolean', // What type of setting this is, valid options are: boolean, text (or any other <input> tag type), and select. 
-      },
-      30 // Optional: Priority
-    )*/
     .registerSetting({
       setting: 'webbinaro-calendar.hide_host',
       label: app.translator.trans('flarum-calendar.admin.settings.hide_host'),

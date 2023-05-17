@@ -5,6 +5,7 @@ import dynamicallyLoadLib from '../utils/dynamicallyLoadLib';
 import Stream from 'flarum/common/utils/Stream';
 import CustomComposerState from '../states/CustomComposerState';
 import TextEditor from 'flarum/common/components/TextEditor';
+import app from 'flarum/forum/app';
 
 const name = Stream('');
 const user = Stream('');
@@ -30,17 +31,6 @@ export default class EditEventModal extends Modal {
 
     this.composerState = new CustomComposerState();
   }
-
-  /**
-   * Builder to create new modal *with empty event* but pre-populated date field.
-   * @param startDate
-   * @returns {EditEventModal}
-   */ /*
-  withStart(startDate)
-  {
-    event_start(startDate);
-    return this;
-  }*/
 
   title() {
     return name() ? app.translator.trans('flarum-calendar.forum.modal.title_edit') : app.translator.trans('flarum-calendar.forum.modal.title_create');
@@ -113,7 +103,7 @@ export default class EditEventModal extends Modal {
     m.redraw();
   }
 
-  onsubmit(e) {
+  async onsubmit(e) {
     e.preventDefault();
     if (!name() || !description()) {
       app.alerts.show(Alert, { type: 'error' }, app.translator.trans('flarum-calendar.forum.modal.requirement_message'));
@@ -122,13 +112,14 @@ export default class EditEventModal extends Modal {
     if (!this.attrs.event) {
       this.attrs.event = app.store.createRecord('events');
     }
-    this.attrs.event
-      .save({
-        name: name(),
-        description: description(),
-        event_start: event_start(),
-        event_end: event_end(),
-      })
-      .then(this.hide());
+
+    await this.attrs.event.save({
+      name: name(),
+      description: description(),
+      event_start: event_start(),
+      event_end: event_end(),
+    });
+
+    this.hide();
   }
 }

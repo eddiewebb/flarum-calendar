@@ -7,6 +7,7 @@ import userOnline from 'flarum/common/helpers/userOnline';
 import listItems from 'flarum/common/helpers/listItems';
 import Component from 'flarum/common/Component';
 import app from 'flarum/forum/app';
+
 /**
  * The `PostUser` component shows the avatar and username of a post's author.
  *
@@ -15,7 +16,9 @@ import app from 'flarum/forum/app';
  * - `post`
  */
 export default class EventUser extends Component {
-  init() {
+  oninit(vnode) {
+    super.oninit(vnode);
+
     /**
      * Whether or not the user hover card is visible.
      *
@@ -38,14 +41,10 @@ export default class EventUser extends Component {
       );
     }
 
-    let card = '';
+    let card = null;
 
     if (!post.isHidden() && this.cardVisible) {
-      card = UserCard.component({
-        user,
-        className: 'UserCard--popover',
-        controlsButtonClassName: 'Button Button--icon Button--flat',
-      });
+      card = <UserCard user={user} className="UserCard--popover" controlsButtonClassName="Button Button--icon Button--flat" />;
     }
 
     return (
@@ -63,8 +62,8 @@ export default class EventUser extends Component {
     );
   }
 
-  config(isInitialized) {
-    if (isInitialized) return;
+  oncreate(vnode) {
+    super.oncreate(vnode);
 
     let timeout;
 
