@@ -5,7 +5,6 @@ import avatar from 'flarum/common/helpers/avatar';
 import username from 'flarum/common/helpers/username';
 import userOnline from 'flarum/common/helpers/userOnline';
 import listItems from 'flarum/common/helpers/listItems';
-import Component from 'flarum/common/Component';
 import app from 'flarum/forum/app';
 
 /**

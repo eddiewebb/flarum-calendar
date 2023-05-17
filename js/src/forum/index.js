@@ -32,3 +32,8 @@ app.initializers.add('webbinaro-calendar', () => {
     return items;
   });
 });
+
+export * from './components';
+export * from './models';
+export * from './states';
+export * from './utils';
