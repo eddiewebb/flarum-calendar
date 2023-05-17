@@ -16,26 +16,26 @@ const event_end = Stream();
  * This builds event details based on a FullCalendar concept of object.  CalendarPage talks to api, sends us FC payload
  */
 export default class EditEventModal extends Modal {
-    oninit(vnode) {
-      super.oninit(vnode);
+  oninit(vnode) {
+    super.oninit(vnode);
 
-      if (this.attrs.event) {
-        const event = this.attrs.event;
-        name(event.name());
-        description(event.description());
-        user(event.user())
-        event_start(event.event_start());
-        event_end(event.event_end() ? event.event_end() : event.event_start());
-      }
-
-      this.composerState = new CustomComposerState();
+    if (this.attrs.event) {
+      const event = this.attrs.event;
+      name(event.name());
+      description(event.description());
+      user(event.user());
+      event_start(event.event_start());
+      event_end(event.event_end() ? event.event_end() : event.event_start());
     }
+
+    this.composerState = new CustomComposerState();
+  }
 
   /**
    * Builder to create new modal *with empty event* but pre-populated date field.
-    * @param startDate
+   * @param startDate
    * @returns {EditEventModal}
-   *//*
+   */ /*
   withStart(startDate)
   {
     event_start(startDate);
@@ -59,13 +59,13 @@ export default class EditEventModal extends Modal {
         </div>
         <div className="Form-group">
           <label className="label">{app.translator.trans('flarum-calendar.forum.modal.dates_label')}</label>
-          <div className="PollModal--date" >
-            <input style="opacity: 1; color: inherit" className="FormControl" data-input oncreate={this.initDatePicker}/>
+          <div className="PollModal--date">
+            <input style="opacity: 1; color: inherit" className="FormControl" data-input oncreate={this.initDatePicker} />
           </div>
         </div>
         <div class="Form-group">
           <label className="label">{app.translator.trans('flarum-calendar.forum.modal.description_label')}</label>
-          <div className='Composer'>
+          <div className="Composer">
             <TextEditor
               disabled={this.loading}
               value={description()}
@@ -76,11 +76,14 @@ export default class EditEventModal extends Modal {
           </div>
         </div>
         <div className="Form-group">
-          {Button.component({
-            type: 'submit',
-            className: 'Button Button--primary PollModal-SubmitButton',
-            loading: this.loading,
-          }, app.translator.trans('flarum-calendar.forum.modal.submit'))}
+          {Button.component(
+            {
+              type: 'submit',
+              className: 'Button Button--primary PollModal-SubmitButton',
+              loading: this.loading,
+            },
+            app.translator.trans('flarum-calendar.forum.modal.submit')
+          )}
         </div>
       </div>,
     ];
@@ -97,17 +100,14 @@ export default class EditEventModal extends Modal {
     flatpickr(vnode.dom, {
       enableTime: true,
       dateFormat: 'Y-m-d H:i',
-      mode: "range",
+      mode: 'range',
       locale,
-      defaultDate: [
-        flatpickr.parseDate(event_start(),"Y-m-d h:i K"),
-        flatpickr.parseDate(event_end(),"Y-m-d h:i K"),
-      ],
+      defaultDate: [flatpickr.parseDate(event_start(), 'Y-m-d h:i K'), flatpickr.parseDate(event_end(), 'Y-m-d h:i K')],
       inline: true,
-      onChange: dates => {
+      onChange: (dates) => {
         event_start(dates[0]);
-        event_end(dates[1])
-      }
+        event_end(dates[1]);
+      },
     });
 
     m.redraw();
@@ -115,21 +115,20 @@ export default class EditEventModal extends Modal {
 
   onsubmit(e) {
     e.preventDefault();
-    if (!name() || !description() ) {
-
-      app.alerts.show(Alert, {type: 'error'}, app.translator.trans('flarum-calendar.forum.modal.requirement_message'));
+    if (!name() || !description()) {
+      app.alerts.show(Alert, { type: 'error' }, app.translator.trans('flarum-calendar.forum.modal.requirement_message'));
       return;
     }
-    if(!this.attrs.event){
+    if (!this.attrs.event) {
       this.attrs.event = app.store.createRecord('events');
     }
-    this.attrs.event.save({
-      name: name(),
-      description: description(),
-      event_start: event_start(),
-      event_end: event_end()
-    }).then(this.hide());
-
+    this.attrs.event
+      .save({
+        name: name(),
+        description: description(),
+        event_start: event_start(),
+        event_end: event_end(),
+      })
+      .then(this.hide());
   }
-
 }

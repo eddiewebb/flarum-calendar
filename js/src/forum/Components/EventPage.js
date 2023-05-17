@@ -2,7 +2,7 @@ import Page from 'flarum/common/components/Page';
 import IndexPage from 'flarum/forum/components/IndexPage';
 import LoadingIndicator from 'flarum/common/components/LoadingIndicator';
 import listItems from 'flarum/common/helpers/listItems';
-import EventFragment from "./EventFragment";
+import EventFragment from './EventFragment';
 
 /**
  * The `EventPage` component shows a individual event details
@@ -27,7 +27,7 @@ export default class EventPage extends Page {
 
   show(event) {
     this.event = event;
-    this.user = event.user(); 
+    this.user = event.user();
     app.setTitle(event.name());
     m.redraw();
   }
@@ -35,22 +35,22 @@ export default class EventPage extends Page {
   view() {
     return (
       <div className="EventPage">
-        {this.event
-          ?
-            <div className="container">
-              <div className="sideNavContainer">
-                <nav className="IndexPage-nav sideNav" config={IndexPage.prototype.affixSidebar}>
-                  <ul>{listItems(IndexPage.prototype.sidebarItems().toArray())}</ul>
-                </nav>
-                <div className="sideNavOffset IndexPage-results">
-                  <h2>{this.event.name()}</h2>
-                  <EventFragment event={this.event}/>
-                </div>
+        {this.event ? (
+          <div className="container">
+            <div className="sideNavContainer">
+              <nav className="IndexPage-nav sideNav" config={IndexPage.prototype.affixSidebar}>
+                <ul>{listItems(IndexPage.prototype.sidebarItems().toArray())}</ul>
+              </nav>
+              <div className="sideNavOffset IndexPage-results">
+                <h2>{this.event.name()}</h2>
+                <EventFragment event={this.event} />
               </div>
             </div>
-          : [LoadingIndicator.component({ className: 'LoadingIndicator--block' })]}
+          </div>
+        ) : (
+          [LoadingIndicator.component({ className: 'LoadingIndicator--block' })]
+        )}
       </div>
     );
   }
-
 }

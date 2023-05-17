@@ -14,20 +14,18 @@ app.initializers.add('webbinaro/flarum-calendar', () => {
       },
       30 // Optional: Priority
     )*/
-    .registerSetting(
-      {
-        setting: 'webbinaro-calendar.hide_host',
-        label: app.translator.trans('flarum-calendar.admin.settings.hide_host'),
-        type: 'boolean',
-      }
-    )
+    .registerSetting({
+      setting: 'webbinaro-calendar.hide_host',
+      label: app.translator.trans('flarum-calendar.admin.settings.hide_host'),
+      type: 'boolean',
+    })
     .registerPermission(
       {
         icon: 'fas fa-calendar', // Font-Awesome Icon
         label: app.translator.trans('flarum-calendar.admin.permissions.view'), // Permission Label
         permission: 'event.view', // Actual permission name stored in database (and used when checking permission).
         allowGuest: true,
-      }, 
+      },
       'view', // Category permission will be added to on the grid
       95 // Optional: Priority
     )
@@ -36,7 +34,7 @@ app.initializers.add('webbinaro/flarum-calendar', () => {
         icon: 'fas fa-calendar-plus', // Font-Awesome Icon
         label: app.translator.trans('flarum-calendar.admin.permissions.add'), // Permission Label
         permission: 'event.create', // Actual permission name stored in database (and used when checking permission).
-      }, 
+      },
       'start', // Category permission will be added to on the grid
       95 // Optional: Priority
     )
@@ -45,7 +43,7 @@ app.initializers.add('webbinaro/flarum-calendar', () => {
         icon: 'fas fa-calendar-times', // Font-Awesome Icon
         label: app.translator.trans('flarum-calendar.admin.permissions.moderate'), // Permission Label
         permission: 'event.moderate', // Actual permission name stored in database (and used when checking permission).
-      }, 
+      },
       'moderate', // Category permission will be added to on the grid
       95 // Optional: Priority
     );
@@ -56,5 +54,4 @@ app.initializers.add('webbinaro/flarum-calendar', () => {
       label: app.translator.trans('flarum-calendar.admin.basics.homepage'),
     });
   });
-
 });

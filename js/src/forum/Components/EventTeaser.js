@@ -2,23 +2,21 @@ import Modal from 'flarum/common/components/Modal';
 import Button from 'flarum/common/components/Button';
 import LinkButton from 'flarum/common/components/LinkButton';
 import avatar from 'flarum/common/helpers/avatar';
-import EventFragment from "./EventFragment";
-
+import EventFragment from './EventFragment';
 
 /**
  * This is intended as a "teaser" to link to full event page
  */
 export default class EventTeaser extends Modal {
-
   oninit(vnode) {
     super.oninit(vnode);
   }
 
-  title(){
+  title() {
     return this.attrs.event.name();
   }
   /*
-  * Override parent modal so we can have avatar in title bar
+   * Override parent modal so we can have avatar in title bar
    */
 
   view() {
@@ -43,27 +41,30 @@ export default class EventTeaser extends Modal {
 
           <form onsubmit={this.onsubmit.bind(this)}>
             <div className="Modal-header">
-                <div>
-                  <h3 className="fa-pull-left App-titleControl App-titleControl--text" style="margin-right:1em">{this.title()}</h3>
-                </div>
-                <div className="fa-pull-right" >{avatar(this.attrs.event.user())}</div>
-                <div style="clear:both">
+              <div>
+                <h3 className="fa-pull-left App-titleControl App-titleControl--text" style="margin-right:1em">
+                  {this.title()}
+                </h3>
               </div>
+              <div className="fa-pull-right">{avatar(this.attrs.event.user())}</div>
+              <div style="clear:both"></div>
             </div>
 
             {this.alertAttrs ? <div className="Modal-alert">{Alert.component(this.alertAttrs)}</div> : ''}
             <div className="Modal-body">
               <EventFragment event={this.attrs.event} modal={this} />
               <p>
-                {LinkButton.component({
-                  href: app.route.advevent(this.attrs.event),
-                }, app.translator.trans('flarum-calendar.forum.event.details'))}
+                {LinkButton.component(
+                  {
+                    href: app.route.advevent(this.attrs.event),
+                  },
+                  app.translator.trans('flarum-calendar.forum.event.details')
+                )}
               </p>
             </div>
           </form>
         </div>
-      </div>
+      </div>,
     ];
   }
-
 }

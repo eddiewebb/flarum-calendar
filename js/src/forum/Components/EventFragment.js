@@ -4,11 +4,10 @@ import Button from 'flarum/common/components/Button';
 import Link from 'flarum/common/components/Link';
 import username from 'flarum/common/helpers/username';
 import userOnline from 'flarum/common/helpers/userOnline';
-import EditEventModal from "./EditEventModal";
+import EditEventModal from './EditEventModal';
 import fullTime from 'flarum/common/helpers/fullTime';
 
 export default class EventFragment extends Component {
-
   oninit(vnode) {
     super.oninit(vnode);
   }
@@ -22,46 +21,50 @@ export default class EventFragment extends Component {
   }
 
   view() {
-      return <div>
-        <p id="eventdescription"/>
-        {!app.forum.attribute('webbinaro-calendar.hide_host') &&
-          <p>{app.translator.trans('flarum-calendar.forum.event.hosted_by')} <Link href={app.route.user(this.attrs.event.user())}>
-            {userOnline(this.attrs.event.user())}
-            {username(this.attrs.event.user())}
-          </Link></p>
-        }
+    return (
+      <div>
+        <p id="eventdescription" />
+        {!app.forum.attribute('webbinaro-calendar.hide_host') && (
+          <p>
+            {app.translator.trans('flarum-calendar.forum.event.hosted_by')}{' '}
+            <Link href={app.route.user(this.attrs.event.user())}>
+              {userOnline(this.attrs.event.user())}
+              {username(this.attrs.event.user())}
+            </Link>
+          </p>
+        )}
         <p>
-          {app.translator.trans('flarum-calendar.forum.event.starts')} { fullTime(this.attrs.event.event_start()) } <br/>
-          {app.translator.trans('flarum-calendar.forum.event.ends')} { fullTime(this.attrs.event.event_end())}
+          {app.translator.trans('flarum-calendar.forum.event.starts')} {fullTime(this.attrs.event.event_start())} <br />
+          {app.translator.trans('flarum-calendar.forum.event.ends')} {fullTime(this.attrs.event.event_end())}
         </p>
-        {(app.session.user && (app.session.user.canModerateEvents || this.attrs.event.user.id === app.session.user.id)) ?
-          (<div>
-              {Button.component({
-                icon: 'fas fa-edit',
-                onclick: this.editLaunch.bind(this),
-                className: 'Button Button--icon Button--link',
-              })}
-              {Button.component({
-                icon: 'fas fa-trash-alt',
-                onclick: this.deleteEvent.bind(this),
-                className: 'Button Button--icon Button--link',
-              })}
-            </div>
-          ) : ''
-        }
+        {app.session.user && (app.session.user.canModerateEvents || this.attrs.event.user.id === app.session.user.id) ? (
+          <div>
+            {Button.component({
+              icon: 'fas fa-edit',
+              onclick: this.editLaunch.bind(this),
+              className: 'Button Button--icon Button--link',
+            })}
+            {Button.component({
+              icon: 'fas fa-trash-alt',
+              onclick: this.deleteEvent.bind(this),
+              className: 'Button Button--icon Button--link',
+            })}
+          </div>
+        ) : (
+          ''
+        )}
       </div>
+    );
   }
 
   oncreate(vnode) {
-    const descElement = document.getElementById("eventdescription");
+    const descElement = document.getElementById('eventdescription');
     s9e.TextFormatter.preview(this.attrs.event.description(), descElement);
   }
 
   editLaunch() {
     // console.log({"message": "[webbinaro/flarum-calendar] edit event ", "attrs": this.attrs.event})
-    app.modal.show(
-      EditEventModal, {"event": this.attrs.event}
-    );
+    app.modal.show(EditEventModal, { event: this.attrs.event });
   }
 
   deleteEvent() {
@@ -70,8 +73,8 @@ export default class EventFragment extends Component {
     }
     // console.log({"message": "[webbinaro/flarum-calendar] delete event ", "event": this.attrs.event})
     const events = this.attrs.events;
-    this.attrs.event.delete().then(()=>{
-      app.alerts.show(Alert, {type: 'success'}, app.translator.trans('flarum-calendar.forum.event.deleted'));
+    this.attrs.event.delete().then(() => {
+      app.alerts.show(Alert, { type: 'success' }, app.translator.trans('flarum-calendar.forum.event.deleted'));
       m.route.set(app.route('advevents'));
       if (this.attrs.modal) {
         this.attrs.modal.hide();
@@ -79,5 +82,4 @@ export default class EventFragment extends Component {
       //app.history.back();
     });
   }
-
 }

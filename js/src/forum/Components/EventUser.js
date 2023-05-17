@@ -5,7 +5,7 @@ import avatar from '../../common/helpers/avatar';
 import username from '../../common/helpers/username';
 import userOnline from '../../common/helpers/userOnline';
 import listItems from '../../common/helpers/listItems';
-import Component  from 'flarum/common/Component';
+import Component from 'flarum/common/Component';
 /**
  * The `PostUser` component shows the avatar and username of a post's author.
  *
