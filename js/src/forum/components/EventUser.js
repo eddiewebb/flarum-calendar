@@ -1,10 +1,12 @@
 import Component from 'flarum/common/Component';
-import UserCard from './UserCard';
-import avatar from '../../common/helpers/avatar';
-import username from '../../common/helpers/username';
-import userOnline from '../../common/helpers/userOnline';
-import listItems from '../../common/helpers/listItems';
-import Component  from 'flarum/Component';
+import Link from 'flarum/common/components/Link';
+import UserCard from 'flarum/forum/components/UserCard';
+import avatar from 'flarum/common/helpers/avatar';
+import username from 'flarum/common/helpers/username';
+import userOnline from 'flarum/common/helpers/userOnline';
+import listItems from 'flarum/common/helpers/listItems';
+import app from 'flarum/forum/app';
+
 /**
  * The `PostUser` component shows the avatar and username of a post's author.
  *
@@ -13,7 +15,9 @@ import Component  from 'flarum/Component';
  * - `post`
  */
 export default class EventUser extends Component {
-  init() {
+  oninit(vnode) {
+    super.oninit(vnode);
+
     /**
      * Whether or not the user hover card is visible.
      *
@@ -36,24 +40,20 @@ export default class EventUser extends Component {
       );
     }
 
-    let card = '';
+    let card = null;
 
     if (!post.isHidden() && this.cardVisible) {
-      card = UserCard.component({
-        user,
-        className: 'UserCard--popover',
-        controlsButtonClassName: 'Button Button--icon Button--flat',
-      });
+      card = <UserCard user={user} className="UserCard--popover" controlsButtonClassName="Button Button--icon Button--flat" />;
     }
 
     return (
       <div className="PostUser">
         <h3>
-          <a href={app.route.user(user)} config={m.route}>
+          <Link href={app.route.user(user)}>
             {avatar(user, { className: 'PostUser-avatar' })}
             {userOnline(user)}
             {username(user)}
-          </a>
+          </Link>
         </h3>
         <ul className="PostUser-badges badges">{listItems(user.badges().toArray())}</ul>
         {card}
@@ -61,8 +61,8 @@ export default class EventUser extends Component {
     );
   }
 
-  config(isInitialized) {
-    if (isInitialized) return;
+  oncreate(vnode) {
+    super.oncreate(vnode);
 
     let timeout;
 

@@ -27,3 +27,45 @@
         margin-top: 10px;
    }
 }
+
+.fc-daygrid-day-top > a,
+.fc-scrollgrid-sync-inner > a {
+    cursor: default;
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.EditEventsModal {
+    .Composer {
+        margin: 0;
+
+        [class^="ComposerBody-"][class$="Wrapper"],
+        textarea {
+            height: 100% !important;
+            resize: none;
+        }
+    }
+    .TextEditor {
+        background: var(--body-bg);
+        padding: 10px;
+        padding-bottom: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .TextEditor-editorContainer {
+        flex-grow: 1;
+    }
+
+    .TextEditor-controls {
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+
+        .item-submit {
+            display: none;
+        }
+    }
+}

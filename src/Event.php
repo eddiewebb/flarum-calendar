@@ -15,8 +15,8 @@ use Carbon\Carbon;
  * @property int $user_id
  * @property Carbon $event_start
  * @property Carbon $event_end
- * @property DateTime $created_at
- * @property DateTime $updated_at
+ * @property \DateTime $created_at
+ * @property \DateTime $updated_at
  */
 class Event extends AbstractModel
 {
@@ -48,7 +48,7 @@ class Event extends AbstractModel
      *
      * @return static
      */
-    public static function build($name, $description, $actorId, $event_start,$event_end)
+    public static function build($name, $description, $actorId, $event_start, $event_end)
     {
         $event = new static();
 
@@ -71,7 +71,7 @@ class Event extends AbstractModel
      *
      * @return static
      */
-    public function replace($name, $description, $event_start,$event_end)
+    public function replace($name, $description, $event_start, $event_end)
     {
         $this->name = $name;
         $this->description = $description;
@@ -86,5 +86,4 @@ class Event extends AbstractModel
     {
         return $this->belongsTo(User::class);
     }
-
 }
