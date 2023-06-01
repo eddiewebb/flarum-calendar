@@ -7,12 +7,6 @@ import CustomComposerState from '../states/CustomComposerState';
 import TextEditor from 'flarum/common/components/TextEditor';
 import app from 'flarum/forum/app';
 
-const name = Stream('');
-const user = Stream('');
-const description = Stream('');
-const event_start = Stream();
-const event_end = Stream();
-
 /**
  * This builds event details based on a FullCalendar concept of object.  CalendarPage talks to api, sends us FC payload
  */
@@ -20,20 +14,28 @@ export default class EditEventModal extends Modal {
   oninit(vnode) {
     super.oninit(vnode);
 
+    this.name = Stream('');
+    this.user = Stream('');
+    this.description = Stream('');
+    this.event_start = Stream();
+    this.event_end = Stream();
+
     if (this.attrs.event) {
       const event = this.attrs.event;
-      name(event.name());
-      description(event.description());
-      user(event.user());
-      event_start(event.event_start());
-      event_end(event.event_end() ? event.event_end() : event.event_start());
+      this.name(event.name());
+      this.description(event.description());
+      this.user(event.user());
+      this.event_start(event.event_start());
+      this.event_end(event.event_end() ? event.event_end() : event.event_start());
     }
 
     this.composerState = new CustomComposerState();
   }
 
   title() {
-    return name() ? app.translator.trans('flarum-calendar.forum.modal.title_edit') : app.translator.trans('flarum-calendar.forum.modal.title_create');
+    return this.name()
+      ? app.translator.trans('flarum-calendar.forum.modal.title_edit')
+      : app.translator.trans('flarum-calendar.forum.modal.title_create');
   }
 
   className() {
@@ -45,12 +47,12 @@ export default class EditEventModal extends Modal {
       <div className="Modal-body">
         <div className="Form-group">
           <label className="label">{app.translator.trans('flarum-calendar.forum.modal.title_label')}</label>
-          <input type="text" name="title" className="FormControl" bidi={name} />
+          <input type="text" name="title" className="FormControl" bidi={this.name} />
         </div>
         <div className="Form-group">
           <label className="label">{app.translator.trans('flarum-calendar.forum.modal.dates_label')}</label>
           <div className="PollModal--date">
-            <input style="opacity: 1; color: inherit" className="FormControl" data-input oncreate={this.initDatePicker} />
+            <input style="opacity: 1; color: inherit" className="FormControl" data-input oncreate={this.initDatePicker.bind(this)} />
           </div>
         </div>
         <div class="Form-group">
@@ -58,8 +60,8 @@ export default class EditEventModal extends Modal {
           <div className="Composer">
             <TextEditor
               disabled={this.loading}
-              value={description()}
-              onchange={description}
+              value={this.description()}
+              onchange={this.description}
               placeholder={app.translator.trans('flarum-calendar.forum.modal.description_placeholder')}
               composer={this.composerState}
             />
@@ -87,11 +89,11 @@ export default class EditEventModal extends Modal {
       dateFormat: 'Y-m-d H:i',
       mode: 'range',
       locale,
-      defaultDate: [flatpickr.parseDate(event_start(), 'Y-m-d h:i K'), flatpickr.parseDate(event_end(), 'Y-m-d h:i K')],
+      defaultDate: [flatpickr.parseDate(this.event_start(), 'Y-m-d h:i K'), flatpickr.parseDate(this.event_end(), 'Y-m-d h:i K')],
       inline: true,
       onChange: (dates) => {
-        event_start(dates[0]);
-        event_end(dates[1]);
+        this.event_start(dates[0]);
+        this.event_end(dates[1]);
       },
     });
 
@@ -100,7 +102,7 @@ export default class EditEventModal extends Modal {
 
   async onsubmit(e) {
     e.preventDefault();
-    if (!name() || !description()) {
+    if (!this.name() || !this.description()) {
       app.alerts.show(Alert, { type: 'error' }, app.translator.trans('flarum-calendar.forum.modal.requirement_message'));
       return;
     }
@@ -109,10 +111,10 @@ export default class EditEventModal extends Modal {
     }
 
     await this.attrs.event.save({
-      name: name(),
-      description: description(),
-      event_start: event_start(),
-      event_end: event_end(),
+      name: this.name(),
+      description: this.description(),
+      event_start: this.event_start(),
+      event_end: this.event_end(),
     });
 
     this.hide();

@@ -38,7 +38,7 @@ export default class EventFragment extends Component {
           {app.translator.trans('flarum-calendar.forum.event.starts')} {fullTime(this.attrs.event.event_start())} <br />
           {app.translator.trans('flarum-calendar.forum.event.ends')} {fullTime(this.attrs.event.event_end())}
         </p>
-        {app.session.user && (app.session.user.canModerateEvents || this.attrs.event.user.id === app.session.user.id) && (
+        {app.session.user && (app.session.user.canModerateEvents() || this.attrs.event.user().id() === app.session.user.id()) && (
           <div>
             <Button icon="fas fa-edit" onclick={this.editLaunch.bind(this)} className="Button Button--icon Button--link" />
             <Button icon="fas fa-trash-alt" onclick={this.deleteEvent.bind(this)} className="Button Button--icon Button--link" />
