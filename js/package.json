@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@flarum/prettier-config": "^1.0.0",
-    "prettier": "^2.8.4"
+    "prettier": "^3.0.1"
   },
   "scripts": {
     "dev": "webpack --mode development --watch",
