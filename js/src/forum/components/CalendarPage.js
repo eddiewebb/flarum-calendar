@@ -97,8 +97,24 @@ export default class CalendarPage extends Page {
     // console.debug(`Loading Full Calendar with locale: ${app.translator.getLocale()}`);
     const calendar = new FullCalendar.Calendar(calendarEl, {
       locale: app.translator.getLocale(), // the initial locale
-      headerToolbar: { center: 'dayGridMonth,listYear' }, // buttons for switching between views
+      headerToolbar: { center: 'dayGridMonth,listYearFromToday' }, // buttons for switching between views
       initialView: 'dayGridMonth',
+      views: {
+        listYearFromToday: {
+          type: 'list',
+          visibleRange: function (currentDate) {
+            // Generate a new date for manipulating in the next step
+            var startDate = new Date(currentDate.valueOf());
+            var endDate = new Date(currentDate.valueOf());
+
+            // Adjust the end date to one year into the future
+            endDate.setFullYear(endDate.getFullYear() + 1);
+
+            return { start: startDate, end: endDate };
+          },
+          listDaySideFormat: { weekday: 'long' }, // day-of-week is nice-to-have
+        },
+      },
       eventClick: async function (info) {
         info.jsEvent.preventDefault();
         for (let event of (await this.state?.getEvents()) || []) {
