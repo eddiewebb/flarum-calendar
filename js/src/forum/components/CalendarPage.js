@@ -8,6 +8,7 @@ import EventTeaser from './EventTeaser';
 import Button from 'flarum/common/components/Button';
 import EditEventModal from './EditEventModal';
 import LogInModal from 'flarum/forum/components/LogInModal';
+import CalendarState from '../states/CalendarState';
 
 export default class CalendarPage extends Page {
   oninit(vnode) {
@@ -83,7 +84,7 @@ export default class CalendarPage extends Page {
   }
 
   onupdate(vnode) {
-    this.renderCalendar(vnode);
+    this.state.refresh(false);
   }
 
   async renderCalendar(vnode) {
@@ -96,11 +97,27 @@ export default class CalendarPage extends Page {
     // console.debug(`Loading Full Calendar with locale: ${app.translator.getLocale()}`);
     const calendar = new FullCalendar.Calendar(calendarEl, {
       locale: app.translator.getLocale(), // the initial locale
-      headerToolbar: { center: 'dayGridMonth,listYear' }, // buttons for switching between views
+      headerToolbar: { center: 'dayGridMonth,listYearFromToday' }, // buttons for switching between views
       initialView: 'dayGridMonth',
-      eventClick: function (info) {
+      views: {
+        listYearFromToday: {
+          type: 'list',
+          visibleRange: function (currentDate) {
+            // Generate a new date for manipulating in the next step
+            var startDate = new Date(currentDate.valueOf());
+            var endDate = new Date(currentDate.valueOf());
+
+            // Adjust the end date to one year into the future
+            endDate.setFullYear(endDate.getFullYear() + 1);
+
+            return { start: startDate, end: endDate };
+          },
+          listDaySideFormat: { weekday: 'long' }, // day-of-week is nice-to-have
+        },
+      },
+      eventClick: async function (info) {
         info.jsEvent.preventDefault();
-        for (var event of this.events) {
+        for (let event of (await this.state?.getEvents()) || []) {
           if (event.id() === info.event.extendedProps.eventId) {
             app.modal.show(EventTeaser, { event: event });
             break;
@@ -110,15 +127,14 @@ export default class CalendarPage extends Page {
       dateClick: function (info) {
         openModal(info);
       },
-      events: function (info, successCallback, failureCallbacks) {
-        app.store.find('events', { start: info.start.toISOString(), end: info.end.toISOString(), sort: 'event_start' }).then((results) => {
-          this.events = results;
-          successCallback(results);
-        });
-      }.bind(this),
+      events: (info, successCb, failureCb) => this.state?.getEvents(info, successCb, failureCb) || [],
       eventDataTransform: this.flarumToFullCalendarEvent,
     });
     calendar.render();
+
+    this.state = new CalendarState(calendar, this);
+    app.calendarState = this.state;
+    this.state.refresh();
   }
 
   openCreateModal(info) {
@@ -126,11 +142,13 @@ export default class CalendarPage extends Page {
       return;
     }
 
+    const refresh = this.state.refresh.bind(this.state);
+
     if (app.session.user != undefined) {
       if (info.dateStr) {
-        app.modal.show(EditEventModal, { withStart: info.dateStr });
+        app.modal.show(EditEventModal, { withStart: info.dateStr, refresh });
       } else {
-        app.modal.show(EditEventModal);
+        app.modal.show(EditEventModal, { refresh });
       }
     } else {
       app.modal.show(LogInModal);

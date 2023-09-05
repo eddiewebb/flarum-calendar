@@ -54,7 +54,7 @@ export default class EventFragment extends Component {
   }
 
   editLaunch() {
-    app.modal.show(EditEventModal, { event: this.attrs.event });
+    app.modal.show(EditEventModal, { event: this.attrs.event, refresh: app.calendarState.refresh.bind(app.calendarState) });
   }
 
   deleteEvent() {

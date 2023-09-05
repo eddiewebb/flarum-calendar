@@ -117,6 +117,8 @@ export default class EditEventModal extends Modal {
       event_end: this.event_end(),
     });
 
+    this.attrs.refresh();
+
     this.hide();
   }
 }

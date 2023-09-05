@@ -1,22 +1,22 @@
 const libs = {
   fullcalendarCore: {
-    js: 'https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.7/index.global.min.js',
+    js: 'https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/index.global.min.js',
     loaded: () => typeof FullCalendar !== 'undefined',
   },
   fullcalendarLocales: {
-    js: 'https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.7/locales-all.global.min.js',
+    js: 'https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.8/locales-all.global.min.js',
     loaded: () => typeof FullCalendar !== 'undefined' && FullCalendar.globalLocales.length > 2,
   },
   fullcalendarDayGrid: {
-    js: 'https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.7/index.global.min.js',
+    js: 'https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.8/index.global.min.js',
     loaded: () => typeof FullCalendar !== 'undefined' && FullCalendar.globalPlugins.find((p) => p.name === '@fullcalendar/daygrid'),
   },
   fullcalendarInteraction: {
-    js: 'https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.7/index.global.min.js',
+    js: 'https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@6.1.8/index.global.min.js',
     loaded: () => typeof FullCalendar !== 'undefined' && FullCalendar.globalPlugins.find((p) => p.name === '@fullcalendar/interaction'),
   },
   fullcalendarList: {
-    js: 'https://cdn.jsdelivr.net/npm/@fullcalendar/list@6.1.7/index.global.min.js',
+    js: 'https://cdn.jsdelivr.net/npm/@fullcalendar/list@6.1.8/index.global.min.js',
     loaded: () => typeof FullCalendar !== 'undefined' && FullCalendar.globalPlugins.find((p) => p.name === '@fullcalendar/list'),
   },
 
